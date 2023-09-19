@@ -2,8 +2,6 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,17 +16,16 @@ public class LoginController {
 	@FXML
 	private TextField username;
 
+	private ErrorView error = new ErrorView();
+
 	@FXML
 	private void login(ActionEvent event) {
-		Alert alert;
 		DashBoardView dashboard = new DashBoardView();
 		String userNamefield = username.getText();
 		String passwordfield = password.getText();
 		// to connect with DB
 		if (userNamefield.isEmpty() || passwordfield.isBlank()) {
-			alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Invalid username or password");
-			alert.showAndWait();
+			error.alertLogin();
 		} else {
 			// successfully login
 			loginButton.getScene().getWindow().hide();

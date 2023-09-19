@@ -6,18 +6,18 @@ public class Account {
 	private String password;
 	private String firstname;
 	private String lastname;
-	private String role;
+	private String userplan;
 
 	public Account() {
 	};
 
-	public Account(String username, String password, String firstname, String lastname, String role) {
+	public Account(String username, String password, String firstname, String lastname, String userplan) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.role = role;
+		this.userplan = userplan;
 	}
 
 	public String getUsername() {
@@ -52,12 +52,12 @@ public class Account {
 		this.lastname = lastname;
 	}
 
-	public String getRole() {
-		return role;
+	public String getUserPlan() {
+		return userplan;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRole(String userplan) {
+		this.userplan = userplan;
 	}
 
 }

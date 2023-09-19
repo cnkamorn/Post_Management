@@ -2,8 +2,6 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -25,27 +23,31 @@ public class SignUpController {
 	@FXML
 	private Button signup;
 
+	private ErrorView error = new ErrorView();
+	private UserDatabase userDb = new UserDatabase();
+	private Account userAccount;
+
 	@FXML
 	private void signUp(ActionEvent event) {
-		if (!errorAlert()) {
-			System.out.println("test");
+		String firstNameField = firstname.getText();
+		String lastNameField = lastname.getText();
+		String usernameField = username.getText();
+		String passwordField = password.getText();
+		userAccount = new Account(firstNameField, lastNameField, usernameField, passwordField, "NML"); // normal user
+		if (checkBlank()) { // check input blank?
+			error.alertBlankInput();
+		} else if (!userDb.insertRow(userAccount)) { // error while insert
+			error.alertUsernameExists();
 		} else {
-			System.out.println("eoe");
+			SuccessView successAlert = new SuccessView();
+			successAlert.alertRegisterSuccess();
+			signup.getScene().getWindow().hide();
 		}
 	}
 
-	public boolean errorAlert() {
-		Alert alert = new Alert(AlertType.ERROR);
+	public boolean checkBlank() {
 		if (firstname.getText().isBlank() || lastname.getText().isBlank() || password.getText().isBlank()
 				|| username.getText().isBlank()) {
-			alert.setContentText("Please input all fields");
-			alert.setHeaderText("Blank Input Error");
-			alert.showAndWait();
-			return true;
-		} else if (username.getText().equals("tee")) {
-			alert.setContentText("Username is exist in our database. Please input a new username");
-			alert.setHeaderText("Username Input Error");
-			alert.showAndWait();
 			return true;
 		}
 		return false;
