@@ -1,5 +1,10 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,19 +23,22 @@ public class LoginController {
 
 	private ErrorView error = new ErrorView();
 
+	public static String currentUserName;
+
 	@FXML
 	private void login(ActionEvent event) {
-		DashBoardView dashboard = new DashBoardView();
-		String userNamefield = username.getText();
-		String passwordfield = password.getText();
+		DashBoardController dbc = new DashBoardController();
+		String userNameField = username.getText();
+		String passwordField = password.getText();
 		// to connect with DB
-		if (userNamefield.isEmpty() || passwordfield.isBlank()) {
-			error.alertLogin();
-		} else {
-			// successfully login
+		if (verifyLogin(userNameField, passwordField)) {
 			loginButton.getScene().getWindow().hide();
-			dashboard.showView();
-
+			currentUserName = userNameField;
+			dbc.userDashBoardControl(userNameField, passwordField);
+		} else if (userNameField.isBlank() || passwordField.isBlank()) {
+			error.alertBlankInput();
+		} else {
+			error.alertLogin();
 		}
 
 		// if not vip
@@ -43,5 +51,24 @@ public class LoginController {
 	private void register(ActionEvent event) {
 		SignUpVIew signUpPage = new SignUpVIew();
 		signUpPage.showView();
+	}
+
+	private boolean verifyLogin(String username, String password) {
+		// if username matches > true else false
+		UserDatabase udb = UserDatabase.getInstance();
+		String query = "SELECT username, password FROM " + udb.TABLE_NAME + " " + "WHERE username = '" + username
+				+ "' AND password ='" + password + "' ";
+		try {
+			Connection c = udb.getConnection();
+			Statement stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

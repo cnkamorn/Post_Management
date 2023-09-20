@@ -12,7 +12,7 @@ public class DashBoardView {
 	Parent root;
 
 	// show the dashboard after successfully login
-	public void showView() {
+	public void showView(Account user) {
 		try {
 			root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
 			scene = new Scene(root);

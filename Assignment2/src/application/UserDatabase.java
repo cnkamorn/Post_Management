@@ -3,29 +3,43 @@ package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class UserDatabase {
+public class UserDatabase extends Database<Account> {
 	private static final String DB_URL = "jdbc:sqlite:data.db"; // driver
-
 	final static String TABLE_NAME = "User";
+//singleton
+	private static UserDatabase Instance;
+
+	private UserDatabase() {
+	};
+
+	public static UserDatabase getInstance() {
+		if (Instance == null) {
+			Instance = new UserDatabase();
+		}
+		return Instance;
+	}
 
 	// run this to create a table
-	private static void createTableUser() {
+	@Override
+	protected void createTableUser() {
 
 		try (Connection con = getConnection(); Statement stmt = con.createStatement();) {
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(username VARCHAR(20) NOT NULL,"
 					+ "password VARCHAR(20) NOT NULL," + "first_name VARCHAR(20) NOT NULL,"
 					+ "last_name VARCHAR(20) NOT NULL," + "user_plan VARCHAR(3) NOT NULL," + "PRIMARY KEY (username))");
+			con.close();
+			stmt.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+
 	}
 
 	public static void main(String[] args) throws SQLException {
-		UserDatabase a = new UserDatabase();
+		UserDatabase a = UserDatabase.getInstance();
 		Account b = new Account("tee", "pass", "c", "a", "VIP");
 		a.insertRow(b);
 		/*
@@ -43,6 +57,7 @@ public class UserDatabase {
 		return false;
 	}
 
+	@Override
 	public boolean insertRow(Account user) {
 		String sql = "INSERT INTO " + TABLE_NAME + " (username, password, first_name, last_name,user_plan)"
 				+ " VALUES (?, ?, ?, ?, ?)";
@@ -59,12 +74,16 @@ public class UserDatabase {
 			if (result == 1) {
 				return true;
 			}
+			con.close();
+			stmt.close();
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			e.getMessage();
 		}
 		return false;
 	}
 
+	@Override
 	public boolean updateRow() {
 		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "Select * from " + TABLE_NAME + " WHERE ";
@@ -77,20 +96,4 @@ public class UserDatabase {
 		}
 		return false;
 	}
-
-	public void queryRow(String sql) {
-		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
-			String query = "SELECT * FROM " + TABLE_NAME;
-			try (ResultSet resultSet = stmt.executeQuery(query)) {
-				while (resultSet.next()) {
-					System.out.printf("Id: %d | Student Number: %s | First Name: %s | Last Name: %s\n",
-							resultSet.getInt("id"), resultSet.getString("student_number"),
-							resultSet.getString("first_name"), resultSet.getString("last_name"));
-				}
-			}
-		} catch (SQLException e) {
-			e.getMessage();
-		}
-	}
-
 }

@@ -1,5 +1,18 @@
 package application;
 
-public class Database {
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public abstract class Database<T> {
+
+	public abstract boolean insertRow(T obj);
+
+	protected abstract void createTableUser();
+
+	public static Connection getConnection() throws SQLException {
+		return null;
+	}
+
+	public abstract boolean updateRow(); // to continue
 
 }

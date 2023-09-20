@@ -56,7 +56,7 @@ public class Account {
 		return userplan;
 	}
 
-	public void setRole(String userplan) {
+	public void setUserPlan(String userplan) {
 		this.userplan = userplan;
 	}
 

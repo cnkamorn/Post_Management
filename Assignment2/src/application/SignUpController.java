@@ -24,7 +24,7 @@ public class SignUpController {
 	private Button signup;
 
 	private ErrorView error = new ErrorView();
-	private UserDatabase userDb = new UserDatabase();
+	private UserDatabase userDb = UserDatabase.getInstance();
 	private Account userAccount;
 
 	@FXML
@@ -33,7 +33,7 @@ public class SignUpController {
 		String lastNameField = lastname.getText();
 		String usernameField = username.getText();
 		String passwordField = password.getText();
-		userAccount = new Account(firstNameField, lastNameField, usernameField, passwordField, "NML"); // normal user
+		userAccount = new Account(usernameField, passwordField, firstNameField, lastNameField, "NML"); // normal user
 		if (checkBlank()) { // check input blank?
 			error.alertBlankInput();
 		} else if (!userDb.insertRow(userAccount)) { // error while insert
