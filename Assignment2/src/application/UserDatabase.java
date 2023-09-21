@@ -27,9 +27,10 @@ public class UserDatabase extends Database<Account> {
 	protected void createTableUser() {
 
 		try (Connection con = getConnection(); Statement stmt = con.createStatement();) {
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(username VARCHAR(20) NOT NULL,"
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
+					+ "(user_id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(20) NOT NULL,"
 					+ "password VARCHAR(20) NOT NULL," + "first_name VARCHAR(20) NOT NULL,"
-					+ "last_name VARCHAR(20) NOT NULL," + "user_plan VARCHAR(3) NOT NULL," + "PRIMARY KEY (username))");
+					+ "last_name VARCHAR(20) NOT NULL," + "user_plan VARCHAR(3) NOT NULL)");
 			con.close();
 			stmt.close();
 		} catch (SQLException e) {
@@ -40,8 +41,13 @@ public class UserDatabase extends Database<Account> {
 
 	public static void main(String[] args) throws SQLException {
 		UserDatabase a = UserDatabase.getInstance();
-		Account b = new Account("tee", "pass", "c", "a", "VIP");
-		a.insertRow(b);
+		Account b = Account.getInstance();
+		b.setFirstname("x");
+		b.setLastname("xx");
+		b.setUsername("haha");
+		b.setPassword("x");
+		b.setUserPlan("inw");
+		a.insertUser(b);
 		/*
 		 * Connection v = getConnection(); Statement d = v.createStatement();
 		 * d.executeUpdate("DROP TABLE User");
@@ -49,7 +55,7 @@ public class UserDatabase extends Database<Account> {
 	}
 	// to create table post
 
-	public static Connection getConnection() throws SQLException {
+	static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(DB_URL); // connection
 	}
 
@@ -57,8 +63,7 @@ public class UserDatabase extends Database<Account> {
 		return false;
 	}
 
-	@Override
-	public boolean insertRow(Account user) {
+	public boolean insertUser(Account user) {
 		String sql = "INSERT INTO " + TABLE_NAME + " (username, password, first_name, last_name,user_plan)"
 				+ " VALUES (?, ?, ?, ?, ?)";
 
@@ -94,6 +99,12 @@ public class UserDatabase extends Database<Account> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
+	}
+
+	@Override
+	public boolean insertRow(Account obj) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

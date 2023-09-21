@@ -5,11 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class DashBoardController extends LoginController {
@@ -17,10 +20,22 @@ public class DashBoardController extends LoginController {
 	Stage stage = new Stage();
 	Scene scene;
 	Parent root;
-	Account currentUserAccount = new Account();
+	private Account currentUserAccount = Account.getInstance();
 
 	@FXML
 	private Label welcome;
+
+	@FXML
+	private Button editprofilebtn;
+
+	@FXML
+	private Button homepostbtn;
+
+	@FXML
+	private Button logoutbtn;
+
+	@FXML
+	private Label welcometxt;
 
 	public DashBoardController() {
 	};
@@ -30,57 +45,63 @@ public class DashBoardController extends LoginController {
 			root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
 			scene = new Scene(root);
 			stage.setScene(scene);
+			stage.setTitle("Data Anylytics Hub");
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// query
-		// create account obj?
-		// pass it to view
-		// view handle account info
-		/*
-		 * Account user = new Account(); UserDatabase udb = UserDatabase.getInstance();
-		 * String query = "SELECT username, password FROM " + udb.TABLE_NAME + " " +
-		 * "WHERE username = '" + username + "' AND password ='" + password + "' "; /*
-		 * try { Connection c = udb.getConnection(); Statement stmt =
-		 * c.createStatement(); ResultSet rs = stmt.executeQuery(query); if (rs.next())
-		 * { return true; } } catch (SQLException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); } return false; DashBoardView show = new
-		 * DashBoardView(); show.showView(null, null); welcome.setText("AHOJ");
-		 */
 	}
 
 	public void setUserDetails() {
-		UserDatabase udb = UserDatabase.getInstance();
 		String query = "SELECT username,password,first_name,last_name,user_plan FROM User WHERE username='"
 				+ currentUserName + "'";
 		try {
-			Connection c = udb.getConnection();
-			Statement stmt = c.createStatement();
+			Connection con = UserDatabase.getConnection();
+			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-				String userPlan = rs.getString("user_plan");
-				currentUserAccount.setUsername(username);
-				currentUserAccount.setPassword(password);
-				currentUserAccount.setFirstname(firstName);
-				currentUserAccount.setLastname(lastName);
-				currentUserAccount.setUserPlan(userPlan);
+			if (rs.next()) {
+				currentUserAccount.setUsername(rs.getString("username"));
+				currentUserAccount.setPassword(rs.getString("password"));
+				currentUserAccount.setFirstname(rs.getString("first_name"));
+				currentUserAccount.setLastname(rs.getString("last_name"));
+				currentUserAccount.setUserPlan(rs.getString("user_plan"));
 			}
+			con.close();
+			stmt.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.println(currentUserAccount.getFirstname());
+	}
+
+	@FXML
+	public void logout(ActionEvent event) {
+		logoutbtn.getScene().getWindow().hide();
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+			Parent parentNode = loader.load();
+			Scene scene = new Scene(parentNode);
+			stage.setResizable(false);
+			stage.setScene(scene);
+			stage.setTitle("Data Anylytics Hub");
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void setWelcomeText() {
-		welcome.setText("Hello " + currentUserAccount.getFirstname() + " " + currentUserAccount.getLastname());
+		welcome.setText(" Hello " + currentUserAccount.getFirstname().toUpperCase() + " "
+				+ currentUserAccount.getLastname().toUpperCase());
+		welcome.setFont(new Font("Arial", 24));
+		welcome.setStyle("-fx-text-fill: CORNFLOWERBLUE;");
 	}
 
 	public void initialize() {
 		setUserDetails();
 		setWelcomeText();
 	}
+
 }

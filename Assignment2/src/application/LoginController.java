@@ -59,9 +59,11 @@ public class LoginController {
 		String query = "SELECT username, password FROM " + udb.TABLE_NAME + " " + "WHERE username = '" + username
 				+ "' AND password ='" + password + "' ";
 		try {
-			Connection c = udb.getConnection();
-			Statement stmt = c.createStatement();
+			Connection con = udb.getConnection();
+			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
+			con.close();
+			stmt.close();
 			if (rs.next()) {
 				return true;
 			}

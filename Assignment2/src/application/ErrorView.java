@@ -23,4 +23,10 @@ public class ErrorView {
 		alert.setHeaderText("Username Input Error");
 		alert.showAndWait();
 	}
+
+	public void alertWhiteSpaceFound(String field) {
+		alert.setContentText("Error: " + field + " should not contains white space.");
+		alert.setHeaderText("White space Error");
+		alert.showAndWait();
+	}
 }

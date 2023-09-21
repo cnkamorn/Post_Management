@@ -8,16 +8,25 @@ public class Account {
 	private String lastname;
 	private String userplan;
 
-	public Account() {
+	private static Account Instance;
+
+	private Account() {
 	};
 
-	public Account(String username, String password, String firstname, String lastname, String userplan) {
+	private Account(String username, String password, String firstname, String lastname, String userplan) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.userplan = userplan;
+	}
+
+	public static Account getInstance() {
+		if (Instance == null) {
+			Instance = new Account();
+		}
+		return Instance;
 	}
 
 	public String getUsername() {

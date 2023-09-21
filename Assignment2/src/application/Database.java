@@ -9,7 +9,7 @@ public abstract class Database<T> {
 
 	protected abstract void createTableUser();
 
-	public static Connection getConnection() throws SQLException {
+	private static Connection getConnection() throws SQLException {
 		return null;
 	}
 
