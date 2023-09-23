@@ -7,7 +7,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class SignUpVIew {
+public class SignUpView {
+
+	private static SignUpView Instance;
+
+	private SignUpView() {
+	};
+
+	public static SignUpView getInstance() {
+		if (Instance == null) {
+			Instance = new SignUpView();
+		}
+		return Instance;
+	}
 
 	public void showView() {
 		try {

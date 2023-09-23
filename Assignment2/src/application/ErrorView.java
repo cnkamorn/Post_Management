@@ -35,4 +35,10 @@ public class ErrorView {
 		alert.setHeaderText("Invalid Username");
 		alert.showAndWait();
 	}
+
+	public void alertRetypeUsername() {
+		alert.setContentText("Error: Invalid Retype Username");
+		alert.setHeaderText("Invalid Retype Username");
+		alert.showAndWait();
+	}
 }

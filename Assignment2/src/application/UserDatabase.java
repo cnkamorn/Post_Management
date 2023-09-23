@@ -3,6 +3,7 @@ package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,7 +26,6 @@ public class UserDatabase extends Database<Account> {
 	// run this to create a table
 	@Override
 	protected void createTableUser() {
-
 		try (Connection con = getConnection(); Statement stmt = con.createStatement();) {
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
 					+ "(user_id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(20) NOT NULL,"
@@ -40,14 +40,6 @@ public class UserDatabase extends Database<Account> {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		UserDatabase a = UserDatabase.getInstance();
-		Account b = Account.getInstance();
-		b.setFirstname("x");
-		b.setLastname("xx");
-		b.setUsername("haha");
-		b.setPassword("x");
-		b.setUserPlan("inw");
-		a.insertUser(b);
 		/*
 		 * Connection v = getConnection(); Statement d = v.createStatement();
 		 * d.executeUpdate("DROP TABLE User");
@@ -88,10 +80,25 @@ public class UserDatabase extends Database<Account> {
 		return false;
 	}
 
-	@Override
-	public boolean updateRow() {
+	// query userID by username
+	public String queryUserId(String username) {
+		String userId = "";
 		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
-			String sql = "Select * from " + TABLE_NAME + " WHERE ";
+			String sql = "SELECT user_id FROM " + TABLE_NAME + " WHERE username = '" + username + "';";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				userId += rs.getString("user_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userId;
+	}
+
+	public boolean updateUsername(String currentUsername, String newUsername) {
+		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "UPDATE " + TABLE_NAME + " SET username = '" + newUsername + "' WHERE user_id = '"
+					+ queryUserId(currentUsername) + "';";
 			int result = stmt.executeUpdate(sql);
 			if (result == 1) {
 				return true;

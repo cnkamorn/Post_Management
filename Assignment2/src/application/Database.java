@@ -12,7 +12,4 @@ public abstract class Database<T> {
 	private static Connection getConnection() throws SQLException {
 		return null;
 	}
-
-	public abstract boolean updateRow(); // to continue
-
 }

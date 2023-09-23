@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import application.Exception.InvalidLoginException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,14 +32,18 @@ public class LoginController {
 		String userNameField = username.getText();
 		String passwordField = password.getText();
 		// to connect with DB
-		if (verifyLogin(userNameField, passwordField)) {
-			loginButton.getScene().getWindow().hide();
-			currentUserName = userNameField;
-			dbc.userDashBoardControl(userNameField, passwordField);
-		} else if (userNameField.isBlank() || passwordField.isBlank()) {
-			error.alertBlankInput();
-		} else {
+		try {
+			if (verifyLogin(userNameField, passwordField)) {
+				loginButton.getScene().getWindow().hide();
+				currentUserName = userNameField;
+				dbc.userDashBoardControl(userNameField, passwordField);
+			} else if (userNameField.isBlank() || passwordField.isBlank()) {
+				error.alertBlankInput();
+			}
+		} catch (InvalidLoginException e) {
+			// TODO Auto-generated catch block
 			error.alertLogin();
+			System.out.println(e.getMessage());
 		}
 
 		// if not vip
@@ -49,28 +54,25 @@ public class LoginController {
 
 	@FXML
 	private void register(ActionEvent event) {
-		SignUpVIew signUpPage = new SignUpVIew();
+		SignUpView signUpPage = SignUpView.getInstance();
 		signUpPage.showView();
 	}
 
-	private boolean verifyLogin(String username, String password) {
-		// if username matches > true else false
-		UserDatabase udb = UserDatabase.getInstance();
-		String query = "SELECT username, password FROM " + udb.TABLE_NAME + " " + "WHERE username = '" + username
-				+ "' AND password ='" + password + "' ";
+	private boolean verifyLogin(String username, String password) throws InvalidLoginException {
+		String query = "SELECT username, password FROM " + UserDatabase.TABLE_NAME + " " + "WHERE username = '"
+				+ username + "' AND password ='" + password + "' ";
 		try {
-			Connection con = udb.getConnection();
+			Connection con = UserDatabase.getConnection();
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			con.close();
 			stmt.close();
-			if (rs.next()) {
-				return true;
+			if (!rs.next()) {
+				throw new InvalidLoginException("Invalid username or password");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		return false;
+		return true;
 	}
 }

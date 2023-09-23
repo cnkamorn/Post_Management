@@ -12,4 +12,10 @@ public class SuccessView {
 		alert.showAndWait();
 	}
 
+	public void alertUpdateUsernameSuccess() {
+		alert.setHeaderText("Successfully Changed Username");
+		alert.setContentText("Your username has been updated successfully!");
+		alert.showAndWait();
+	}
+
 }

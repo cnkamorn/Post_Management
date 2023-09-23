@@ -1,10 +1,8 @@
 package application;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import application.Exception.BlankInputException;
+import application.Exception.UsernameMismatchException;
+import application.Exception.UsernameRetypeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +57,9 @@ public class AccountDashboardController extends DashBoardController {
 	@FXML
 	private Pane usernameView;
 
-	private ErrorView alert = new ErrorView();
+	protected ErrorView alert = new ErrorView();
+
+	protected SuccessView alertSuccess = new SuccessView();
 
 	@FXML
 	public void backToHomePage(ActionEvent event) {
@@ -76,7 +76,6 @@ public class AccountDashboardController extends DashBoardController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(currentUserAccount.getFirstname());
 	}
 
 	@FXML
@@ -107,33 +106,27 @@ public class AccountDashboardController extends DashBoardController {
 
 	@FXML
 	public void changeUserName(ActionEvent event) {
-		String currentUsername = currentUsernameField.getText();
-		String newUsername = newUsernameField.getText();
-		String reTypeUsernameField = reTypeUsername.getText();
-		System.out.println(currentUsername);
-		System.out.println(currentUsernameField.getText());
-		if (!currentUsername.equals(currentUserAccount.getUsername())) {
+		ChangeUsername changeUnController = ChangeUsername.getInstance();
+		String currentUn = currentUsernameField.getText();
+		String newUn = newUsernameField.getText();
+		String reTypeUn = reTypeUsername.getText();
+		try {
+			changeUnController.checkBlankField(currentUn, newUn, reTypeUn);
+			changeUnController.checkMatchingCurrentUsername(currentUn, currentUserAccount.getUsername());
+			changeUnController.checkMatchingRetypeUsername(newUn, reTypeUn);
+			changeUnController.checkUsernameExist(currentUserAccount.getUsername(), newUn);
+			// pass all exception fields, change the username
+			currentUserAccount.setUsername(newUn);
+			// update database
+			UserDatabase udb = UserDatabase.getInstance();
+			udb.updateUsername(currentUn, newUn);
+			alertSuccess.alertUpdateUsernameSuccess();
+		} catch (UsernameMismatchException e) {
 			alert.alertInvalidUsername();
-		} else {
-			if (!newUsername.equals(reTypeUsernameField)) {
-				System.out.println("not matches");
-			} else {
-				String query = "SELECT username FROM User WHERE username='" + newUsername + "' AND username != '"
-						+ currentUsername + "';";
-				try {
-					Connection con = UserDatabase.getConnection();
-					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery(query);
-					con.close();
-					stmt.close();
-					if (rs.next()) {
-						alert.alertUsernameExists(); // found existing username
-					}
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
-				}
-			}
-
+		} catch (UsernameRetypeException e) {
+			alert.alertRetypeUsername();
+		} catch (BlankInputException e) {
+			alert.alertBlankInput();
 		}
 	}
 
