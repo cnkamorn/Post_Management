@@ -58,16 +58,15 @@ public class UserDatabase extends Database<Account> {
 	public boolean insertUser(Account user) {
 		String sql = "INSERT INTO " + TABLE_NAME + " (username, password, first_name, last_name,user_plan)"
 				+ " VALUES (?, ?, ?, ?, ?)";
-
 		try (Connection con = UserDatabase.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());
 			stmt.setString(3, user.getFirstname());
 			stmt.setString(4, user.getLastname());
 			stmt.setString(5, user.getUserPlan());
-
 			int result = stmt.executeUpdate();
-
+			con.close();
+			stmt.close();
 			if (result == 1) {
 				return true;
 			}
@@ -80,12 +79,13 @@ public class UserDatabase extends Database<Account> {
 		return false;
 	}
 
-	// query userID by username
 	public String queryUserId(String username) {
 		String userId = "";
 		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "SELECT user_id FROM " + TABLE_NAME + " WHERE username = '" + username + "';";
 			ResultSet rs = stmt.executeQuery(sql);
+			con.close();
+			stmt.close();
 			if (rs.next()) {
 				userId += rs.getString("user_id");
 			}
@@ -100,6 +100,8 @@ public class UserDatabase extends Database<Account> {
 			String sql = "UPDATE " + TABLE_NAME + " SET username = '" + newUsername + "' WHERE user_id = '"
 					+ queryUserId(currentUsername) + "';";
 			int result = stmt.executeUpdate(sql);
+			con.close();
+			stmt.close();
 			if (result == 1) {
 				return true;
 			}
@@ -109,9 +111,66 @@ public class UserDatabase extends Database<Account> {
 		return false;
 	}
 
-	@Override
-	public boolean insertRow(Account obj) {
-		// TODO Auto-generated method stub
+	public boolean updatePassword(String currentUsername, String newPassword) {
+		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "UPDATE " + TABLE_NAME + " SET password = '" + newPassword + "' WHERE user_id = '"
+					+ queryUserId(currentUsername) + "';";
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			stmt.close();
+			if (result == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updatePlan(String username) {
+		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "UPDATE " + TABLE_NAME + " SET user_plan = 'VIP' WHERE username = '" + username + "';";
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			stmt.close();
+			if (result == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateFirstName(String currentUsername, String firstName) {
+		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "UPDATE " + TABLE_NAME + " SET first_name = '" + firstName + "' WHERE username = '"
+					+ currentUsername + "';";
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			stmt.close();
+			if (result == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateLastName(String currentUsername, String lastName) {
+		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "UPDATE " + TABLE_NAME + " SET last_name = '" + lastName + "' WHERE username = '"
+					+ currentUsername + "';";
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			stmt.close();
+			if (result == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 }

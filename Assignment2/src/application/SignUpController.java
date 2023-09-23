@@ -30,7 +30,7 @@ public class SignUpController {
 	@FXML
 	private Button signup;
 
-	private ErrorView error = new ErrorView();
+	private ErrorView error = ErrorView.getInstance();
 	private UserDatabase userDb = UserDatabase.getInstance();
 	private Account userAccount = Account.getInstance();
 

@@ -18,16 +18,16 @@
    <left>
       <AnchorPane prefHeight="315.0" prefWidth="139.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="usernameBtn" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#switchPage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change username" textFill="WHITE" />
-            <Button fx:id="passwordBtn" layoutX="5.0" layoutY="108.0" mnemonicParsing="false" onAction="#switchPage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change password" textFill="WHITE" />
-            <Button fx:id="firstnameBtn" layoutX="5.0" layoutY="151.0" mnemonicParsing="false" onAction="#switchPage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change first name" textFill="WHITE" />
-            <Button fx:id="lastnameBtn" layoutX="5.0" layoutY="194.0" mnemonicParsing="false" onAction="#switchPage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change last name" textFill="WHITE" />
+            <Button fx:id="usernameBtn" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#changePage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change username" textFill="WHITE" />
+            <Button fx:id="passwordBtn" layoutX="5.0" layoutY="108.0" mnemonicParsing="false" onAction="#changePage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change password" textFill="WHITE" />
+            <Button fx:id="firstnameBtn" layoutX="5.0" layoutY="151.0" mnemonicParsing="false" onAction="#changePage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change first name" textFill="WHITE" />
+            <Button fx:id="lastnameBtn" layoutX="5.0" layoutY="194.0" mnemonicParsing="false" onAction="#changePage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Change last name" textFill="WHITE" />
             <Label layoutX="8.0" layoutY="30.0" text="ACCOUNT ACCESS">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button fx:id="back" layoutX="4.0" layoutY="277.0" mnemonicParsing="false" onAction="#backToHomePage" prefHeight="23.0" prefWidth="148.0" style="-fx-background-color: grey;" text="Back" textFill="WHITE" />
+            <Button fx:id="back" layoutX="4.0" layoutY="277.0" mnemonicParsing="false" onAction="#backToHomePage" prefHeight="27.0" prefWidth="141.0" style="-fx-background-color: grey;" text="Back" textFill="WHITE" />
          </children>
       </AnchorPane>
    </left>
@@ -40,10 +40,12 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="Menu">
                         <items>
-                          <MenuItem fx:id="usernameMenu" mnemonicParsing="false" onAction="#switchPage" text="Change Username" />
-                              <MenuItem fx:id="passwordMenu" mnemonicParsing="false" onAction="#switchPage" text="Change Password" />
-                              <MenuItem fx:id="firstNameMenu" mnemonicParsing="false" onAction="#switchPage" text="Change First name" />
-                              <MenuItem fx:id="lastNameMenu" mnemonicParsing="false" onAction="#switchPage" text="Change Last name" />
+                          <MenuItem fx:id="usernameMenu" mnemonicParsing="false" onAction="#changePage" text="Change Username" />
+                              <MenuItem fx:id="passwordMenu" mnemonicParsing="false" onAction="#changePage" text="Change Password" />
+                              <MenuItem fx:id="firstNameMenu" mnemonicParsing="false" onAction="#changePage" text="Change First name" />
+                              <MenuItem fx:id="lastNameMenu" mnemonicParsing="false" onAction="#changePage" text="Change Last name" />
+                              <MenuItem fx:id="upgradeToVipMenu" mnemonicParsing="false" onAction="#upgradeToVip" text="Upgrade to VIP" />
+                              <MenuItem fx:id="backMenu" mnemonicParsing="false" onAction="#backToHomePage" text="Back" />
                         </items>
                       </Menu>
                     </menus>
@@ -71,8 +73,8 @@
    <right>
       <AnchorPane prefHeight="326.0" prefWidth="136.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="11.0" layoutY="65.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="114.0" style="-fx-background-color: #ffc44e;" text="Upgrade to VIP" textFill="WHITE" />
-            <Label layoutX="14.0" layoutY="30.0" text="SUBSCRIPTION">
+            <Button fx:id="vipBtn" layoutX="11.0" layoutY="65.0" mnemonicParsing="false" onAction="#upgradeToVip" prefHeight="33.0" prefWidth="114.0" style="-fx-background-color: #ffc44e;" text="Upgrade to VIP" textFill="WHITE" />
+            <Label fx:id="subscriptionLabel" layoutX="14.0" layoutY="30.0" text="SUBSCRIPTION">
                <font>
                   <Font size="16.0" />
                </font>
@@ -99,12 +101,12 @@
             <Pane fx:id="passwordView" layoutX="19.0" layoutY="15.0" prefHeight="307.0" prefWidth="262.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
-                  <TextField layoutX="49.0" layoutY="77.0" promptText="Current password" />
+                  <TextField fx:id="currentPasswordField" layoutX="49.0" layoutY="77.0" promptText="Current password" />
                   <Text layoutX="50.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type your current password" />
                   <Text layoutX="50.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type your new password" />
-                  <TextField layoutX="50.0" layoutY="142.0" promptText="New password" />
+                  <TextField fx:id="newPasswordField" layoutX="50.0" layoutY="142.0" promptText="New password" />
                   <Text layoutX="50.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retype your new password" />
-                  <TextField layoutX="50.0" layoutY="211.0" promptText="Retype new password" />
+                  <TextField fx:id="reTypeNewPasswordField" layoutX="50.0" layoutY="211.0" promptText="Retype new password" />
                   <Text layoutX="100.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                   <Button layoutX="175.0" layoutY="265.0" mnemonicParsing="false" onAction="#changePassword" style="-fx-background-color: #00a400;;" text="Save" textFill="WHITE" />
                </children>
@@ -112,22 +114,22 @@
             <Pane fx:id="firstNameView" layoutX="19.0" layoutY="15.0" prefHeight="307.0" prefWidth="262.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
-                  <TextField layoutX="49.0" layoutY="77.0" promptText="new first name" />
+                  <TextField fx:id="firstNameField" layoutX="49.0" layoutY="77.0" promptText="new first name" />
                   <Text layoutX="50.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type your new first name" />
                   <Text layoutX="50.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retype your new first name" />
-                  <TextField layoutX="50.0" layoutY="142.0" promptText="Retype new first name" />
-                  <Button layoutX="175.0" layoutY="265.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Save" textFill="WHITE" />
+                  <TextField fx:id="reTypefirstNameField" layoutX="50.0" layoutY="142.0" promptText="Retype new first name" />
+                  <Button layoutX="175.0" layoutY="265.0" mnemonicParsing="false" onAction="#changeFirstName" style="-fx-background-color: #00a400;;" text="Save" textFill="WHITE" />
                   <Text layoutX="100.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name" />
                </children>
             </Pane>
             <Pane fx:id="lastNameView" layoutX="19.0" layoutY="15.0" prefHeight="307.0" prefWidth="262.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
-                  <TextField layoutX="49.0" layoutY="77.0" promptText="new last name" />
+                  <TextField fx:id="lastNameField" layoutX="49.0" layoutY="77.0" promptText="new last name" />
                   <Text layoutX="50.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type your new last name" />
                   <Text layoutX="50.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retype your new last name" />
-                  <TextField layoutX="50.0" layoutY="142.0" promptText="Retype new last name" />
-                  <Button layoutX="175.0" layoutY="265.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Save" textFill="WHITE" />
+                  <TextField fx:id="reTypeLastNameField" layoutX="50.0" layoutY="142.0" promptText="Retype new last name" />
+                  <Button layoutX="175.0" layoutY="265.0" mnemonicParsing="false" onAction="#changeLastName" style="-fx-background-color: #00a400;;" text="Save" textFill="WHITE" />
                   <Text layoutX="100.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name" />
                </children>
             </Pane>

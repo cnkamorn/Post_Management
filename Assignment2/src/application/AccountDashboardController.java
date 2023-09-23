@@ -1,29 +1,35 @@
 package application;
 
 import application.Exception.BlankInputException;
+import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
-import application.Exception.UsernameRetypeException;
+import application.Exception.WrongPasswordException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class AccountDashboardController extends DashBoardController {
 
 	@FXML
-	private MenuItem lastNameMenu;
-
-	@FXML
 	private Button back;
 
 	@FXML
+	private TextField currentPasswordField;
+
+	@FXML
 	private TextField currentUsernameField;
+
+	@FXML
+	private TextField firstNameField;
 
 	@FXML
 	private MenuItem firstNameMenu;
@@ -35,6 +41,15 @@ public class AccountDashboardController extends DashBoardController {
 	private Button firstnameBtn;
 
 	@FXML
+	private TextField lastNameField;
+
+	@FXML
+	private MenuItem lastNameMenu;
+
+	@FXML
+	private MenuItem backMenu;
+
+	@FXML
 	private Pane lastNameView;
 
 	@FXML
@@ -42,6 +57,9 @@ public class AccountDashboardController extends DashBoardController {
 
 	@FXML
 	private Pane logoView;
+
+	@FXML
+	private TextField newPasswordField;
 
 	@FXML
 	private TextField newUsernameField;
@@ -56,7 +74,22 @@ public class AccountDashboardController extends DashBoardController {
 	private Pane passwordView;
 
 	@FXML
+	private TextField reTypeLastNameField;
+
+	@FXML
+	private TextField reTypeNewPasswordField;
+
+	@FXML
 	private TextField reTypeUsername;
+
+	@FXML
+	private TextField reTypefirstNameField;
+
+	@FXML
+	private Label subscriptionLabel;
+
+	@FXML
+	private MenuItem upgradeToVipMenu;
 
 	@FXML
 	private Button usernameBtn;
@@ -70,7 +103,10 @@ public class AccountDashboardController extends DashBoardController {
 	@FXML
 	private Pane usernameView;
 
-	protected ErrorView alert = new ErrorView();
+	@FXML
+	private Button vipBtn;
+
+	ErrorView alert = ErrorView.getInstance();
 
 	protected SuccessView alertSuccess = new SuccessView();
 
@@ -92,7 +128,7 @@ public class AccountDashboardController extends DashBoardController {
 	}
 
 	@FXML
-	public void switchPage(ActionEvent event) {
+	public void changePage(ActionEvent event) {
 		logoView.setVisible(false);
 		if ((event.getSource() == usernameBtn) || (event.getSource() == usernameMenu)) {
 			usernameView.setVisible(true);
@@ -119,24 +155,26 @@ public class AccountDashboardController extends DashBoardController {
 
 	@FXML
 	public void changeUserName(ActionEvent event) {
-		ChangeUsername changeUnController = ChangeUsername.getInstance();
+		ChangeUsername changeUsernameController = ChangeUsername.getInstance();
 		String currentUn = currentUsernameField.getText();
 		String newUn = newUsernameField.getText();
 		String reTypeUn = reTypeUsername.getText();
 		try {
-			changeUnController.checkBlankField(currentUn, newUn, reTypeUn);
-			changeUnController.checkMatchingCurrentUsername(currentUn, currentUserAccount.getUsername());
-			changeUnController.checkMatchingRetypeUsername(newUn, reTypeUn);
-			changeUnController.checkUsernameExist(currentUserAccount.getUsername(), newUn);
-			// pass all exception fields, change the username
-			currentUserAccount.setUsername(newUn);
-			// update database
-			UserDatabase udb = UserDatabase.getInstance();
-			udb.updateUsername(currentUn, newUn);
-			alertSuccess.alertUpdateUsernameSuccess();
+			changeUsernameController.checkBlankField(currentUn, newUn, reTypeUn);
+			changeUsernameController.checkMatchingCurrentUsername(currentUn, currentUserAccount.getUsername());
+			changeUsernameController.checkMatchingRetypeUsername(newUn, reTypeUn);
+			changeUsernameController.checkUsernameExist(currentUserAccount.getUsername(), newUn);
+			if (!changeUsernameController.checkInputWhiteSpace(currentUn, newUn, reTypeUn)) {
+				currentUserAccount.setUsername(newUn);
+				// update database
+				UserDatabase udb = UserDatabase.getInstance();
+				udb.updateUsername(currentUn, newUn);
+				alertSuccess.alertUpdateUsernameSuccess();
+			}
+
 		} catch (UsernameMismatchException e) {
 			alert.alertInvalidUsername();
-		} catch (UsernameRetypeException e) {
+		} catch (RetypeException e) {
 			alert.alertRetypeUsername();
 		} catch (BlankInputException e) {
 			alert.alertBlankInput();
@@ -145,6 +183,92 @@ public class AccountDashboardController extends DashBoardController {
 
 	@FXML
 	public void changePassword(ActionEvent event) {
+		ChangePassword changePwController = ChangePassword.getInstance();
+		String currentPw = currentPasswordField.getText();
+		String newPw = newPasswordField.getText();
+		String reTypePw = reTypeNewPasswordField.getText();
+		try {
+			changePwController.checkBlankField(currentPw, newPw, reTypePw);
+			changePwController.checkCurrentPassword(currentPw);
+			changePwController.checkMatchingRetypePassword(newPw, reTypePw);
+			if (!changePwController.checkInputWhiteSpace(currentPw, newPw, reTypePw)) {
+				currentUserAccount.setPassword(newPw);
+				// update database
+				UserDatabase udb = UserDatabase.getInstance();
+				udb.updatePassword(currentUserAccount.getUsername(), newPw);
+				alertSuccess.alertUpdatePasswordSuccess();
+			}
+		} catch (BlankInputException e) {
+			alert.alertBlankInput();
+		} catch (WrongPasswordException e) {
+			alert.alertInvalidPassword();
+		} catch (RetypeException e) {
+			alert.alertRetypePassword();
+		}
+	}
 
+	@FXML
+	public void changeFirstName(ActionEvent event) {
+		ChangeFirstName changeFnController = ChangeFirstName.getInstance();
+		String newFirstName = firstNameField.getText();
+		String reTypeFirstName = reTypefirstNameField.getText();
+		try {
+			changeFnController.checkBlankField(newFirstName, reTypeFirstName);
+			changeFnController.checkMatchingRetypeFirstName(newFirstName, reTypeFirstName);
+			if (!changeFnController.checkInputWhiteSpace(newFirstName, reTypeFirstName)) {
+				currentUserAccount.setFirstname(newFirstName);
+				// update database
+				UserDatabase udb = UserDatabase.getInstance();
+				udb.updateFirstName(currentUserAccount.getUsername(), reTypeFirstName);
+				alertSuccess.alertUpdateFirstNameSuccess();
+			}
+		} catch (BlankInputException e) {
+			alert.alertBlankInput();
+		} catch (RetypeException e) {
+			alert.alertRetypeFirstname();
+		}
+	}
+
+	@FXML
+	public void changeLastName(ActionEvent event) {
+		ChangeLastName changeLnController = ChangeLastName.getInstance();
+		String newLastName = lastNameField.getText();
+		String reTypeLastName = reTypeLastNameField.getText();
+		try {
+			changeLnController.checkBlankField(newLastName, reTypeLastName);
+			changeLnController.checkMatchingRetypeLastName(newLastName, reTypeLastName);
+			if (!changeLnController.checkInputWhiteSpace(newLastName, reTypeLastName)) {
+				currentUserAccount.setLastname(newLastName);
+				// update database
+				UserDatabase udb = UserDatabase.getInstance();
+				udb.updateLastName(currentUserAccount.getUsername(), reTypeLastName);
+				alertSuccess.alertUpdateLastNameSuccess();
+			}
+		} catch (BlankInputException e) {
+			alert.alertBlankInput();
+		} catch (RetypeException e) {
+			alert.alertRetypeLastname();
+		}
+	}
+
+	@FXML
+	public void upgradeToVip(ActionEvent event) {
+		currentUserAccount.setUserPlan("VIP");
+		UserDatabase udb = UserDatabase.getInstance();
+		udb.updatePlan(currentUserAccount.getUsername());
+		alertSuccess.alertUpdatePlanSuccess();
+	}
+
+	public void initialize() {
+		hideVipButton();
+	}
+
+	public void hideVipButton() {
+		if (currentUserAccount.getUserPlan().equals("VIP")) {
+			subscriptionLabel.setText("   You account is VIP");
+			subscriptionLabel.setFont(new Font("Arial", 11));
+			upgradeToVipMenu.setVisible(false);
+			vipBtn.setVisible(false);
+		}
 	}
 }

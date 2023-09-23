@@ -50,7 +50,6 @@ public class DashBoardController extends LoginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("t");
 	}
 
 	@FXML
@@ -68,7 +67,6 @@ public class DashBoardController extends LoginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("x");
 	}
 
 	public void setUserDetails() {

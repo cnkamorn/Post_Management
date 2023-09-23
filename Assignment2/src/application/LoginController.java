@@ -22,7 +22,7 @@ public class LoginController {
 	@FXML
 	private TextField username;
 
-	private ErrorView error = new ErrorView();
+	ErrorView alert = ErrorView.getInstance();
 
 	public static String currentUserName;
 
@@ -38,11 +38,11 @@ public class LoginController {
 				currentUserName = userNameField;
 				dbc.userDashBoardControl(userNameField, passwordField);
 			} else if (userNameField.isBlank() || passwordField.isBlank()) {
-				error.alertBlankInput();
+				alert.alertBlankInput();
 			}
 		} catch (InvalidLoginException e) {
 			// TODO Auto-generated catch block
-			error.alertLogin();
+			alert.alertLogin();
 			System.out.println(e.getMessage());
 		}
 

@@ -5,6 +5,17 @@ import javafx.scene.control.Alert.AlertType;
 
 public class ErrorView {
 	private Alert alert = new Alert(AlertType.ERROR);;
+	private static ErrorView Instance;
+
+	private ErrorView() {
+	};
+
+	public static ErrorView getInstance() {
+		if (Instance == null) {
+			Instance = new ErrorView();
+		}
+		return Instance;
+	}
 
 	public void alertLogin() {
 		alert.setHeaderText("Invalid username or password");
@@ -36,9 +47,33 @@ public class ErrorView {
 		alert.showAndWait();
 	}
 
+	public void alertInvalidPassword() {
+		alert.setContentText("Error: Invalid Current Password");
+		alert.setHeaderText("Invalid Password");
+		alert.showAndWait();
+	}
+
+	public void alertRetypePassword() {
+		alert.setContentText("Error: Invalid Retype Password");
+		alert.setHeaderText("Invalid Retype Password");
+		alert.showAndWait();
+	}
+
 	public void alertRetypeUsername() {
 		alert.setContentText("Error: Invalid Retype Username");
 		alert.setHeaderText("Invalid Retype Username");
+		alert.showAndWait();
+	}
+
+	public void alertRetypeFirstname() {
+		alert.setContentText("Error: Invalid Retype First name");
+		alert.setHeaderText("Invalid Retype First name");
+		alert.showAndWait();
+	}
+
+	public void alertRetypeLastname() {
+		alert.setContentText("Error: Invalid Retype Last name");
+		alert.setHeaderText("Invalid Retype Last name");
 		alert.showAndWait();
 	}
 }

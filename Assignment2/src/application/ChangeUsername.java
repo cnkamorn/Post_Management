@@ -7,10 +7,11 @@ import java.sql.Statement;
 
 import application.Exception.BlankInputException;
 import application.Exception.UsernameMismatchException;
-import application.Exception.UsernameRetypeException;
+import application.Exception.RetypeException;
 
 public class ChangeUsername extends AccountDashboardController {
 
+	ErrorView alert = ErrorView.getInstance();
 	private static ChangeUsername Instance;
 
 	private ChangeUsername() {
@@ -31,9 +32,9 @@ public class ChangeUsername extends AccountDashboardController {
 	}
 
 	public void checkMatchingRetypeUsername(String newUsername, String reTypeUsernameField)
-			throws UsernameRetypeException {
+			throws RetypeException {
 		if (!newUsername.equals(reTypeUsernameField)) {
-			throw new UsernameRetypeException("New Username mismatches");
+			throw new RetypeException("New Username mismatches");
 		}
 	}
 
@@ -60,4 +61,28 @@ public class ChangeUsername extends AccountDashboardController {
 			throw new BlankInputException("Error : Blank Input found");
 		}
 	}
+
+	public boolean checkWhiteSpace(String text) {
+		for (int i = 0; i < text.length(); i++) {
+			if (Character.isWhitespace(text.charAt(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean checkInputWhiteSpace(String currentUsername, String newUsername, String reTypeNewUsername) {
+		if (checkWhiteSpace(currentUsername)) { // error if contains whitespace
+			alert.alertWhiteSpaceFound("current username");
+			return true;
+		} else if (checkWhiteSpace(newUsername)) {
+			alert.alertWhiteSpaceFound("new username");
+			return true;
+		} else if (checkWhiteSpace(reTypeNewUsername)) {
+			alert.alertWhiteSpaceFound("retype username");
+			return true;
+		}
+		return false;
+	}
+
 }
