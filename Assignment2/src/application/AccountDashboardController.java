@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -16,10 +17,16 @@ import javafx.stage.Stage;
 public class AccountDashboardController extends DashBoardController {
 
 	@FXML
+	private MenuItem lastNameMenu;
+
+	@FXML
 	private Button back;
 
 	@FXML
 	private TextField currentUsernameField;
+
+	@FXML
+	private MenuItem firstNameMenu;
 
 	@FXML
 	private Pane firstNameView;
@@ -43,6 +50,9 @@ public class AccountDashboardController extends DashBoardController {
 	private Button passwordBtn;
 
 	@FXML
+	private MenuItem passwordMenu;
+
+	@FXML
 	private Pane passwordView;
 
 	@FXML
@@ -50,6 +60,9 @@ public class AccountDashboardController extends DashBoardController {
 
 	@FXML
 	private Button usernameBtn;
+
+	@FXML
+	private MenuItem usernameMenu;
 
 	@FXML
 	private Button usernameSaveBtn;
@@ -81,22 +94,22 @@ public class AccountDashboardController extends DashBoardController {
 	@FXML
 	public void switchPage(ActionEvent event) {
 		logoView.setVisible(false);
-		if (event.getSource() == usernameBtn) {
+		if ((event.getSource() == usernameBtn) || (event.getSource() == usernameMenu)) {
 			usernameView.setVisible(true);
 			passwordView.setVisible(false);
 			firstNameView.setVisible(false);
 			lastNameView.setVisible(false);
-		} else if (event.getSource() == passwordBtn) {
+		} else if ((event.getSource() == passwordBtn) || (event.getSource() == passwordMenu)) {
 			usernameView.setVisible(false);
 			passwordView.setVisible(true);
 			firstNameView.setVisible(false);
 			lastNameView.setVisible(false);
-		} else if (event.getSource() == firstnameBtn) {
+		} else if ((event.getSource() == firstnameBtn) || (event.getSource() == firstNameMenu)) {
 			usernameView.setVisible(false);
 			passwordView.setVisible(false);
 			firstNameView.setVisible(true);
 			lastNameView.setVisible(false);
-		} else if (event.getSource() == lastnameBtn) {
+		} else if ((event.getSource() == lastnameBtn) || (event.getSource() == lastNameMenu)) {
 			usernameView.setVisible(false);
 			passwordView.setVisible(false);
 			firstNameView.setVisible(false);
@@ -130,4 +143,8 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	@FXML
+	public void changePassword(ActionEvent event) {
+
+	}
 }
