@@ -29,4 +29,10 @@ public class ErrorView {
 		alert.setHeaderText("White space Error");
 		alert.showAndWait();
 	}
+
+	public void alertInvalidUsername() {
+		alert.setContentText("Error: Invalid Username");
+		alert.setHeaderText("Invalid Username");
+		alert.showAndWait();
+	}
 }

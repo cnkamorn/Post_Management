@@ -20,7 +20,7 @@ public class DashBoardController extends LoginController {
 	Stage stage = new Stage();
 	Scene scene;
 	Parent root;
-	private Account currentUserAccount = Account.getInstance();
+	protected Account currentUserAccount = Account.getInstance();
 
 	@FXML
 	private Label welcome;
@@ -52,6 +52,23 @@ public class DashBoardController extends LoginController {
 		}
 	}
 
+	@FXML
+	public void accountSetting(ActionEvent event) {
+		editprofilebtn.getScene().getWindow().hide();
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("accountDashboard.fxml"));
+			Parent parentNode = loader.load();
+			Scene scene = new Scene(parentNode);
+			stage.setResizable(false);
+			stage.setScene(scene);
+			stage.setTitle("Data Anylytics Hub");
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void setUserDetails() {
 		String query = "SELECT username,password,first_name,last_name,user_plan FROM User WHERE username='"
 				+ currentUserName + "'";
@@ -71,7 +88,6 @@ public class DashBoardController extends LoginController {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println(currentUserAccount.getFirstname());
 	}
 
 	@FXML
@@ -93,10 +109,12 @@ public class DashBoardController extends LoginController {
 	}
 
 	public void setWelcomeText() {
-		welcome.setText(" Hello " + currentUserAccount.getFirstname().toUpperCase() + " "
-				+ currentUserAccount.getLastname().toUpperCase());
-		welcome.setFont(new Font("Arial", 24));
-		welcome.setStyle("-fx-text-fill: CORNFLOWERBLUE;");
+		if (this.editprofilebtn != null) {
+			welcome.setText(" Hello " + currentUserAccount.getFirstname().toUpperCase() + " "
+					+ currentUserAccount.getLastname().toUpperCase());
+			welcome.setFont(new Font("Arial", 24));
+			welcome.setStyle("-fx-text-fill: CORNFLOWERBLUE;");
+		}
 	}
 
 	public void initialize() {

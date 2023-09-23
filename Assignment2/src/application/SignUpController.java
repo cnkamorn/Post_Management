@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import application.Exception.BlankInputException;
+import application.Exception.UsernameExistException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -33,33 +35,33 @@ public class SignUpController {
 	private Account userAccount = Account.getInstance();
 
 	@FXML
-	private boolean signUp(ActionEvent event) {
+	private void signUp(ActionEvent event) {
 		userAccount.setUsername(username.getText());
 		userAccount.setPassword(password.getText());
 		userAccount.setFirstname(firstname.getText());
 		userAccount.setLastname(lastname.getText());
 		userAccount.setUserPlan("NML");
-		if (checkBlank()) { // check input blank?
+		try {
+			if (!checkBlank() && !checkInputWhiteSpace(username.getText(), password.getText(), firstname.getText(),
+					lastname.getText()) && !checkUsernameExists(username.getText())) { // check input blank?
+				userDb.insertUser(userAccount);
+				SuccessView successAlert = new SuccessView();
+				successAlert.alertRegisterSuccess();
+				signup.getScene().getWindow().hide();
+			}
+		} catch (BlankInputException e) {
 			error.alertBlankInput();
-			return false;
-		} else if (checkInputWhiteSpace(username.getText(), password.getText(), firstname.getText(),
-				lastname.getText())) { // check any white spaces?
-			return false;
-		} else if (checkUsernameExists(username.getText())) { // checkusernameexist?
+			System.out.println(e.getMessage());
+		} catch (UsernameExistException e) {
 			error.alertUsernameExists();
-			return false;
+			System.out.println(e.getMessage());
 		}
-		userDb.insertUser(userAccount);
-		SuccessView successAlert = new SuccessView();
-		successAlert.alertRegisterSuccess();
-		signup.getScene().getWindow().hide();
-		return true;
 	}
 
-	public boolean checkBlank() {
+	public boolean checkBlank() throws BlankInputException {
 		if (firstname.getText().isBlank() || lastname.getText().isBlank() || password.getText().isBlank()
 				|| username.getText().isBlank()) {
-			return true;
+			throw new BlankInputException("The input fields can't be empty");
 		}
 		return false;
 	}
@@ -90,7 +92,7 @@ public class SignUpController {
 		return false;
 	}
 
-	public boolean checkUsernameExists(String username) {
+	public boolean checkUsernameExists(String username) throws UsernameExistException {
 		String query = "SELECT username FROM User WHERE username='" + username + "'";
 		try {
 			Connection con = UserDatabase.getConnection();
@@ -99,7 +101,7 @@ public class SignUpController {
 			con.close();
 			stmt.close();
 			if (rs.next()) {
-				return true;
+				throw new UsernameExistException("Error : Username exists in the database");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
