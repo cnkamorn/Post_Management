@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -108,7 +111,7 @@ public class AccountDashboardController extends DashBoardController {
 
 	ErrorView alert = ErrorView.getInstance();
 
-	protected SuccessView alertSuccess = new SuccessView();
+	SuccessView alertSuccess = SuccessView.getInstance();
 
 	@FXML
 	public void backToHomePage(ActionEvent event) {
@@ -251,16 +254,24 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	// https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html
 	@FXML
 	public void upgradeToVip(ActionEvent event) {
-		currentUserAccount.setUserPlan("VIP");
-		UserDatabase udb = UserDatabase.getInstance();
-		udb.updatePlan(currentUserAccount.getUsername());
-		alertSuccess.alertUpdatePlanSuccess();
+		Alert alertConfirmation = new Alert(AlertType.CONFIRMATION,
+				"Would you like to subscribe to the application for a monthly fee of $0?");
+		alertConfirmation.showAndWait().filter(response -> response == ButtonType.OK)
+				.ifPresent(response -> setVipUser());
 	}
 
 	public void initialize() {
 		hideVipButton();
+	}
+
+	public void setVipUser() {
+		alertSuccess.alertUpdatePlanSuccess();
+		currentUserAccount.setUserPlan("VIP");
+		UserDatabase udb = UserDatabase.getInstance();
+		udb.updatePlan(currentUserAccount.getUsername());
 	}
 
 	public void hideVipButton() {

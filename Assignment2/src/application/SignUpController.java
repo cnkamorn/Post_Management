@@ -45,7 +45,7 @@ public class SignUpController {
 			if (!checkBlank() && !checkInputWhiteSpace(username.getText(), password.getText(), firstname.getText(),
 					lastname.getText()) && !checkUsernameExists(username.getText())) { // check input blank?
 				userDb.insertUser(userAccount);
-				SuccessView successAlert = new SuccessView();
+				SuccessView successAlert = SuccessView.getInstance();
 				successAlert.alertRegisterSuccess();
 				signup.getScene().getWindow().hide();
 			}

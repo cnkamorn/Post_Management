@@ -6,6 +6,18 @@ import javafx.scene.control.Alert.AlertType;
 public class SuccessView {
 	private Alert alert = new Alert(AlertType.INFORMATION);;
 
+	private static SuccessView Instance;
+
+	private SuccessView() {
+	};
+
+	public static SuccessView getInstance() {
+		if (Instance == null) {
+			Instance = new SuccessView();
+		}
+		return Instance;
+	}
+
 	public void alertRegisterSuccess() {
 		alert.setHeaderText("Successfully Sign-Up");
 		alert.setContentText("Your account has been created successfully!");
@@ -26,7 +38,7 @@ public class SuccessView {
 
 	public void alertUpdatePlanSuccess() {
 		alert.setHeaderText("Successfully Upgraded to VIP");
-		alert.setContentText("Your plan has been upgraded successfully!");
+		alert.setContentText("Please log out and log in again to access VIP functionalities.");
 		alert.showAndWait();
 	}
 
