@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PostDashboardController">
+   <left>
+      <AnchorPane prefHeight="386.0" prefWidth="159.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="addPostBtn" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#changePage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Add Post" textFill="WHITE" />
+            <Button fx:id="removePostBtn" layoutX="5.0" layoutY="108.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Remove Post" textFill="WHITE" />
+            <Button fx:id="retrievePostBtn" layoutX="5.0" layoutY="151.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Retrieve Post" textFill="WHITE" />
+            <Button fx:id="retrieveMultiPostsBtn" layoutX="5.0" layoutY="194.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Retrieve Post By N" textFill="WHITE" />
+            <Label layoutX="30.0" layoutY="30.0" text="FEATURES">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="back" layoutX="4.0" layoutY="343.0" mnemonicParsing="false" onAction="#backToHomePage" prefHeight="27.0" prefWidth="141.0" style="-fx-background-color: grey;" text="Back" textFill="WHITE" />
+            <Button fx:id="exportPostBtn" layoutX="5.0" layoutY="238.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Export Post " textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </left>
+   <top>
+      <AnchorPane prefHeight="60.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="117.0" prefWidth="800.0">
+               <children>
+                  <MenuBar layoutX="-1.0" layoutY="1.0" prefHeight="28.0" prefWidth="801.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="Menu">
+                        <items>
+                          <MenuItem fx:id="addPostMenu" mnemonicParsing="false" text="Add Post" />
+                              <MenuItem fx:id="removePostMenu" mnemonicParsing="false" text="Remove Post" />
+                              <MenuItem fx:id="retrievePostMenu" mnemonicParsing="false" onAction="#changePage" text="Retrieve Post" />
+                              <MenuItem fx:id="retrieveMultiPostMenu" mnemonicParsing="false" onAction="#changePage" text="Retrieve Post By N" />
+                              <MenuItem fx:id="exportPostMenu" mnemonicParsing="false" onAction="#changePage" text="Export Post" />
+                              <MenuItem fx:id="backMenu" mnemonicParsing="false" onAction="#backToHomePage" text="Back" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                  <ImageView fitHeight="71.0" fitWidth="75.0" layoutX="35.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../post.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="294.0" layoutY="57.0" text="POST MANAGEMENT">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="71.0" fitWidth="75.0" layoutX="700.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../vip.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </top>
+   <right>
+      <AnchorPane prefHeight="326.0" prefWidth="136.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="7.0" layoutY="65.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="124.0" style="-fx-background-color: #ffc44e;" text="Data Visualization" textFill="WHITE" />
+            <Label fx:id="subscriptionLabel" layoutX="18.0" layoutY="30.0" text="VIP FEATURES">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="7.0" layoutY="107.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="124.0" style="-fx-background-color: #ffc44e;" text="Bulk Import" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </right>
+   <center>
+      <AnchorPane prefHeight="337.0" prefWidth="317.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane fx:id="addPostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+               <children>
+                  <Label layoutX="64.0" layoutY="41.0" />
+                  <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
+                  <Text layoutX="77.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
+                  <Button fx:id="addPostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a social media post to the collection" wrappingWidth="352.6326904296875">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Text>
+                  <TextField layoutX="188.0" layoutY="103.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Content" />
+                  <Text layoutX="77.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Content:" />
+                  <TextField layoutX="188.0" layoutY="137.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Likes" />
+                  <Text layoutX="77.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Likes:" />
+                  <TextField layoutX="188.0" layoutY="169.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Shares" />
+                  <Text layoutX="77.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Shares:" />
+                  <TextField layoutX="188.0" layoutY="203.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Date-Time" />
+                  <Text layoutX="77.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Date-Time:" />
+               </children>
+            </Pane>
+            <Pane fx:id="removePostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+               <children>
+                  <Label layoutX="64.0" layoutY="41.0" />
+                  <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
+                  <Text layoutX="77.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
+                  <Button fx:id="removePostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove a social media post to the collection" wrappingWidth="352.6326904296875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="retrievePostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+               <children>
+                  <Label layoutX="64.0" layoutY="41.0" />
+                  <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
+                  <Text layoutX="77.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
+                  <Button fx:id="retrievePostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retrieve a social media post from the collection" wrappingWidth="352.6326904296875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="retrieveMultiPostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+               <children>
+                  <Label layoutX="64.0" layoutY="41.0" />
+                  <TextField layoutX="193.0" layoutY="91.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
+                  <Text layoutX="82.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
+                  <Button fx:id="retrieveMultiPostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retrieve social media posts from the collection" wrappingWidth="352.6326904296875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="85.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please input the number of posts you wish to retrieve. The system will display them in descending order of likes" textAlignment="CENTER" wrappingWidth="338.65386962890625">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <ImageView fx:id="postLogoView" fitHeight="239.0" fitWidth="287.0" layoutX="124.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../social.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

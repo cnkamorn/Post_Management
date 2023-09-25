@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class UserDatabase extends Database<Account> {
+public class UserDatabase {
 	private static final String DB_URL = "jdbc:sqlite:data.db"; // driver
 	final static String TABLE_NAME = "User";
 //singleton
@@ -24,8 +24,7 @@ public class UserDatabase extends Database<Account> {
 	}
 
 	// run this to create a table
-	@Override
-	protected void createTableUser() {
+	public static void createTableUser() {
 		try (Connection con = getConnection(); Statement stmt = con.createStatement();) {
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
 					+ "(user_id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(20) NOT NULL,"
@@ -40,19 +39,11 @@ public class UserDatabase extends Database<Account> {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		/*
-		 * Connection v = getConnection(); Statement d = v.createStatement();
-		 * d.executeUpdate("DROP TABLE User");
-		 */
 	}
 	// to create table post
 
-	static Connection getConnection() throws SQLException {
+	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(DB_URL); // connection
-	}
-
-	public boolean deleteRow() {
-		return false;
 	}
 
 	public boolean insertUser(Account user) {

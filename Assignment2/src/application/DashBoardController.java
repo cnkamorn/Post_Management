@@ -69,6 +69,23 @@ public class DashBoardController extends LoginController {
 		}
 	}
 
+	@FXML
+	public void postManagement(ActionEvent event) {
+		editprofilebtn.getScene().getWindow().hide();
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("postDashboard.fxml"));
+			Parent parentNode = loader.load();
+			Scene scene = new Scene(parentNode);
+			stage.setResizable(false);
+			stage.setScene(scene);
+			stage.setTitle("Data Anylytics Hub");
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void setUserDetails() {
 		String query = "SELECT username,password,first_name,last_name,user_plan FROM User WHERE username='"
 				+ currentUserName + "'";
