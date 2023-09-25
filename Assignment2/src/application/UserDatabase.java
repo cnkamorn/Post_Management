@@ -75,11 +75,11 @@ public class UserDatabase {
 		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "SELECT user_id FROM " + TABLE_NAME + " WHERE username = '" + username + "';";
 			ResultSet rs = stmt.executeQuery(sql);
-			con.close();
-			stmt.close();
 			if (rs.next()) {
 				userId += rs.getString("user_id");
 			}
+			con.close();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,12 +1,18 @@
 package application;
 
+import application.Exception.BlankInputException;
+import application.Exception.InvalidDateTimeFormatException;
+import application.Exception.NegativeNumberException;
+import application.Exception.PostIdExistsException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -35,10 +41,25 @@ public class PostDashboardController extends DashBoardController {
 	private Button exportPostBtn;
 
 	@FXML
+	private MenuItem exportPostMenu;
+
+	@FXML
+	private TextField postContentField;
+
+	@FXML
+	private TextField postDateTimeField;
+
+	@FXML
+	private TextField postIdField;
+
+	@FXML
+	private TextField postLikesField;
+
+	@FXML
 	private ImageView postLogoView;
 
 	@FXML
-	private MenuItem exportPostMenu;
+	private TextField postSharesField;
 
 	@FXML
 	private Button removePostBtn;
@@ -77,6 +98,15 @@ public class PostDashboardController extends DashBoardController {
 	private Pane retrievePostView;
 
 	@FXML
+	private Label subscriptionLabel;
+
+	private UserDatabase userDb = UserDatabase.getInstance();
+	private Post post = Post.getInstance();
+	private Input inputValidate = Input.getInstance();
+	private PostDatabase postDb = PostDatabase.getInstance();
+	private SuccessView alertSuccess = SuccessView.getInstance();
+
+	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();
 		try {
@@ -101,6 +131,50 @@ public class PostDashboardController extends DashBoardController {
 			removePostView.setVisible(false);
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(false);
+		}
+	}
+
+	@FXML
+	public void addPost(ActionEvent event) {
+		// get texts and store in the variables
+		String postId = postIdField.getText();
+		String postContent = postContentField.getText();
+		String postLikes = postLikesField.getText();
+		String postShares = postSharesField.getText();
+		String postDateTime = postDateTimeField.getText();
+		AddPostValidation addPostCheck = AddPostValidation.getInstance();
+		try {
+			// check the blank input
+			addPostCheck.checkBlankField(postId, postContent, postLikes, postShares, postDateTime);
+			// check if the postID is exist
+			postDb.checkPostIdExist(postId);
+			// check if the input fields are in the correct formats
+			inputValidate.acceptIntegerInput(postId);
+			inputValidate.acceptIntegerInput(postLikes);
+			inputValidate.acceptIntegerInput(postShares);
+			inputValidate.acceptDateTime(postDateTime);
+			if (!addPostCheck.checkInputWhiteSpace(postId, postLikes, postShares)) {
+				// create a post object then add it to the database
+				post.setPostID(Integer.parseInt(postId));
+				post.setLikes(Integer.parseInt(postLikes));
+				post.setShares(Integer.parseInt(postShares));
+				post.setPostAuthorID(userDb.queryUserId(currentUserAccount.getUsername()));
+				post.setPostContent(postContent);
+				post.setPostDateTime(postDateTime);
+				postDb.insertPost(post);
+				alertSuccess.alertAddedPostSuccess();
+			}
+		} catch (BlankInputException e) {
+			alert.alertBlankInput();
+		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
+			alert.alertNumberFormat();
+		} catch (NegativeNumberException e) {
+			alert.alertNegativeNumber();
+		} catch (InvalidDateTimeFormatException e) {
+			alert.alertInvalidDateTimeFormat();
+		} catch (PostIdExistsException e) {
+			alert.alertPostIdExist();
 		}
 	}
 }

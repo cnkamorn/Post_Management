@@ -16,7 +16,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PostDashboardController">
    <left>
-      <AnchorPane prefHeight="386.0" prefWidth="159.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="383.0" prefWidth="178.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="addPostBtn" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#changePage" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Add Post" textFill="WHITE" />
             <Button fx:id="removePostBtn" layoutX="5.0" layoutY="108.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #6495ED;" text="Remove Post" textFill="WHITE" />
@@ -56,7 +56,7 @@
                         <Image url="@../post.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="294.0" layoutY="57.0" text="POST MANAGEMENT">
+                  <Label layoutX="289.0" layoutY="57.0" text="POST MANAGEMENT">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -87,27 +87,28 @@
    <center>
       <AnchorPane prefHeight="337.0" prefWidth="317.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="addPostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+            <Pane fx:id="addPostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="506.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
-                  <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
+                  <TextField fx:id="postIdField" layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
                   <Text layoutX="77.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
-                  <Button fx:id="addPostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Button fx:id="addPostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" onAction="#addPost" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
                   <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a social media post to the collection" wrappingWidth="352.6326904296875">
                      <font>
                         <Font size="18.0" />
                      </font></Text>
-                  <TextField layoutX="188.0" layoutY="103.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Content" />
+                  <TextField fx:id="postContentField" layoutX="188.0" layoutY="103.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Content" />
                   <Text layoutX="77.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Content:" />
-                  <TextField layoutX="188.0" layoutY="137.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Likes" />
+                  <TextField fx:id="postLikesField" layoutX="188.0" layoutY="137.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Likes" />
                   <Text layoutX="77.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Likes:" />
-                  <TextField layoutX="188.0" layoutY="169.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Shares" />
+                  <TextField fx:id="postSharesField" layoutX="188.0" layoutY="169.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Shares" />
                   <Text layoutX="77.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Shares:" />
-                  <TextField layoutX="188.0" layoutY="203.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Date-Time" />
+                  <TextField fx:id="postDateTimeField" layoutX="188.0" layoutY="203.0" prefHeight="26.0" prefWidth="174.0" promptText="Post Date-Time" />
                   <Text layoutX="77.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Date-Time:" />
+                  <Label layoutX="191.0" layoutY="232.0" text="DD/MM/YYYY HH:MM" />
                </children>
             </Pane>
-            <Pane fx:id="removePostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+            <Pane fx:id="removePostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
                   <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
@@ -120,7 +121,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="retrievePostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+            <Pane fx:id="retrievePostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
                   <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
@@ -133,7 +134,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="retrieveMultiPostView" layoutX="19.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+            <Pane fx:id="retrieveMultiPostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
                   <TextField layoutX="193.0" layoutY="91.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
@@ -151,7 +152,7 @@
                   </Text>
                </children>
             </Pane>
-            <ImageView fx:id="postLogoView" fitHeight="239.0" fitWidth="287.0" layoutX="124.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="postLogoView" fitHeight="239.0" fitWidth="287.0" layoutX="110.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../social.png" />
                </image>

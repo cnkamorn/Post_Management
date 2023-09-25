@@ -6,6 +6,8 @@ import javafx.scene.control.Alert.AlertType;
 public class ErrorView {
 	private Alert alert = new Alert(AlertType.ERROR);;
 	private static ErrorView Instance;
+	private String header;
+	private String content;
 
 	private ErrorView() {
 	};
@@ -76,4 +78,37 @@ public class ErrorView {
 		alert.setHeaderText("Invalid Retype Last name");
 		alert.showAndWait();
 	}
+
+	// ref
+	// https://java.hotexamples.com/examples/javafx.scene.control/Alert/getDialogPane/java-alert-getdialogpane-method-examples.html
+	public void alertNumberFormat() {
+		alert.getDialogPane().setPrefSize(300, 280);
+		alert.setContentText(
+				"Error: Invalid Input, please input only numbers for the post ID, likes and shares fields");
+		alert.setHeaderText("Invalid Number Input");
+		alert.showAndWait();
+	}
+
+	public void alertNegativeNumber() {
+		alert.setContentText(
+				"Error: Invalid Input, please input only positive numbers for the likes and shares fields");
+		alert.setHeaderText("Invalid Negative Number Input");
+		alert.showAndWait();
+	}
+
+	// ref
+	// https://java.hotexamples.com/examples/javafx.scene.control/Alert/getDialogPane/java-alert-getdialogpane-method-examples.html
+	public void alertInvalidDateTimeFormat() {
+		alert.getDialogPane().setPrefSize(300, 280);
+		alert.setContentText("Error: Invalid Input, please input date and time in the DD/MM/YYYY HH:MM format");
+		alert.setHeaderText("Invalid Date-Time Input");
+		alert.showAndWait();
+	}
+
+	public void alertPostIdExist() {
+		alert.setContentText("Error: The post ID is already exists in the database");
+		alert.setHeaderText("Invalid Post ID Input");
+		alert.showAndWait();
+	}
+
 }

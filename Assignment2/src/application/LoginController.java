@@ -45,11 +45,6 @@ public class LoginController {
 			alert.alertLogin();
 			System.out.println(e.getMessage());
 		}
-
-		// if not vip
-
-		// if vip
-		// dashboard.showViewVip();
 	}
 
 	@FXML

@@ -3,8 +3,11 @@ package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import application.Exception.PostIdExistsException;
 
 public class PostDatabase {
 
@@ -41,7 +44,7 @@ public class PostDatabase {
 	}
 
 	// SELECT a.* FROM post AS b INNER JOIN user as A ON (b.user_id=a.user_id);
-	public static boolean insertPost(Post post) {
+	public boolean insertPost(Post post) {
 		String sql = "INSERT INTO " + TABLE_NAME
 				+ " (post_id, post_content, post_likes, post_shares,post_date_time,user_id)"
 				+ " VALUES (?, ?, ?, ?, ?,?)";
@@ -53,8 +56,6 @@ public class PostDatabase {
 			stmt.setString(5, post.getPostDateTime());
 			stmt.setString(6, post.getPostAuthorID());
 			int result = stmt.executeUpdate();
-			con.close();
-			stmt.close();
 			if (result == 1) {
 				return true;
 			}
@@ -65,5 +66,19 @@ public class PostDatabase {
 			e.getMessage();
 		}
 		return false;
+	}
+
+	public void checkPostIdExist(String postId) throws PostIdExistsException {
+		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "SELECT post_id FROM " + TABLE_NAME + " WHERE post_id = '" + postId + "';";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				throw new PostIdExistsException("Post is already exists");
+			}
+			con.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

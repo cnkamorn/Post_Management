@@ -127,7 +127,7 @@ public class Post {
 	/**
 	 * Accessor method to get the post's date and time of the post object
 	 * 
-	 * @return LocalDateTime the post's date and time object
+	 * @return String the post's date and time object
 	 */
 
 	public String getPostDateTime() {

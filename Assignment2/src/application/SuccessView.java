@@ -53,4 +53,10 @@ public class SuccessView {
 		alert.setContentText("Your last name has been updated successfully!");
 		alert.showAndWait();
 	}
+
+	public void alertAddedPostSuccess() {
+		alert.setHeaderText("Successfully Added the post to the collection");
+		alert.setContentText("Your post has been added to the collection successfully!");
+		alert.showAndWait();
+	}
 }

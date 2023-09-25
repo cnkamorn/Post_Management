@@ -33,19 +33,19 @@ public class SignUpController {
 	private ErrorView error = ErrorView.getInstance();
 	private UserDatabase userDb = UserDatabase.getInstance();
 	private Account userAccount = Account.getInstance();
+	private SuccessView successAlert = SuccessView.getInstance();
 
 	@FXML
 	private void signUp(ActionEvent event) {
-		userAccount.setUsername(username.getText());
-		userAccount.setPassword(password.getText());
-		userAccount.setFirstname(firstname.getText());
-		userAccount.setLastname(lastname.getText());
-		userAccount.setUserPlan("NML");
 		try {
 			if (!checkBlank() && !checkInputWhiteSpace(username.getText(), password.getText(), firstname.getText(),
-					lastname.getText()) && !checkUsernameExists(username.getText())) { // check input blank?
+					lastname.getText()) && !checkUsernameExists(username.getText())) {
+				userAccount.setUsername(username.getText());
+				userAccount.setPassword(password.getText());
+				userAccount.setFirstname(firstname.getText());
+				userAccount.setLastname(lastname.getText());
+				userAccount.setUserPlan("NML");
 				userDb.insertUser(userAccount);
-				SuccessView successAlert = SuccessView.getInstance();
 				successAlert.alertRegisterSuccess();
 				signup.getScene().getWindow().hide();
 			}
