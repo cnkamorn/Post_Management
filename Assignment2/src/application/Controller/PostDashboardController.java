@@ -225,6 +225,7 @@ public class PostDashboardController extends DashBoardController implements Init
 			sp.checkBlankField(userInputSearchID);
 			Post post = sp.retrievePost(userInputSearchID);
 		} catch (BlankInputException e) {
+			// to create alert
 			alertError.alertBlankInput();
 		} catch (PostNotFoundException e) {
 			// TODO Auto-generated catch block
