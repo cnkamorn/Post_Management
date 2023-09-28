@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PostDashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller.PostDashboardController">
    <left>
       <AnchorPane prefHeight="383.0" prefWidth="178.0" BorderPane.alignment="CENTER">
          <children>
@@ -121,17 +123,27 @@
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="retrievePostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+            <Pane fx:id="retrievePostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
                   <TextField layoutX="188.0" layoutY="69.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
                   <Text layoutX="77.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
-                  <Button fx:id="retrievePostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Button fx:id="retrievePostSaveBtn" layoutX="370.0" layoutY="286.0" mnemonicParsing="false" onAction="#searchPost" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
                   <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retrieve a social media post from the collection" wrappingWidth="352.6326904296875">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
+                  <TableView fx:id="postTable" layoutX="7.0" layoutY="109.0" prefHeight="159.0" prefWidth="477.0">
+                    <columns>
+                      <TableColumn fx:id="postIDColumn" prefWidth="75.0" text="Post ID" />
+                      <TableColumn fx:id="postContentColumn" prefWidth="150.0" text="Content" />
+                        <TableColumn fx:id="postLikeColumn" minWidth="0.0" prefWidth="46.0" text="Like" />
+                        <TableColumn fx:id="postShareColumn" prefWidth="46.0" text="Share" />
+                        <TableColumn fx:id="postDateColumn" prefWidth="84.0" text="Date" />
+                        <TableColumn prefWidth="75.0" text="Author ID" />
+                    </columns>
+                  </TableView>
                </children>
             </Pane>
             <Pane fx:id="retrieveMultiPostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
@@ -152,7 +164,7 @@
                   </Text>
                </children>
             </Pane>
-            <ImageView fx:id="postLogoView" fitHeight="239.0" fitWidth="287.0" layoutX="110.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="postLogoView" fitHeight="239.0" fitWidth="287.0" layoutX="110.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../social.png" />
                </image>
