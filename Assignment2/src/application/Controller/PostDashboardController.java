@@ -1,6 +1,8 @@
 package application.Controller;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import application.Exception.BlankInputException;
@@ -51,13 +53,16 @@ public class PostDashboardController extends DashBoardController implements Init
 	private MenuItem backMenu;
 
 	@FXML
-	private Button exportPostBtn;
+	private Button exportPostbutton;
 
 	@FXML
 	private MenuItem exportPostMenu;
 
 	@FXML
-	private TableColumn<Post, String> postAuthorIDcolumn;
+	private Pane exportPostView;
+
+	@FXML
+	private TableColumn<Post, String> postAuthorIDColumn;
 
 	@FXML
 	private TableColumn<Post, String> postContentColumn;
@@ -75,6 +80,9 @@ public class PostDashboardController extends DashBoardController implements Init
 	private TableColumn<Post, Integer> postIDColumn;
 
 	@FXML
+	private TextField postIDExportField;
+
+	@FXML
 	private TextField postIdField;
 
 	@FXML
@@ -87,6 +95,9 @@ public class PostDashboardController extends DashBoardController implements Init
 	private ImageView postLogoView;
 
 	@FXML
+	private TextField postSearchField;
+
+	@FXML
 	private TableColumn<Post, Integer> postShareColumn;
 
 	@FXML
@@ -97,6 +108,9 @@ public class PostDashboardController extends DashBoardController implements Init
 
 	@FXML
 	private Button removePostBtn;
+
+	@FXML
+	private TextField removePostIDfield;
 
 	@FXML
 	private MenuItem removePostMenu;
@@ -132,9 +146,6 @@ public class PostDashboardController extends DashBoardController implements Init
 	private Pane retrievePostView;
 
 	@FXML
-	private TextField postSearchField;
-
-	@FXML
 	private Label subscriptionLabel;
 
 	private UserDatabase userDb = UserDatabase.getInstance();
@@ -143,6 +154,8 @@ public class PostDashboardController extends DashBoardController implements Init
 	private PostDatabase postDb = PostDatabase.getInstance();
 	private SuccessAlert alertSuccess = SuccessAlert.getInstance();
 	private ErrorAlert alertError = ErrorAlert.getInstance();
+	private ArrayList<String> currentSearchPost = new ArrayList();
+	private ExportPost exportPostController = ExportPost.getInstance();
 
 	@FXML
 	public void backToHomePage(ActionEvent event) {
@@ -169,6 +182,42 @@ public class PostDashboardController extends DashBoardController implements Init
 			removePostView.setVisible(false);
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(false);
+			exportPostView.setVisible(false);
+		} else if ((event.getSource() == retrievePostBtn) || (event.getSource() == retrievePostMenu)) {
+			addPostView.setVisible(false);
+			removePostView.setVisible(false);
+			retrieveMultiPostView.setVisible(false);
+			retrievePostView.setVisible(true);
+			exportPostView.setVisible(false);
+		} else if ((event.getSource() == removePostBtn) || (event.getSource() == removePostMenu)) {
+			addPostView.setVisible(false);
+			removePostView.setVisible(true);
+			retrieveMultiPostView.setVisible(false);
+			retrievePostView.setVisible(false);
+			exportPostView.setVisible(false);
+		} else if ((event.getSource() == exportPostbutton) || (event.getSource() == exportPostMenu)) {
+			System.out.println("x");
+			addPostView.setVisible(false);
+			removePostView.setVisible(false);
+			retrieveMultiPostView.setVisible(false);
+			retrievePostView.setVisible(false);
+			exportPostView.setVisible(true);
+		}
+
+	}
+
+	@FXML
+	public void removePost(ActionEvent event) {
+		String postId = removePostIDfield.getText();
+		RemovePost remove = RemovePost.getInstance();
+		try {
+			remove.checkBlankField(postId);
+			remove.removePost(postId);
+			alertSuccess.alertRemovePostSuccess();
+		} catch (BlankInputException e) {
+			alert.alertBlankInput();
+		} catch (PostNotFoundException e) {
+			alertError.alertPostNotFound();
 		}
 	}
 
@@ -219,21 +268,55 @@ public class PostDashboardController extends DashBoardController implements Init
 	// ref https://www.youtube.com/watch?v=qQcr_JMxWRw&list=LL&index=1&t=110s
 	@FXML
 	public void searchPost(ActionEvent event) {
-		SearchPost sp = SearchPost.getInstance();
 		String userInputSearchID = postSearchField.getText();
+		SearchPost searchPostController = SearchPost.getInstance();
 		try {
-			sp.checkBlankField(userInputSearchID);
-			Post post = sp.retrievePost(userInputSearchID);
+			searchPostController.checkBlankField(userInputSearchID);
+			Post post = searchPostController.retrievePost(userInputSearchID);
+			ObservableList<Post> posts = postTable.getItems();
+			// prevent duplicate posts
+			if (!currentSearchPost.contains(userInputSearchID)) {
+				currentSearchPost.add(userInputSearchID);
+				posts.add(post);
+				postTable.setItems(posts);
+			}
 		} catch (BlankInputException e) {
-			// to create alert
 			alertError.alertBlankInput();
 		} catch (PostNotFoundException e) {
-			// TODO Auto-generated catch block
+			alertError.alertPostNotFound();
+		}
+	}
+
+	// ref https://www.youtube.com/watch?v=ZGFjaZLwqns
+	@FXML
+	public void exportPost(ActionEvent event) {
+		String inputPost = postIDExportField.getText();
+		SearchPost searchPostController = SearchPost.getInstance();
+		try {
+			exportPostController.checkBlankField(inputPost);
+			Post post = searchPostController.retrievePost(inputPost); // get a post from postID
+			ExportPost exportPost = ExportPost.getInstance();
+			exportPost.exportFile(post);
+			/*
+			 * Integer postID = post.getPostID(); String postContent =
+			 * post.getPostContent(); Integer postLikes = post.getLikes(); Integer
+			 * postShares = post.getShares(); String postDateTime = post.getPostDateTime();
+			 * String postAuthorID = post.getPostAuthorID(); FileChooser chooser = new
+			 * FileChooser(); chooser.setInitialFileName("post.csv"); // set the file name
+			 * File file = chooser.showSaveDialog(new Stage()); // show a save file window
+			 * if (file != null) { PrintWriter writer = new PrintWriter(file);
+			 * writer.write(String.format("%d,%s,%d,%d,%s,%s", postID, postContent,
+			 * postLikes, postShares, postDateTime, postAuthorID)); writer.close();
+			 * alertSuccess.alertExportPostSuccess(); }
+			 */
+			alertSuccess.alertExportPostSuccess();
+		} catch (BlankInputException e) {
+			alertError.alertBlankInput();
+		} catch (PostNotFoundException e) {
+			alertError.alertPostNotFound();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		ObservableList<Post> posts = postTable.getItems();
-		posts.add(post);
-		postTable.setItems(posts);
 	}
 
 	// ref https://www.youtube.com/watch?v=qQcr_JMxWRw&list=LL&index=1&t=110s
@@ -241,16 +324,11 @@ public class PostDashboardController extends DashBoardController implements Init
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		postIDColumn.setCellValueFactory(new PropertyValueFactory<Post, Integer>("postID"));
-		// postContentColumn.setCellValueFactory(new PropertyValueFactory<Post,
-		// String>("postContent"));
-		// postLikeColumn.setCellValueFactory(new PropertyValueFactory<Post,
-		// Integer>("likes"));
-		// postShareColumn.setCellValueFactory(new PropertyValueFactory<Post,
-		// Integer>("shares"));
-		// postDateColumn.setCellValueFactory(new PropertyValueFactory<Post,
-		// String>("postDateTime"));
-		// postAuthorIDcolumn.setCellValueFactory(new PropertyValueFactory<Post,
-		// String>("postAuthorID"));
+		postContentColumn.setCellValueFactory(new PropertyValueFactory<Post, String>("postContent"));
+		postLikeColumn.setCellValueFactory(new PropertyValueFactory<Post, Integer>("likes"));
+		postShareColumn.setCellValueFactory(new PropertyValueFactory<Post, Integer>("shares"));
+		postDateColumn.setCellValueFactory(new PropertyValueFactory<Post, String>("postDateTime"));
+		postAuthorIDColumn.setCellValueFactory(new PropertyValueFactory<Post, String>("postAuthorID"));
 
 	}
 

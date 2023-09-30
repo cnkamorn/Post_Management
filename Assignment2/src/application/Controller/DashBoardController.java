@@ -49,6 +49,7 @@ public class DashBoardController extends LoginController {
 			stage.setTitle("Data Anylytics Hub");
 			stage.show();
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

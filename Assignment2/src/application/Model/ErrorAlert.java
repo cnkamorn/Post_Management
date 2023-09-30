@@ -111,4 +111,9 @@ public class ErrorAlert {
 		alert.showAndWait();
 	}
 
+	public void alertPostNotFound() {
+		alert.setContentText("Error: The post ID is not exist or you don't have access to it");
+		alert.setHeaderText("Error Post ID Input");
+		alert.showAndWait();
+	}
 }

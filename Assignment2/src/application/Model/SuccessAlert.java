@@ -59,4 +59,17 @@ public class SuccessAlert {
 		alert.setContentText("Your post has been added to the collection successfully!");
 		alert.showAndWait();
 	}
+
+	public void alertRemovePostSuccess() {
+		alert.setHeaderText("Successfully Removed the post to the collection");
+		alert.setContentText("Your post has been removed from the collection successfully!");
+		alert.showAndWait();
+	}
+
+	public void alertExportPostSuccess() {
+		alert.setHeaderText("Successfully exported the csv file");
+		alert.setContentText("Your have exported the csv file successfully!");
+		alert.showAndWait();
+	}
+
 }

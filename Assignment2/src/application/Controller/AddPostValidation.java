@@ -10,11 +10,6 @@ import application.Exception.PostIdExistsException;
 
 public class AddPostValidation extends PostDashboardController {
 	private static AddPostValidation Instance;
-	private String postId;
-	private String postContent;
-	private String postLikes;
-	private String postShares;
-	private String postDateTime;
 
 	private AddPostValidation() {
 	}
@@ -69,30 +64,6 @@ public class AddPostValidation extends PostDashboardController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void setPostLikes(String postLikes) {
-		this.postLikes = postLikes;
-	}
-
-	public void setPostContent(String postContent) {
-		this.postContent = postContent;
-	}
-
-	public void setPostId(String postId) {
-		this.postId = postId;
-	}
-
-	public void setPostShares(String postShares) {
-		this.postShares = postShares;
-	}
-
-	public void setPostDateTime(String postDateTime) {
-		this.postDateTime = postDateTime;
-	}
-
-	public String getPostId() {
-		return this.postId;
 	}
 
 }

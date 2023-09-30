@@ -70,9 +70,9 @@ public class PostDatabase {
 	}
 
 	public Post retrievePost(String authorID, String postID) throws PostNotFoundException {
-		String sql = "SELECT * FROM Post WHERE post_id =' " + postID + "' AND user_id =' " + authorID + "';";
 		Post post = Post.getInstance();
-		try (Connection con = PostDatabase.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
+		try (Connection con = PostDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "SELECT * FROM Post WHERE post_id ='" + postID + "' AND user_id ='" + authorID + "';";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				// found
@@ -81,9 +81,10 @@ public class PostDatabase {
 				post.setLikes(Integer.parseInt(rs.getString("post_likes")));
 				post.setShares(Integer.parseInt(rs.getString("post_shares")));
 				post.setPostDateTime(rs.getString("post_date_time"));
-				post.setPostAuthorID("user_id");
-			} else
+				post.setPostAuthorID(rs.getString("user_id"));
+			} else {
 				throw new PostNotFoundException("Post is not exist or this user has no access to it");
+			}
 			con.close();
 			stmt.close();
 		} catch (SQLException e) {
@@ -92,4 +93,19 @@ public class PostDatabase {
 		return post;
 	}
 
+	public boolean removePost(String authorID, String postID) throws PostNotFoundException {
+		try (Connection con = PostDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "DELETE FROM Post WHERE post_id ='" + postID + "' AND user_id ='" + authorID + "';";
+			int result = stmt.executeUpdate(sql);
+			if (result == 1) {
+				return true;
+			}
+			con.close();
+			stmt.close();
+			throw new PostNotFoundException("Post is not exist or this user has no access to it");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
