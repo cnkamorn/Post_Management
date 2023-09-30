@@ -84,14 +84,13 @@ public class ErrorAlert {
 	public void alertNumberFormat() {
 		alert.getDialogPane().setPrefSize(300, 280);
 		alert.setContentText(
-				"Error: Invalid Input, please input only numbers for the post ID, likes and shares fields");
+				"Error: Invalid Input, please input only numbers for the post number,post ID, likes and shares fields");
 		alert.setHeaderText("Invalid Number Input");
 		alert.showAndWait();
 	}
 
 	public void alertNegativeNumber() {
-		alert.setContentText(
-				"Error: Invalid Input, please input only positive numbers for the likes and shares fields");
+		alert.setContentText("Error: Invalid Input, please input only positive numbers");
 		alert.setHeaderText("Invalid Negative Number Input");
 		alert.showAndWait();
 	}
@@ -114,6 +113,18 @@ public class ErrorAlert {
 	public void alertPostNotFound() {
 		alert.setContentText("Error: The post ID is not exist or you don't have access to it");
 		alert.setHeaderText("Error Post ID Input");
+		alert.showAndWait();
+	}
+
+	public void alertZeroPost() {
+		alert.setContentText("Error: You don't have any posts");
+		alert.setHeaderText("Error no post found");
+		alert.showAndWait();
+	}
+
+	public void alertNumberOfPost(int n) {
+		alert.setContentText("You have only " + n + " post/posts show them all");
+		alert.setHeaderText("Error number of post");
 		alert.showAndWait();
 	}
 }

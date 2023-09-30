@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import application.Exception.PostNotFoundException;
 import application.Model.Post;
@@ -91,6 +92,28 @@ public class PostDatabase {
 			e.printStackTrace();
 		}
 		return post;
+	}
+
+	public ArrayList<Post> retrieveUserPosts(String authorID) throws PostNotFoundException {
+		ArrayList<Post> posts = new ArrayList();
+		try (Connection con = PostDatabase.getConnection(); Statement stmt = con.createStatement();) {
+			String sql = "SELECT * FROM Post WHERE user_id ='" + authorID + "';";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Post post = new Post(Integer.parseInt(rs.getString("post_id")), rs.getString("post_content"),
+						rs.getString("user_id"), Integer.parseInt(rs.getString("post_likes")),
+						Integer.parseInt(rs.getString("post_shares")), rs.getString("post_date_time"));
+				posts.add(post);
+			}
+			con.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (posts.size() == 0) {
+			throw new PostNotFoundException("This user has no post");
+		}
+		return posts;
 	}
 
 	public boolean removePost(String authorID, String postID) throws PostNotFoundException {

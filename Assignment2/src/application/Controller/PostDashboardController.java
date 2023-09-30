@@ -53,7 +53,7 @@ public class PostDashboardController extends DashBoardController implements Init
 	private MenuItem backMenu;
 
 	@FXML
-	private Button exportPostbutton;
+	private Button exportPostBtn;
 
 	@FXML
 	private MenuItem exportPostMenu;
@@ -62,10 +62,22 @@ public class PostDashboardController extends DashBoardController implements Init
 	private Pane exportPostView;
 
 	@FXML
+	private Button exportPostbutton;
+
+	@FXML
 	private TableColumn<Post, String> postAuthorIDColumn;
 
 	@FXML
+	private TableColumn<Post, String> postAuthorIDColumnByN;
+
+	@FXML
+	private TextField postByNField;
+
+	@FXML
 	private TableColumn<Post, String> postContentColumn;
+
+	@FXML
+	private TableColumn<Post, String> postContentColumnByN;
 
 	@FXML
 	private TextField postContentField;
@@ -74,10 +86,16 @@ public class PostDashboardController extends DashBoardController implements Init
 	private TableColumn<Post, String> postDateColumn;
 
 	@FXML
+	private TableColumn<Post, String> postDateColumnByN;
+
+	@FXML
 	private TextField postDateTimeField;
 
 	@FXML
 	private TableColumn<Post, Integer> postIDColumn;
+
+	@FXML
+	private TableColumn<Post, Integer> postIDColumnByN;
 
 	@FXML
 	private TextField postIDExportField;
@@ -87,6 +105,9 @@ public class PostDashboardController extends DashBoardController implements Init
 
 	@FXML
 	private TableColumn<Post, Integer> postLikeColumn;
+
+	@FXML
+	private TableColumn<Post, Integer> postLikeColumnByN;
 
 	@FXML
 	private TextField postLikesField;
@@ -101,10 +122,16 @@ public class PostDashboardController extends DashBoardController implements Init
 	private TableColumn<Post, Integer> postShareColumn;
 
 	@FXML
+	private TableColumn<Post, Integer> postShareColumnByN;
+
+	@FXML
 	private TextField postSharesField;
 
 	@FXML
 	private TableView<Post> postTable;
+
+	@FXML
+	private TableView<Post> postTableByN;
 
 	@FXML
 	private Button removePostBtn;
@@ -196,14 +223,18 @@ public class PostDashboardController extends DashBoardController implements Init
 			retrievePostView.setVisible(false);
 			exportPostView.setVisible(false);
 		} else if ((event.getSource() == exportPostbutton) || (event.getSource() == exportPostMenu)) {
-			System.out.println("x");
 			addPostView.setVisible(false);
 			removePostView.setVisible(false);
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(false);
 			exportPostView.setVisible(true);
+		} else if ((event.getSource() == retrieveMultiPostsBtn) || (event.getSource() == retrieveMultiPostMenu)) {
+			addPostView.setVisible(false);
+			removePostView.setVisible(false);
+			retrieveMultiPostView.setVisible(true);
+			retrievePostView.setVisible(false);
+			exportPostView.setVisible(false);
 		}
-
 	}
 
 	@FXML
@@ -297,18 +328,6 @@ public class PostDashboardController extends DashBoardController implements Init
 			Post post = searchPostController.retrievePost(inputPost); // get a post from postID
 			ExportPost exportPost = ExportPost.getInstance();
 			exportPost.exportFile(post);
-			/*
-			 * Integer postID = post.getPostID(); String postContent =
-			 * post.getPostContent(); Integer postLikes = post.getLikes(); Integer
-			 * postShares = post.getShares(); String postDateTime = post.getPostDateTime();
-			 * String postAuthorID = post.getPostAuthorID(); FileChooser chooser = new
-			 * FileChooser(); chooser.setInitialFileName("post.csv"); // set the file name
-			 * File file = chooser.showSaveDialog(new Stage()); // show a save file window
-			 * if (file != null) { PrintWriter writer = new PrintWriter(file);
-			 * writer.write(String.format("%d,%s,%d,%d,%s,%s", postID, postContent,
-			 * postLikes, postShares, postDateTime, postAuthorID)); writer.close();
-			 * alertSuccess.alertExportPostSuccess(); }
-			 */
 			alertSuccess.alertExportPostSuccess();
 		} catch (BlankInputException e) {
 			alertError.alertBlankInput();
@@ -319,17 +338,54 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	@FXML
+	public void retrievePostsByN(ActionEvent event) {
+		postTableByN.getItems().clear();
+		String inputNumber = postByNField.getText();
+		RetrieveMultiPosts retrievePosts = RetrieveMultiPosts.getInstance();
+		try {
+			inputValidate.acceptIntegerInput(inputNumber);
+			retrievePosts.checkBlankField(inputNumber);
+			ArrayList<Post> posts = retrievePosts.retrievePostsCollection(); // get the post collects from this user
+			ObservableList<Post> postCollection = postTableByN.getItems();
+			if (Integer.parseInt(inputNumber) >= posts.size()) {
+				alertError.alertNumberOfPost(posts.size());
+				// input > posts show all
+				postCollection.addAll(posts);
+				postTableByN.setItems(postCollection);
+			} else {
+				for (int i = 0; i < Integer.parseInt(inputNumber); i++) {
+					postCollection.add(posts.get(i));
+					postTableByN.setItems(postCollection);
+				}
+			}
+		} catch (NumberFormatException e) {
+			alertError.alertNumberFormat();
+		} catch (NegativeNumberException e) {
+			alertError.alertNegativeNumber();
+		} catch (BlankInputException e) {
+			alertError.alertBlankInput();
+		} catch (PostNotFoundException e) {
+			alertError.alertZeroPost();
+		}
+	}
+
 	// ref https://www.youtube.com/watch?v=qQcr_JMxWRw&list=LL&index=1&t=110s
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		// add cell table value in the retrieve Post tab
 		postIDColumn.setCellValueFactory(new PropertyValueFactory<Post, Integer>("postID"));
 		postContentColumn.setCellValueFactory(new PropertyValueFactory<Post, String>("postContent"));
 		postLikeColumn.setCellValueFactory(new PropertyValueFactory<Post, Integer>("likes"));
 		postShareColumn.setCellValueFactory(new PropertyValueFactory<Post, Integer>("shares"));
 		postDateColumn.setCellValueFactory(new PropertyValueFactory<Post, String>("postDateTime"));
 		postAuthorIDColumn.setCellValueFactory(new PropertyValueFactory<Post, String>("postAuthorID"));
-
+		// add cell table value in the retrieve Post by N tab
+		postIDColumnByN.setCellValueFactory(new PropertyValueFactory<Post, Integer>("postID"));
+		postContentColumnByN.setCellValueFactory(new PropertyValueFactory<Post, String>("postContent"));
+		postLikeColumnByN.setCellValueFactory(new PropertyValueFactory<Post, Integer>("likes"));
+		postShareColumnByN.setCellValueFactory(new PropertyValueFactory<Post, Integer>("shares"));
+		postDateColumnByN.setCellValueFactory(new PropertyValueFactory<Post, String>("postDateTime"));
+		postAuthorIDColumnByN.setCellValueFactory(new PropertyValueFactory<Post, String>("postAuthorID"));
 	}
-
 }

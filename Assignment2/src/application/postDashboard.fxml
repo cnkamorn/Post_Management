@@ -146,22 +146,32 @@
                   </TableView>
                </children>
             </Pane>
-            <Pane fx:id="retrieveMultiPostView" layoutX="-12.0" layoutY="15.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
+            <Pane fx:id="retrieveMultiPostView" layoutX="-24.0" layoutY="-24.0" prefHeight="377.0" prefWidth="516.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
                <children>
                   <Label layoutX="64.0" layoutY="41.0" />
-                  <TextField layoutX="193.0" layoutY="91.0" prefHeight="26.0" prefWidth="174.0" promptText="Post ID" />
-                  <Text layoutX="82.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post ID: " />
-                  <Button fx:id="retrieveMultiPostSaveBtn" layoutX="361.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
-                  <Text layoutX="83.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retrieve social media posts from the collection" wrappingWidth="352.6326904296875">
+                  <TextField fx:id="postByNField" layoutX="176.0" layoutY="81.0" prefHeight="26.0" prefWidth="51.0" />
+                  <Text layoutX="73.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Posts:" />
+                  <Button fx:id="retrieveMultiPostSaveBtn" layoutX="420.0" layoutY="342.0" mnemonicParsing="false" onAction="#retrievePostsByN" style="-fx-background-color: #00a400;;" text="Submit" textFill="WHITE" />
+                  <Text layoutX="83.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retrieve social media posts from the collection" wrappingWidth="352.6326904296875">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="85.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please input the number of posts you wish to retrieve. The system will display them in descending order of likes" textAlignment="CENTER" wrappingWidth="338.65386962890625">
+                  <Text layoutX="20.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please input the number of posts you wish to retrieve. The system will display them in descending order of likes. If the number input more than the number of posts from the user, all post will be displayed " textAlignment="CENTER" wrappingWidth="473.65386962890625">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="11.0" />
                      </font>
                   </Text>
+                  <TableView fx:id="postTableByN" layoutX="7.0" layoutY="109.0" prefHeight="223.0" prefWidth="501.0">
+                     <columns>
+                        <TableColumn fx:id="postIDColumnByN" prefWidth="48.0" text="Post ID" />
+                        <TableColumn fx:id="postContentColumnByN" prefWidth="177.0" text="Content" />
+                        <TableColumn fx:id="postLikeColumnByN" minWidth="0.0" prefWidth="46.0" text="Like" />
+                        <TableColumn fx:id="postShareColumnByN" prefWidth="46.0" text="Share" />
+                        <TableColumn fx:id="postDateColumnByN" prefWidth="116.0" text="Date" />
+                        <TableColumn fx:id="postAuthorIDColumnByN" prefWidth="67.0" text="Author ID" />
+                     </columns>
+                  </TableView>
                </children>
             </Pane>
            <Pane fx:id="exportPostView" layoutX="-2.0" layoutY="25.0" prefHeight="339.0" prefWidth="488.0" style="-fx-background-color: #f4e9d3; -fx-background-radius: 30;" visible="false">
