@@ -118,13 +118,27 @@ public class ErrorAlert {
 
 	public void alertZeroPost() {
 		alert.setContentText("Error: You don't have any posts");
-		alert.setHeaderText("Error no post found");
+		alert.setHeaderText("Error Post not found");
 		alert.showAndWait();
 	}
 
 	public void alertNumberOfPost(int n) {
 		alert.setContentText("You have only " + n + " post/posts show them all");
 		alert.setHeaderText("Error number of post");
+		alert.showAndWait();
+	}
+
+	public void alertImportError(String content, String header) {
+		alert.setContentText(content);
+		alert.setHeaderText(header);
+		alert.showAndWait();
+	}
+
+	public void alertUserPlan() {
+		alert.getDialogPane().setPrefSize(300, 280);
+		alert.setContentText(
+				"You don't have access to the VIP feature. Click 'Subscribe' button on the account setting page to upgrade");
+		alert.setHeaderText("Error user permission");
 		alert.showAndWait();
 	}
 }

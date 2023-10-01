@@ -1,12 +1,15 @@
 package application.Controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import application.Exception.BlankInputException;
+import application.Exception.InputHeaderException;
 import application.Exception.InvalidDateTimeFormatException;
+import application.Exception.InvalidFileTypeException;
 import application.Exception.NegativeNumberException;
 import application.Exception.PostIdExistsException;
 import application.Exception.PostNotFoundException;
@@ -21,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -30,12 +34,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class PostDashboardController extends DashBoardController implements Initializable {
 
 	@FXML
 	private Button addPostBtn;
+
+	@FXML
+	private MenuItem DataVisulizationMenu;
 
 	@FXML
 	private MenuItem addPostMenu;
@@ -48,6 +56,9 @@ public class PostDashboardController extends DashBoardController implements Init
 
 	@FXML
 	private Button back;
+
+	@FXML
+	private Button bulkImportBtn;
 
 	@FXML
 	private MenuItem backMenu;
@@ -108,6 +119,9 @@ public class PostDashboardController extends DashBoardController implements Init
 
 	@FXML
 	private TableColumn<Post, Integer> postLikeColumnByN;
+
+	@FXML
+	private Button genPieBtn;
 
 	@FXML
 	private TextField postLikesField;
@@ -173,6 +187,15 @@ public class PostDashboardController extends DashBoardController implements Init
 	private Pane retrievePostView;
 
 	@FXML
+	private PieChart pieChart;
+
+	@FXML
+	private Button dataVisualizationBtn;
+
+	@FXML
+	private Pane dataVisualizationView;
+
+	@FXML
 	private Label subscriptionLabel;
 
 	private UserDatabase userDb = UserDatabase.getInstance();
@@ -210,30 +233,47 @@ public class PostDashboardController extends DashBoardController implements Init
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(false);
 			exportPostView.setVisible(false);
+			dataVisualizationView.setVisible(false);
 		} else if ((event.getSource() == retrievePostBtn) || (event.getSource() == retrievePostMenu)) {
 			addPostView.setVisible(false);
 			removePostView.setVisible(false);
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(true);
 			exportPostView.setVisible(false);
+			dataVisualizationView.setVisible(false);
 		} else if ((event.getSource() == removePostBtn) || (event.getSource() == removePostMenu)) {
 			addPostView.setVisible(false);
 			removePostView.setVisible(true);
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(false);
 			exportPostView.setVisible(false);
+			dataVisualizationView.setVisible(false);
 		} else if ((event.getSource() == exportPostbutton) || (event.getSource() == exportPostMenu)) {
 			addPostView.setVisible(false);
 			removePostView.setVisible(false);
 			retrieveMultiPostView.setVisible(false);
 			retrievePostView.setVisible(false);
 			exportPostView.setVisible(true);
+			dataVisualizationView.setVisible(false);
 		} else if ((event.getSource() == retrieveMultiPostsBtn) || (event.getSource() == retrieveMultiPostMenu)) {
 			addPostView.setVisible(false);
 			removePostView.setVisible(false);
 			retrieveMultiPostView.setVisible(true);
 			retrievePostView.setVisible(false);
 			exportPostView.setVisible(false);
+			dataVisualizationView.setVisible(false);
+		} else if ((event.getSource() == dataVisualizationBtn) || (event.getSource() == DataVisulizationMenu)) {
+			addPostView.setVisible(false);
+			removePostView.setVisible(false);
+			retrieveMultiPostView.setVisible(false);
+			retrievePostView.setVisible(false);
+			exportPostView.setVisible(false);
+			if (!currentUserAccount.getUserPlan().equals("VIP")) {
+				alert.alertUserPlan();
+				postLogoView.setVisible(true);
+			} else {
+				dataVisualizationView.setVisible(true);
+			}
 		}
 	}
 
@@ -367,6 +407,69 @@ public class PostDashboardController extends DashBoardController implements Init
 			alertError.alertBlankInput();
 		} catch (PostNotFoundException e) {
 			alertError.alertZeroPost();
+		}
+	}
+
+	@FXML
+	public void generateChart(ActionEvent event) {
+		// pie chart
+		AnalyticsChart calculate = AnalyticsChart.getInstance();
+		pieChart.setVisible(true);
+		genPieBtn.setVisible(false);
+		try {
+			PieChart.Data zeroToNinetyNine = new PieChart.Data("0 - 99 shares",
+					calculate.calculateShares().get("0-99"));
+			PieChart.Data hundredToThousand = new PieChart.Data("100 - 999 shares",
+					calculate.calculateShares().get("100-999"));
+			PieChart.Data thousandPlus = new PieChart.Data("More than 999 shares",
+					calculate.calculateShares().get("1000+"));
+			pieChart.getData().addAll(zeroToNinetyNine, hundredToThousand, thousandPlus);
+		} catch (PostNotFoundException e) {
+			alertError.alertZeroPost();
+		}
+	}
+
+	@FXML
+	public void bulkImport(ActionEvent event) {
+		if (!currentUserAccount.getUserPlan().equals("VIP")) {
+			alert.alertUserPlan();
+		} else {
+			FileChooser chooser = new FileChooser();
+			chooser.setTitle("Select file");
+			File file = chooser.showOpenDialog(new Stage());
+			ImportFile manageFile = ImportFile.getInstance();
+			AddPostValidation addPostCheck = AddPostValidation.getInstance();
+			if (file != null) {
+				try {
+					ArrayList<Post> postList = manageFile.bulkImport(file);
+					for (Post post : postList) {
+						addPostCheck.checkPostIdExist(Integer.toString(post.getPostID()));
+						inputValidate.acceptIntegerInput(Integer.toString(post.getPostID()));
+						inputValidate.acceptIntegerInput(Integer.toString(post.getLikes()));
+						inputValidate.acceptIntegerInput(Integer.toString(post.getShares()));
+						inputValidate.acceptDateTime(post.getPostDateTime());
+						postDb.insertPost(post);
+						alertSuccess.alertAddedPostSuccess();
+					}
+				} catch (InvalidFileTypeException e) {
+					alert.alertImportError("Error: The file type is not csv", "Invalid file format");
+				} catch (FileNotFoundException e) {
+					alert.alertImportError("Error: The file is not found", "File not found");
+				} catch (InputHeaderException e) {
+					alert.alertImportError("Error: The file doesn't contain header", "Invalid file format");
+				} catch (NumberFormatException e) {
+					alert.alertImportError(
+							"Error: Invalid data found, please ensure the data is ordered as ID,content,author,likes,shares,date-time",
+							"Invalid data format");
+				} catch (PostIdExistsException e) {
+					alert.alertPostIdExist();
+				} catch (NegativeNumberException e) {
+					// TODO Auto-generated catch block
+					alert.alertImportError("Error: The file contains negative numbers", "Negative number found");
+				} catch (InvalidDateTimeFormatException e) {
+					alert.alertImportError("Error: Invalid date-time format found", "Invalid date-time format");
+				}
+			}
 		}
 	}
 

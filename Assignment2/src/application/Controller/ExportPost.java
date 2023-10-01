@@ -41,8 +41,9 @@ public class ExportPost {
 		File file = chooser.showSaveDialog(new Stage()); // show a save file window
 		if (file != null) {
 			PrintWriter writer = new PrintWriter(file);
-			writer.write(String.format("%d,%s,%d,%d,%s,%s", postID, postContent, postLikes, postShares, postDateTime,
-					postAuthorID));
+			writer.write("ID,content,author,likes,shares,date-time\n");
+			writer.write(String.format("%d,%s,%s,%d,%d,%s", postID, postContent, postAuthorID, postLikes, postShares,
+					postDateTime));
 			writer.close();
 		}
 	}
