@@ -224,56 +224,79 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	public void addPostViewVisible() {
+		addPostView.setVisible(true);
+		removePostView.setVisible(false);
+		retrieveMultiPostView.setVisible(false);
+		retrievePostView.setVisible(false);
+		exportPostView.setVisible(false);
+	}
+
+	public void retrievePostViewVisible() {
+		addPostView.setVisible(false);
+		removePostView.setVisible(false);
+		retrieveMultiPostView.setVisible(false);
+		retrievePostView.setVisible(true);
+		exportPostView.setVisible(false);
+		dataVisualizationView.setVisible(false);
+	}
+
+	public void removePostViewVisible() {
+		addPostView.setVisible(false);
+		removePostView.setVisible(true);
+		retrieveMultiPostView.setVisible(false);
+		retrievePostView.setVisible(false);
+		exportPostView.setVisible(false);
+		dataVisualizationView.setVisible(false);
+	}
+
+	public void exportPostViewVisible() {
+		addPostView.setVisible(false);
+		removePostView.setVisible(false);
+		retrieveMultiPostView.setVisible(false);
+		retrievePostView.setVisible(false);
+		exportPostView.setVisible(true);
+		dataVisualizationView.setVisible(false);
+	}
+
+	public void retrieveMultiPostViewVisible() {
+		addPostView.setVisible(false);
+		removePostView.setVisible(false);
+		retrieveMultiPostView.setVisible(true);
+		retrievePostView.setVisible(false);
+		exportPostView.setVisible(false);
+		dataVisualizationView.setVisible(false);
+	}
+
+	public void dataVisualizationViewVisible() {
+		addPostView.setVisible(false);
+		removePostView.setVisible(false);
+		retrieveMultiPostView.setVisible(false);
+		retrievePostView.setVisible(false);
+		exportPostView.setVisible(false);
+		if (!currentUserAccount.getUserPlan().equals("VIP")) {
+			alert.alertUserPlan();
+			postLogoView.setVisible(true);
+		} else {
+			dataVisualizationView.setVisible(true);
+		}
+	}
+
 	@FXML
 	public void changePage(ActionEvent event) {
 		postLogoView.setVisible(false);
 		if ((event.getSource() == addPostBtn) || (event.getSource() == addPostMenu)) {
-			addPostView.setVisible(true);
-			removePostView.setVisible(false);
-			retrieveMultiPostView.setVisible(false);
-			retrievePostView.setVisible(false);
-			exportPostView.setVisible(false);
-			dataVisualizationView.setVisible(false);
+			addPostViewVisible();
 		} else if ((event.getSource() == retrievePostBtn) || (event.getSource() == retrievePostMenu)) {
-			addPostView.setVisible(false);
-			removePostView.setVisible(false);
-			retrieveMultiPostView.setVisible(false);
-			retrievePostView.setVisible(true);
-			exportPostView.setVisible(false);
-			dataVisualizationView.setVisible(false);
+			retrievePostViewVisible();
 		} else if ((event.getSource() == removePostBtn) || (event.getSource() == removePostMenu)) {
-			addPostView.setVisible(false);
-			removePostView.setVisible(true);
-			retrieveMultiPostView.setVisible(false);
-			retrievePostView.setVisible(false);
-			exportPostView.setVisible(false);
-			dataVisualizationView.setVisible(false);
+			removePostViewVisible();
 		} else if ((event.getSource() == exportPostbutton) || (event.getSource() == exportPostMenu)) {
-			addPostView.setVisible(false);
-			removePostView.setVisible(false);
-			retrieveMultiPostView.setVisible(false);
-			retrievePostView.setVisible(false);
-			exportPostView.setVisible(true);
-			dataVisualizationView.setVisible(false);
+			exportPostViewVisible();
 		} else if ((event.getSource() == retrieveMultiPostsBtn) || (event.getSource() == retrieveMultiPostMenu)) {
-			addPostView.setVisible(false);
-			removePostView.setVisible(false);
-			retrieveMultiPostView.setVisible(true);
-			retrievePostView.setVisible(false);
-			exportPostView.setVisible(false);
-			dataVisualizationView.setVisible(false);
+			retrieveMultiPostViewVisible();
 		} else if ((event.getSource() == dataVisualizationBtn) || (event.getSource() == DataVisulizationMenu)) {
-			addPostView.setVisible(false);
-			removePostView.setVisible(false);
-			retrieveMultiPostView.setVisible(false);
-			retrievePostView.setVisible(false);
-			exportPostView.setVisible(false);
-			if (!currentUserAccount.getUserPlan().equals("VIP")) {
-				alert.alertUserPlan();
-				postLogoView.setVisible(true);
-			} else {
-				dataVisualizationView.setVisible(true);
-			}
+			dataVisualizationViewVisible();
 		}
 	}
 
@@ -413,6 +436,7 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	public void generateChart(ActionEvent event) {
 		// pie chart
+		// ref https://docs.oracle.com/javafx/2/charts/pie-chart.htm
 		AnalyticsChart calculate = AnalyticsChart.getInstance();
 		pieChart.setVisible(true);
 		genPieBtn.setVisible(false);
@@ -431,6 +455,7 @@ public class PostDashboardController extends DashBoardController implements Init
 
 	@FXML
 	public void bulkImport(ActionEvent event) {
+		// ref https://jenkov.com/tutorials/javafx/filechooser.html
 		if (!currentUserAccount.getUserPlan().equals("VIP")) {
 			alert.alertUserPlan();
 		} else {

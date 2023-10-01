@@ -115,6 +115,10 @@ public class AccountDashboardController extends DashBoardController {
 
 	SuccessAlert alertSuccess = SuccessAlert.getInstance();
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();

@@ -17,12 +17,25 @@ public class ChangePassword extends AccountDashboardController {
 		return Instance;
 	}
 
+	/**
+	 * 
+	 * @param newPassword
+	 * @param reTypePassword
+	 * @throws RetypeException
+	 */
 	public void checkMatchingRetypePassword(String newPassword, String reTypePassword) throws RetypeException {
 		if (!newPassword.equals(reTypePassword)) {
 			throw new RetypeException("New Username mismatches");
 		}
 	}
 
+	/**
+	 * 
+	 * @param currentPassword
+	 * @param newPassword
+	 * @param reTypePassword
+	 * @throws BlankInputException
+	 */
 	public void checkBlankField(String currentPassword, String newPassword, String reTypePassword)
 			throws BlankInputException {
 		if (currentPassword.isBlank() || newPassword.isBlank() || reTypePassword.isBlank()) {
@@ -30,12 +43,22 @@ public class ChangePassword extends AccountDashboardController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param currentPassword
+	 * @throws WrongPasswordException
+	 */
 	public void checkCurrentPassword(String currentPassword) throws WrongPasswordException {
 		if (!currentUserAccount.getPassword().equals(currentPassword)) {
 			throw new WrongPasswordException("Error : Wrong current password input");
 		}
 	}
 
+	/**
+	 * 
+	 * @param text
+	 * @return
+	 */
 	public boolean checkWhiteSpace(String text) {
 		for (int i = 0; i < text.length(); i++) {
 			if (Character.isWhitespace(text.charAt(i))) {
@@ -45,6 +68,13 @@ public class ChangePassword extends AccountDashboardController {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param currentPassword
+	 * @param newPassword
+	 * @param reTypePassword
+	 * @return
+	 */
 	public boolean checkInputWhiteSpace(String currentPassword, String newPassword, String reTypePassword) {
 		if (checkWhiteSpace(currentPassword)) { // error if contains whitespace
 			alert.alertWhiteSpaceFound("current password");
