@@ -1,5 +1,11 @@
 package application.Model;
 
+/**
+ * This class is an account model class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class Account {
 
 	private String username;

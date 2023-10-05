@@ -9,6 +9,13 @@ import application.Model.Post;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * This class is a an export class It contains related methods about export the
+ * post
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class ExportPost {
 
 	private static ExportPost Instance;

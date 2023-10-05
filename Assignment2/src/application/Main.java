@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This is the main Class to run the program
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {

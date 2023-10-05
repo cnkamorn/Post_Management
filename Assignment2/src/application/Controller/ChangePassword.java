@@ -4,6 +4,13 @@ import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 import application.Exception.WrongPasswordException;
 
+/**
+ * This class is a change password class for account setting page It's an
+ * extended class from the main Account dash board controller class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class ChangePassword extends AccountDashboardController {
 	private static ChangePassword Instance;
 

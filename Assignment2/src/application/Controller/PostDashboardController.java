@@ -17,13 +17,11 @@ import application.Model.ErrorAlert;
 import application.Model.Input;
 import application.Model.Post;
 import application.Model.SuccessAlert;
+import application.View.DashBoardView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,6 +35,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * This class is a main post dash board class It contains related methods about
+ * managing all actions related to the post
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class PostDashboardController extends DashBoardController implements Initializable {
 
 	@FXML
@@ -210,18 +215,8 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();
-		try {
-			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/dashboard.fxml"));
-			Parent parentNode = loader.load();
-			Scene scene = new Scene(parentNode);
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.setTitle("Data Anylytics Hub");
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		DashBoardView dashBoardScene = new DashBoardView();
+		dashBoardScene.getScene();
 	}
 
 	public void addPostViewVisible() {

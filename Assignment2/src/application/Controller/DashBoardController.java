@@ -6,21 +6,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import application.Model.Account;
+import application.View.AccountDashBoardView;
+import application.View.DashBoardView;
+import application.View.LoginView;
+import application.View.PostDashBoardView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
+/**
+ * This class is a dash board controller class It's an extended class from the
+ * login controller class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class DashBoardController extends LoginController {
 
-	Stage stage = new Stage();
-	Scene scene;
-	Parent root;
 	protected Account currentUserAccount = Account.getInstance();
 
 	@FXML
@@ -42,50 +46,26 @@ public class DashBoardController extends LoginController {
 	};
 
 	public void userDashBoardControl(String username, String password) {
-		try {
-			root = FXMLLoader.load(getClass().getResource("/application/dashboard.fxml"));
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.setTitle("Data Anylytics Hub");
-			stage.show();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+
+		DashBoardView dashboard = new DashBoardView();
+		dashboard.getScene();
 	}
 
 	@FXML
 	public void accountSetting(ActionEvent event) {
 		editprofilebtn.getScene().getWindow().hide();
-		try {
-			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/accountDashboard.fxml"));
-			Parent parentNode = loader.load();
-			Scene scene = new Scene(parentNode);
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.setTitle("Data Anylytics Hub");
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		AccountDashBoardView accDashboard = new AccountDashBoardView();
+		accDashboard.getScene();
 	}
 
+	/**
+	 * @param event
+	 */
 	@FXML
 	public void postManagement(ActionEvent event) {
 		editprofilebtn.getScene().getWindow().hide();
-		try {
-			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/postDashboard.fxml"));
-			Parent parentNode = loader.load();
-			Scene scene = new Scene(parentNode);
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.setTitle("Data Anylytics Hub");
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		PostDashBoardView postDashboard = new PostDashBoardView();
+		postDashboard.getScene();
 	}
 
 	public void setUserDetails() {
@@ -112,19 +92,8 @@ public class DashBoardController extends LoginController {
 	@FXML
 	public void logout(ActionEvent event) {
 		logoutbtn.getScene().getWindow().hide();
-		try {
-			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/login.fxml"));
-			Parent parentNode = loader.load();
-			Scene scene = new Scene(parentNode);
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.setTitle("Data Anylytics Hub");
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		LoginView loginScene = new LoginView();
+		loginScene.getScene();
 	}
 
 	public void setWelcomeText() {

@@ -3,6 +3,12 @@ package application.Model;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * This class is an alert success model class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class SuccessAlert {
 	private Alert alert = new Alert(AlertType.INFORMATION);;
 

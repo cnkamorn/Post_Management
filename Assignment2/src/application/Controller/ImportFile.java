@@ -9,6 +9,13 @@ import application.Exception.InputHeaderException;
 import application.Exception.InvalidFileTypeException;
 import application.Model.Post;
 
+/**
+ * This class is a an import class It contains related methods about import the
+ * post
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class ImportFile extends PostDashboardController {
 
 	private static ImportFile Instance;

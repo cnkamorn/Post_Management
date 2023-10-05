@@ -6,6 +6,13 @@ import java.util.HashMap;
 import application.Exception.PostNotFoundException;
 import application.Model.Post;
 
+/**
+ * This class is a class for account setting page It's an extended class from
+ * the main Post dash board controller class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class AnalyticsChart extends PostDashboardController {
 	private static AnalyticsChart Instance;
 
@@ -19,6 +26,12 @@ public class AnalyticsChart extends PostDashboardController {
 		return Instance;
 	}
 
+	/**
+	 * Methong to calculate the number of shares from the current user
+	 * 
+	 * @return HashMap<String,Integer>
+	 * @throws PostNotFoundException
+	 */
 	public HashMap<String, Integer> calculateShares() throws PostNotFoundException {
 		HashMap<String, Integer> shares = new HashMap<String, Integer>();
 		shares.put("0-99", 0);

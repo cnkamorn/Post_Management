@@ -3,6 +3,13 @@ package application.Controller;
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 
+/**
+ * This class is a change first name class for account setting page It's an
+ * extended class from the main Account dash board controller class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class ChangeFirstName extends AccountDashboardController {
 	private static ChangeFirstName Instance;
 

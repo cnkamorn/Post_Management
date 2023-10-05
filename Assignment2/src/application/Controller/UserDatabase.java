@@ -9,6 +9,13 @@ import java.sql.Statement;
 
 import application.Model.Account;
 
+/**
+ * This class is a user database class It contains all related user database
+ * methods
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class UserDatabase {
 	private static final String DB_URL = "jdbc:sqlite:data.db"; // driver
 	final static String TABLE_NAME = "User";

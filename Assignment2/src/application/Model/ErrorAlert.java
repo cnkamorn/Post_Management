@@ -3,6 +3,12 @@ package application.Model;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * This class is an error alert model class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class ErrorAlert {
 	private Alert alert = new Alert(AlertType.ERROR);;
 	private static ErrorAlert Instance;

@@ -3,6 +3,13 @@ package application.Controller;
 import application.Exception.BlankInputException;
 import application.Exception.PostNotFoundException;
 
+/**
+ * This class is a remove post class It's an extended class from the main post
+ * dash board class.
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class RemovePost extends PostDashboardController {
 
 	private static RemovePost Instance;

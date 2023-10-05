@@ -1,6 +1,5 @@
 package application.View;
 
-import application.Model.Account;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,31 +7,28 @@ import javafx.stage.Stage;
 
 public class DashBoardView {
 
-	Stage stage = new Stage();
-	Scene scene;
-	Parent root;
+	public DashBoardView() {
 
-	// show the dashboard after successfully login
-	public void showView(Account user) {
+	}
+
+	public void getScene() {
 		try {
+			Stage stage = new Stage();
+			Scene scene;
+			Parent root;
 			root = FXMLLoader.load(getClass().getResource("/application/dashboard.fxml"));
 			scene = new Scene(root);
 			stage.setScene(scene);
+			stage.setTitle("Data Anylytics Hub");
+			stage.setResizable(true);
+			stage.setMinWidth(570);
+			stage.setMinHeight(440);
+			stage.setMaxHeight(440);
+			stage.setMaxWidth(600);
 			stage.show();
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
-
-	public void showViewVip() {
-		try {
-			root = FXMLLoader.load(getClass().getResource("/application/dashboard.fxml"));
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 }

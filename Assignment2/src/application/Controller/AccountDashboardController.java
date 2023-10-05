@@ -6,11 +6,9 @@ import application.Exception.UsernameMismatchException;
 import application.Exception.WrongPasswordException;
 import application.Model.ErrorAlert;
 import application.Model.SuccessAlert;
+import application.View.DashBoardView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,8 +18,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
+/**
+ * This class is a controller class for the account setting page
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class AccountDashboardController extends DashBoardController {
 
 	@FXML
@@ -116,26 +119,22 @@ public class AccountDashboardController extends DashBoardController {
 	SuccessAlert alertSuccess = SuccessAlert.getInstance();
 
 	/**
+	 * Method to change the screen back to the homepage
 	 * 
 	 * @param event
 	 */
 	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();
-		try {
-			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/dashboard.fxml"));
-			Parent parentNode = loader.load();
-			Scene scene = new Scene(parentNode);
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.setTitle("Data Anylytics Hub");
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		DashBoardView dashBoardScene = new DashBoardView();
+		dashBoardScene.getScene();
 	}
 
+	/**
+	 * Method to change the page depends on which button is clicked
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void changePage(ActionEvent event) {
 		logoView.setVisible(false);
@@ -162,6 +161,11 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	/**
+	 * Method to change the username
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void changeUserName(ActionEvent event) {
 		ChangeUsername changeUsernameController = ChangeUsername.getInstance();
@@ -190,6 +194,11 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	/**
+	 * Method to change the password
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void changePassword(ActionEvent event) {
 		ChangePassword changePwController = ChangePassword.getInstance();
@@ -216,6 +225,11 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	/**
+	 * Method to change the first name
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void changeFirstName(ActionEvent event) {
 		ChangeFirstName changeFnController = ChangeFirstName.getInstance();
@@ -238,6 +252,11 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	/**
+	 * Method to change the last name
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void changeLastName(ActionEvent event) {
 		ChangeLastName changeLnController = ChangeLastName.getInstance();
@@ -260,7 +279,13 @@ public class AccountDashboardController extends DashBoardController {
 		}
 	}
 
+	// ref
 	// https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html
+	/**
+	 * Method to upgrade the current plan to VIP
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void upgradeToVip(ActionEvent event) {
 		Alert alertConfirmation = new Alert(AlertType.CONFIRMATION,
@@ -269,10 +294,16 @@ public class AccountDashboardController extends DashBoardController {
 				.ifPresent(response -> setVipUser());
 	}
 
+	/**
+	 * Method to call the method to hide the upgraded VIP button
+	 */
 	public void initialize() {
 		hideVipButton();
 	}
 
+	/**
+	 * Method to upgrade plan to VIP
+	 */
 	public void setVipUser() {
 		alertSuccess.alertUpdatePlanSuccess();
 		currentUserAccount.setUserPlan("VIP");
@@ -280,6 +311,9 @@ public class AccountDashboardController extends DashBoardController {
 		udb.updatePlan(currentUserAccount.getUsername());
 	}
 
+	/**
+	 * Method to hide the VIP button if the user is already has a VIP plan
+	 */
 	public void hideVipButton() {
 		if (currentUserAccount.getUserPlan().equals("VIP")) {
 			subscriptionLabel.setText("   You account is VIP");

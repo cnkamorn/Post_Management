@@ -16,6 +16,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * This class is a sign up controller class It's responsible for managing the
+ * signup process and contains relevant methods
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class SignUpController {
 
 	@FXML

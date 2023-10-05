@@ -7,21 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class SignUpView {
+public class RegisterView {
 
-	private static SignUpView Instance;
-
-	private SignUpView() {
-	};
-
-	public static SignUpView getInstance() {
-		if (Instance == null) {
-			Instance = new SignUpView();
-		}
-		return Instance;
+	public RegisterView() {
 	}
 
-	public void showView() {
+	public void getScene() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Register.fxml"));
 			Parent parentNode = loader.load();
@@ -33,7 +24,5 @@ public class SignUpView {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

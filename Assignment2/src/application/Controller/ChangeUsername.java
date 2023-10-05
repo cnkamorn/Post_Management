@@ -6,10 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import application.Exception.BlankInputException;
+import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
 import application.Model.ErrorAlert;
-import application.Exception.RetypeException;
 
+/**
+ * This class is a change username class for account setting page It's an
+ * extended class from the main Account dash board controller class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class ChangeUsername extends AccountDashboardController {
 
 	ErrorAlert alert = ErrorAlert.getInstance();
@@ -32,8 +39,7 @@ public class ChangeUsername extends AccountDashboardController {
 		}
 	}
 
-	public void checkMatchingRetypeUsername(String newUsername, String reTypeUsernameField)
-			throws RetypeException {
+	public void checkMatchingRetypeUsername(String newUsername, String reTypeUsernameField) throws RetypeException {
 		if (!newUsername.equals(reTypeUsernameField)) {
 			throw new RetypeException("New Username mismatches");
 		}

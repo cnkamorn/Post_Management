@@ -4,6 +4,13 @@ import application.Exception.BlankInputException;
 import application.Exception.PostNotFoundException;
 import application.Model.Post;
 
+/**
+ * This class is a search post class It's an extended class from the main post
+ * dash board class.
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class SearchPost extends PostDashboardController {
 
 	private static SearchPost Instance;

@@ -6,6 +6,12 @@ import java.time.LocalDateTime;
 import application.Exception.InvalidDateTimeFormatException;
 import application.Exception.NegativeNumberException;
 
+/**
+ * This class is an input model class
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class Input extends Exception {
 
 	private static Input Instance;

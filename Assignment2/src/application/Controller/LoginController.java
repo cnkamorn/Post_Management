@@ -7,13 +7,20 @@ import java.sql.Statement;
 
 import application.Exception.InvalidLoginException;
 import application.Model.ErrorAlert;
-import application.View.SignUpView;
+import application.View.RegisterView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * This class is a login controller class It contains related methods about the
+ * login process
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class LoginController {
 	@FXML
 	private Button loginButton;
@@ -33,7 +40,6 @@ public class LoginController {
 		DashBoardController dbc = new DashBoardController();
 		String userNameField = username.getText();
 		String passwordField = password.getText();
-		// to connect with DB
 		try {
 			if (verifyLogin(userNameField, passwordField)) {
 				loginButton.getScene().getWindow().hide();
@@ -43,7 +49,6 @@ public class LoginController {
 				alert.alertBlankInput();
 			}
 		} catch (InvalidLoginException e) {
-			// TODO Auto-generated catch block
 			alert.alertLogin();
 			System.out.println(e.getMessage());
 		}
@@ -51,8 +56,9 @@ public class LoginController {
 
 	@FXML
 	private void register(ActionEvent event) {
-		SignUpView signUpPage = SignUpView.getInstance();
-		signUpPage.showView();
+
+		RegisterView registerScene = new RegisterView();
+		registerScene.getScene();
 	}
 
 	private boolean verifyLogin(String username, String password) throws InvalidLoginException {

@@ -11,6 +11,13 @@ import java.util.ArrayList;
 import application.Exception.PostNotFoundException;
 import application.Model.Post;
 
+/**
+ * This class is a post database class It contains related methods about the
+ * post database
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class PostDatabase {
 
 	private static final String DB_URL = "jdbc:sqlite:data.db"; // driver
