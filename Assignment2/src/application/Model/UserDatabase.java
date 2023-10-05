@@ -45,10 +45,6 @@ public class UserDatabase {
 
 	}
 
-	public static void main(String[] args) throws SQLException {
-	}
-	// to create table post
-
 	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(DB_URL); // connection
 	}
@@ -103,6 +99,7 @@ public class UserDatabase {
 			if (result == 1) {
 				return true;
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

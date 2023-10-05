@@ -44,21 +44,18 @@ public class ChangeUsername {
 		}
 	}
 
-	public void checkUsernameExist(String currentUsername, String newUsername) {
+	public boolean checkUsernameExist(String currentUsername, String newUsername) throws SQLException {
 		String query = "SELECT username FROM User WHERE username='" + newUsername + "' AND username != '"
 				+ currentUsername + "';";
-		try {
-			Connection con = UserDatabase.getConnection();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			con.close();
-			stmt.close();
-			if (rs.next()) {
-				alert.alertUsernameExists();
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		Connection con = UserDatabase.getConnection();
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		con.close();
+		stmt.close();
+		if (rs.next()) {
+			return false;
 		}
+		return true;
 	}
 
 	public void checkBlankField(String currentUsername, String newUsername, String retypeUsername)

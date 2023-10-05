@@ -33,7 +33,6 @@ public class LoginController {
 	private TextField username;
 
 	ErrorAlert alert = ErrorAlert.getInstance();
-
 	public static String currentUserName;
 
 	@FXML

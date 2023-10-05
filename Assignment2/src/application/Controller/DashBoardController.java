@@ -26,7 +26,7 @@ import javafx.scene.text.Font;
  */
 public class DashBoardController extends LoginController {
 
-	protected Account currentUserAccount = Account.getInstance();
+	protected Account currentLoginUser = Account.getInstance();
 
 	@FXML
 	private Label welcome;
@@ -77,11 +77,11 @@ public class DashBoardController extends LoginController {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
-				currentUserAccount.setUsername(rs.getString("username"));
-				currentUserAccount.setPassword(rs.getString("password"));
-				currentUserAccount.setFirstname(rs.getString("first_name"));
-				currentUserAccount.setLastname(rs.getString("last_name"));
-				currentUserAccount.setUserPlan(rs.getString("user_plan"));
+				currentLoginUser.setUsername(rs.getString("username"));
+				currentLoginUser.setPassword(rs.getString("password"));
+				currentLoginUser.setFirstname(rs.getString("first_name"));
+				currentLoginUser.setLastname(rs.getString("last_name"));
+				currentLoginUser.setUserPlan(rs.getString("user_plan"));
 			}
 			con.close();
 			stmt.close();
@@ -99,8 +99,8 @@ public class DashBoardController extends LoginController {
 
 	public void setWelcomeText() {
 		if (this.editprofilebtn != null) {
-			welcome.setText(" Hello " + currentUserAccount.getFirstname().toUpperCase() + " "
-					+ currentUserAccount.getLastname().toUpperCase());
+			welcome.setText(" Hello " + currentLoginUser.getFirstname().toUpperCase() + " "
+					+ currentLoginUser.getLastname().toUpperCase());
 			welcome.setFont(new Font("Arial", 24));
 			welcome.setStyle("-fx-text-fill: CORNFLOWERBLUE;");
 		}

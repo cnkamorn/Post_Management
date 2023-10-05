@@ -279,7 +279,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		retrieveMultiPostView.setVisible(false);
 		retrievePostView.setVisible(false);
 		exportPostView.setVisible(false);
-		if (!currentUserAccount.getUserPlan().equals("VIP")) {
+		if (!currentLoginUser.getUserPlan().equals("VIP")) {
 			alert.alertUserPlan();
 			postLogoView.setVisible(true);
 		} else {
@@ -311,7 +311,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		RemovePost remove = RemovePost.getInstance();
 		try {
 			remove.checkBlankField(postId);
-			remove.removePost(currentUserAccount.getUsername(), postId);
+			remove.removePost(currentLoginUser.getUsername(), postId);
 			alertSuccess.alertRemovePostSuccess();
 		} catch (BlankInputException e) {
 			alert.alertBlankInput();
@@ -344,7 +344,7 @@ public class PostDashboardController extends DashBoardController implements Init
 				post.setPostID(Integer.parseInt(postId));
 				post.setLikes(Integer.parseInt(postLikes));
 				post.setShares(Integer.parseInt(postShares));
-				post.setPostAuthorID(userDb.queryUserId(currentUserAccount.getUsername()));
+				post.setPostAuthorID(userDb.queryUserId(currentLoginUser.getUsername()));
 				post.setPostContent(postContent);
 				post.setPostDateTime(postDateTime);
 				postDb.insertPost(post);
@@ -368,10 +368,10 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	public void searchPost(ActionEvent event) {
 		String userInputSearchID = postSearchField.getText();
-		SearchPost searchPostController = SearchPost.getInstance();
+		SearchPost searchPostFromDB = SearchPost.getInstance();
 		try {
-			searchPostController.checkBlankField(userInputSearchID);
-			Post post = searchPostController.retrievePost(currentUserAccount.getUsername(), userInputSearchID);
+			searchPostFromDB.checkBlankField(userInputSearchID);
+			Post post = searchPostFromDB.retrievePost(currentLoginUser.getUsername(), userInputSearchID);
 			ObservableList<Post> posts = postTable.getItems();
 			// prevent duplicate posts
 			if (!currentSearchPost.contains(userInputSearchID)) {
@@ -390,11 +390,11 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	public void exportPost(ActionEvent event) {
 		String inputPost = postIDExportField.getText();
-		SearchPost searchPostController = SearchPost.getInstance();
+		SearchPost searchPostFromDB = SearchPost.getInstance();
 		try {
 			exportPostController.checkBlankField(inputPost);
-			Post post = searchPostController.retrievePost(currentUserAccount.getUsername(), inputPost); // get a post
-																										// from postID
+			Post post = searchPostFromDB.retrievePost(currentLoginUser.getUsername(), inputPost); // get a post
+																									// from postID
 			ExportPost exportPost = ExportPost.getInstance();
 			exportPost.exportFile(post);
 			alertSuccess.alertExportPostSuccess();
@@ -415,7 +415,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		try {
 			inputValidate.acceptIntegerInput(inputNumber);
 			retrievePosts.checkBlankField(inputNumber);
-			ArrayList<Post> posts = retrievePosts.retrievePostsCollection(currentUserAccount.getUsername());
+			ArrayList<Post> posts = retrievePosts.retrievePostsCollection(currentLoginUser.getUsername());
 			ObservableList<Post> postCollection = postTableByN.getItems();
 			if (Integer.parseInt(inputNumber) >= posts.size()) {
 				alertError.alertNumberOfPost(posts.size());
@@ -448,11 +448,11 @@ public class PostDashboardController extends DashBoardController implements Init
 		genPieBtn.setVisible(false);
 		try {
 			PieChart.Data zeroToNinetyNine = new PieChart.Data("0 - 99 shares",
-					calculate.calculateShares(currentUserAccount.getUsername()).get("0-99"));
+					calculate.calculateShares(currentLoginUser.getUsername()).get("0-99"));
 			PieChart.Data hundredToThousand = new PieChart.Data("100 - 999 shares",
-					calculate.calculateShares(currentUserAccount.getUsername()).get("100-999"));
+					calculate.calculateShares(currentLoginUser.getUsername()).get("100-999"));
 			PieChart.Data thousandPlus = new PieChart.Data("More than 999 shares",
-					calculate.calculateShares(currentUserAccount.getUsername()).get("1000+"));
+					calculate.calculateShares(currentLoginUser.getUsername()).get("1000+"));
 			pieChart.getData().addAll(zeroToNinetyNine, hundredToThousand, thousandPlus);
 		} catch (PostNotFoundException e) {
 			alertError.alertZeroPost();
@@ -462,7 +462,7 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	public void bulkImport(ActionEvent event) {
 		// ref https://jenkov.com/tutorials/javafx/filechooser.html
-		if (!currentUserAccount.getUserPlan().equals("VIP")) {
+		if (!currentLoginUser.getUserPlan().equals("VIP")) {
 			alert.alertUserPlan();
 		} else {
 			FileChooser chooser = new FileChooser();
