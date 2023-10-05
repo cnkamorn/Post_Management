@@ -1,11 +1,10 @@
-package application.Controller;
+package application.Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import application.Exception.BlankInputException;
-import application.Model.Post;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 

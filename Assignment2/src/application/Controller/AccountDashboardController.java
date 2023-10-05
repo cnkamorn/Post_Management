@@ -4,8 +4,13 @@ import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
 import application.Exception.WrongPasswordException;
+import application.Model.ChangeFirstName;
+import application.Model.ChangeLastName;
+import application.Model.ChangePassword;
+import application.Model.ChangeUsername;
 import application.Model.ErrorAlert;
 import application.Model.SuccessAlert;
+import application.Model.UserDatabase;
 import application.View.DashBoardView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -126,7 +131,7 @@ public class AccountDashboardController extends DashBoardController {
 	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();
-		DashBoardView dashBoardScene = new DashBoardView();
+		DashBoardView dashBoardScene = DashBoardView.getInstance();
 		dashBoardScene.getScene();
 	}
 
@@ -207,7 +212,7 @@ public class AccountDashboardController extends DashBoardController {
 		String reTypePw = reTypeNewPasswordField.getText();
 		try {
 			changePwController.checkBlankField(currentPw, newPw, reTypePw);
-			changePwController.checkCurrentPassword(currentPw);
+			changePwController.checkCurrentPassword(currentUserAccount.getPassword(), currentPw);
 			changePwController.checkMatchingRetypePassword(newPw, reTypePw);
 			if (!changePwController.checkInputWhiteSpace(currentPw, newPw, reTypePw)) {
 				currentUserAccount.setPassword(newPw);

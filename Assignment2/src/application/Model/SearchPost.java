@@ -1,8 +1,7 @@
-package application.Controller;
+package application.Model;
 
 import application.Exception.BlankInputException;
 import application.Exception.PostNotFoundException;
-import application.Model.Post;
 
 /**
  * This class is a search post class It's an extended class from the main post
@@ -11,7 +10,7 @@ import application.Model.Post;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class SearchPost extends PostDashboardController {
+public class SearchPost {
 
 	private static SearchPost Instance;
 
@@ -31,10 +30,10 @@ public class SearchPost extends PostDashboardController {
 		}
 	}
 
-	public Post retrievePost(String postId) throws PostNotFoundException {
+	public Post retrievePost(String username, String postId) throws PostNotFoundException {
 		PostDatabase postDB = PostDatabase.getInstance();
 		UserDatabase userDB = UserDatabase.getInstance();
-		String authorId = userDB.queryUserId(currentUserAccount.getUsername()); // search for ID
+		String authorId = userDB.queryUserId(username); // search for ID
 		Post post = postDB.retrievePost(authorId, postId);
 		return post;
 	}

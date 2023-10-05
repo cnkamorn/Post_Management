@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import application.Exception.PostNotFoundException;
-import application.Model.Post;
 
 /**
  * This class is a post database class It contains related methods about the

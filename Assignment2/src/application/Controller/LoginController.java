@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import application.Exception.InvalidLoginException;
 import application.Model.ErrorAlert;
+import application.Model.UserDatabase;
 import application.View.RegisterView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,13 +58,13 @@ public class LoginController {
 	@FXML
 	private void register(ActionEvent event) {
 
-		RegisterView registerScene = new RegisterView();
+		RegisterView registerScene = RegisterView.getInstance();
 		registerScene.getScene();
 	}
 
 	private boolean verifyLogin(String username, String password) throws InvalidLoginException {
-		String query = "SELECT username, password FROM " + UserDatabase.TABLE_NAME + " " + "WHERE username = '"
-				+ username + "' AND password ='" + password + "' ";
+		String query = "SELECT username, password FROM User WHERE username = '" + username + "' AND password ='"
+				+ password + "'; ";
 		try {
 			Connection con = UserDatabase.getConnection();
 			Statement stmt = con.createStatement();

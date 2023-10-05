@@ -1,10 +1,9 @@
-package application.Controller;
+package application.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import application.Exception.PostNotFoundException;
-import application.Model.Post;
 
 /**
  * This class is a class for account setting page It's an extended class from
@@ -13,7 +12,7 @@ import application.Model.Post;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class AnalyticsChart extends PostDashboardController {
+public class AnalyticsChart {
 	private static AnalyticsChart Instance;
 
 	private AnalyticsChart() {
@@ -27,18 +26,18 @@ public class AnalyticsChart extends PostDashboardController {
 	}
 
 	/**
-	 * Methong to calculate the number of shares from the current user
+	 * Method to calculate the number of shares from the current user
 	 * 
 	 * @return HashMap<String,Integer>
 	 * @throws PostNotFoundException
 	 */
-	public HashMap<String, Integer> calculateShares() throws PostNotFoundException {
+	public HashMap<String, Integer> calculateShares(String username) throws PostNotFoundException {
 		HashMap<String, Integer> shares = new HashMap<String, Integer>();
 		shares.put("0-99", 0);
 		shares.put("100-999", 0);
 		shares.put("1000+", 0);
 		RetrieveMultiPosts findPosts = RetrieveMultiPosts.getInstance();
-		ArrayList<Post> userPosts = findPosts.retrievePostsCollection();
+		ArrayList<Post> userPosts = findPosts.retrievePostsCollection(username);
 		// loop each post to get shares
 		for (Post post : userPosts) {
 			if (post.getShares() >= 0 && post.getShares() <= 99) {

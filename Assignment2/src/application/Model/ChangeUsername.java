@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,7 +8,6 @@ import java.sql.Statement;
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
-import application.Model.ErrorAlert;
 
 /**
  * This class is a change username class for account setting page It's an
@@ -17,7 +16,7 @@ import application.Model.ErrorAlert;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class ChangeUsername extends AccountDashboardController {
+public class ChangeUsername {
 
 	ErrorAlert alert = ErrorAlert.getInstance();
 	private static ChangeUsername Instance;
@@ -79,6 +78,7 @@ public class ChangeUsername extends AccountDashboardController {
 	}
 
 	public boolean checkInputWhiteSpace(String currentUsername, String newUsername, String reTypeNewUsername) {
+		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(currentUsername)) { // error if contains whitespace
 			alert.alertWhiteSpaceFound("current username");
 			return true;

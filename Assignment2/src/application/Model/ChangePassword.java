@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
@@ -11,7 +11,7 @@ import application.Exception.WrongPasswordException;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class ChangePassword extends AccountDashboardController {
+public class ChangePassword {
 	private static ChangePassword Instance;
 
 	private ChangePassword() {
@@ -55,8 +55,9 @@ public class ChangePassword extends AccountDashboardController {
 	 * @param currentPassword
 	 * @throws WrongPasswordException
 	 */
-	public void checkCurrentPassword(String currentPassword) throws WrongPasswordException {
-		if (!currentUserAccount.getPassword().equals(currentPassword)) {
+	public void checkCurrentPassword(String loggedinUserPassword, String currentPassword)
+			throws WrongPasswordException {
+		if (!loggedinUserPassword.equals(currentPassword)) {
 			throw new WrongPasswordException("Error : Wrong current password input");
 		}
 	}
@@ -83,6 +84,7 @@ public class ChangePassword extends AccountDashboardController {
 	 * @return
 	 */
 	public boolean checkInputWhiteSpace(String currentPassword, String newPassword, String reTypePassword) {
+		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(currentPassword)) { // error if contains whitespace
 			alert.alertWhiteSpaceFound("current password");
 			return true;

@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
@@ -10,7 +10,7 @@ import application.Exception.RetypeException;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class ChangeLastName extends AccountDashboardController {
+public class ChangeLastName {
 	private static ChangeLastName Instance;
 
 	private ChangeLastName() {
@@ -39,6 +39,7 @@ public class ChangeLastName extends AccountDashboardController {
 	}
 
 	public boolean checkInputWhiteSpace(String newLastName, String reTypeLastName) {
+		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(newLastName)) { // error if contains whitespace
 			alert.alertWhiteSpaceFound("new last name");
 			return true;

@@ -7,7 +7,16 @@ import javafx.stage.Stage;
 
 public class AccountDashBoardView {
 
-	public AccountDashBoardView() {
+	private static AccountDashBoardView Instance;
+
+	private AccountDashBoardView() {
+	};
+
+	public static AccountDashBoardView getInstance() {
+		if (Instance == null) {
+			Instance = new AccountDashBoardView();
+		}
+		return Instance;
 	}
 
 	public void getScene() {

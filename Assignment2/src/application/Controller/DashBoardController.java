@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import application.Model.Account;
+import application.Model.UserDatabase;
 import application.View.AccountDashBoardView;
 import application.View.DashBoardView;
 import application.View.LoginView;
@@ -47,14 +48,14 @@ public class DashBoardController extends LoginController {
 
 	public void userDashBoardControl(String username, String password) {
 
-		DashBoardView dashboard = new DashBoardView();
+		DashBoardView dashboard = DashBoardView.getInstance();
 		dashboard.getScene();
 	}
 
 	@FXML
 	public void accountSetting(ActionEvent event) {
 		editprofilebtn.getScene().getWindow().hide();
-		AccountDashBoardView accDashboard = new AccountDashBoardView();
+		AccountDashBoardView accDashboard = AccountDashBoardView.getInstance();
 		accDashboard.getScene();
 	}
 
@@ -64,7 +65,7 @@ public class DashBoardController extends LoginController {
 	@FXML
 	public void postManagement(ActionEvent event) {
 		editprofilebtn.getScene().getWindow().hide();
-		PostDashBoardView postDashboard = new PostDashBoardView();
+		PostDashBoardView postDashboard = PostDashBoardView.getInstance();
 		postDashboard.getScene();
 	}
 
@@ -92,7 +93,7 @@ public class DashBoardController extends LoginController {
 	@FXML
 	public void logout(ActionEvent event) {
 		logoutbtn.getScene().getWindow().hide();
-		LoginView loginScene = new LoginView();
+		LoginView loginScene = LoginView.getInstance();
 		loginScene.getScene();
 	}
 

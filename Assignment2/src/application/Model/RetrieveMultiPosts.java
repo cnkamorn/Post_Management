@@ -1,11 +1,10 @@
-package application.Controller;
+package application.Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import application.Exception.BlankInputException;
 import application.Exception.PostNotFoundException;
-import application.Model.Post;
 
 /**
  * This class is a retrieve multi posts class It's an extended class from the
@@ -14,7 +13,7 @@ import application.Model.Post;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class RetrieveMultiPosts extends PostDashboardController {
+public class RetrieveMultiPosts {
 
 	private static RetrieveMultiPosts Instance;
 
@@ -34,10 +33,10 @@ public class RetrieveMultiPosts extends PostDashboardController {
 		}
 	}
 
-	public ArrayList<Post> retrievePostsCollection() throws PostNotFoundException {
+	public ArrayList<Post> retrievePostsCollection(String username) throws PostNotFoundException {
 		PostDatabase postDB = PostDatabase.getInstance();
 		UserDatabase userDB = UserDatabase.getInstance();
-		String authorId = userDB.queryUserId(currentUserAccount.getUsername());
+		String authorId = userDB.queryUserId(username);
 		// get all the posts from the current user
 		ArrayList<Post> posts = postDB.retrieveUserPosts(authorId);
 		// sort by likes

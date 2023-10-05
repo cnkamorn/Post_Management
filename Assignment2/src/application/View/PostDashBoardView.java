@@ -7,7 +7,16 @@ import javafx.stage.Stage;
 
 public class PostDashBoardView {
 
-	public PostDashBoardView() {
+	private static PostDashBoardView Instance;
+
+	private PostDashBoardView() {
+	};
+
+	public static PostDashBoardView getInstance() {
+		if (Instance == null) {
+			Instance = new PostDashBoardView();
+		}
+		return Instance;
 	}
 
 	public void getScene() {

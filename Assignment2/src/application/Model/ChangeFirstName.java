@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
@@ -10,7 +10,7 @@ import application.Exception.RetypeException;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class ChangeFirstName extends AccountDashboardController {
+public class ChangeFirstName {
 	private static ChangeFirstName Instance;
 
 	private ChangeFirstName() {
@@ -23,12 +23,25 @@ public class ChangeFirstName extends AccountDashboardController {
 		return Instance;
 	}
 
+	/**
+	 * Method to check the input blank fields
+	 * 
+	 * @param newFirstName
+	 * @param reTypeFirstName
+	 * @throws BlankInputException
+	 */
 	public void checkBlankField(String newFirstName, String reTypeFirstName) throws BlankInputException {
 		if (newFirstName.isBlank() || reTypeFirstName.isBlank()) {
 			throw new BlankInputException("Error : Blank Input found");
 		}
 	}
 
+	/**
+	 * Method to check the white space
+	 * 
+	 * @param text
+	 * @return
+	 */
 	public boolean checkWhiteSpace(String text) {
 		for (int i = 0; i < text.length(); i++) {
 			if (Character.isWhitespace(text.charAt(i))) {
@@ -38,7 +51,15 @@ public class ChangeFirstName extends AccountDashboardController {
 		return false;
 	}
 
+	/**
+	 * Method to alert if the white space is found
+	 * 
+	 * @param newFirstName
+	 * @param reTypeFirstName
+	 * @return
+	 */
 	public boolean checkInputWhiteSpace(String newFirstName, String reTypeFirstName) {
+		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(newFirstName)) { // error if contains whitespace
 			alert.alertWhiteSpaceFound("new first name");
 			return true;
@@ -49,6 +70,13 @@ public class ChangeFirstName extends AccountDashboardController {
 		return false;
 	}
 
+	/**
+	 * Method to check matching first name from the two fields
+	 * 
+	 * @param newFirstName
+	 * @param reTypeFirstName
+	 * @throws RetypeException
+	 */
 	public void checkMatchingRetypeFirstName(String newFirstName, String reTypeFirstName) throws RetypeException {
 		if (!newFirstName.equals(reTypeFirstName)) {
 			throw new RetypeException("New First Name mismatches");

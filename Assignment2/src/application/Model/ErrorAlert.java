@@ -12,8 +12,6 @@ import javafx.scene.control.Alert.AlertType;
 public class ErrorAlert {
 	private Alert alert = new Alert(AlertType.ERROR);;
 	private static ErrorAlert Instance;
-	private String header;
-	private String content;
 
 	private ErrorAlert() {
 	};

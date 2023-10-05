@@ -7,8 +7,16 @@ import javafx.stage.Stage;
 
 public class DashBoardView {
 
-	public DashBoardView() {
+	private static DashBoardView Instance;
 
+	private DashBoardView() {
+	};
+
+	public static DashBoardView getInstance() {
+		if (Instance == null) {
+			Instance = new DashBoardView();
+		}
+		return Instance;
 	}
 
 	public void getScene() {

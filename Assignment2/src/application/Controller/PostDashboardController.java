@@ -13,10 +13,19 @@ import application.Exception.InvalidFileTypeException;
 import application.Exception.NegativeNumberException;
 import application.Exception.PostIdExistsException;
 import application.Exception.PostNotFoundException;
+import application.Model.AddPostValidation;
+import application.Model.AnalyticsChart;
 import application.Model.ErrorAlert;
+import application.Model.ExportPost;
+import application.Model.ImportFile;
 import application.Model.Input;
 import application.Model.Post;
+import application.Model.PostDatabase;
+import application.Model.RemovePost;
+import application.Model.RetrieveMultiPosts;
+import application.Model.SearchPost;
 import application.Model.SuccessAlert;
+import application.Model.UserDatabase;
 import application.View.DashBoardView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -215,7 +224,7 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();
-		DashBoardView dashBoardScene = new DashBoardView();
+		DashBoardView dashBoardScene = DashBoardView.getInstance();
 		dashBoardScene.getScene();
 	}
 
@@ -225,6 +234,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		retrieveMultiPostView.setVisible(false);
 		retrievePostView.setVisible(false);
 		exportPostView.setVisible(false);
+		dataVisualizationView.setVisible(false);
 	}
 
 	public void retrievePostViewVisible() {
@@ -301,7 +311,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		RemovePost remove = RemovePost.getInstance();
 		try {
 			remove.checkBlankField(postId);
-			remove.removePost(postId);
+			remove.removePost(currentUserAccount.getUsername(), postId);
 			alertSuccess.alertRemovePostSuccess();
 		} catch (BlankInputException e) {
 			alert.alertBlankInput();
@@ -361,7 +371,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		SearchPost searchPostController = SearchPost.getInstance();
 		try {
 			searchPostController.checkBlankField(userInputSearchID);
-			Post post = searchPostController.retrievePost(userInputSearchID);
+			Post post = searchPostController.retrievePost(currentUserAccount.getUsername(), userInputSearchID);
 			ObservableList<Post> posts = postTable.getItems();
 			// prevent duplicate posts
 			if (!currentSearchPost.contains(userInputSearchID)) {
@@ -383,7 +393,8 @@ public class PostDashboardController extends DashBoardController implements Init
 		SearchPost searchPostController = SearchPost.getInstance();
 		try {
 			exportPostController.checkBlankField(inputPost);
-			Post post = searchPostController.retrievePost(inputPost); // get a post from postID
+			Post post = searchPostController.retrievePost(currentUserAccount.getUsername(), inputPost); // get a post
+																										// from postID
 			ExportPost exportPost = ExportPost.getInstance();
 			exportPost.exportFile(post);
 			alertSuccess.alertExportPostSuccess();
@@ -404,7 +415,7 @@ public class PostDashboardController extends DashBoardController implements Init
 		try {
 			inputValidate.acceptIntegerInput(inputNumber);
 			retrievePosts.checkBlankField(inputNumber);
-			ArrayList<Post> posts = retrievePosts.retrievePostsCollection(); // get the post collects from this user
+			ArrayList<Post> posts = retrievePosts.retrievePostsCollection(currentUserAccount.getUsername());
 			ObservableList<Post> postCollection = postTableByN.getItems();
 			if (Integer.parseInt(inputNumber) >= posts.size()) {
 				alertError.alertNumberOfPost(posts.size());
@@ -437,11 +448,11 @@ public class PostDashboardController extends DashBoardController implements Init
 		genPieBtn.setVisible(false);
 		try {
 			PieChart.Data zeroToNinetyNine = new PieChart.Data("0 - 99 shares",
-					calculate.calculateShares().get("0-99"));
+					calculate.calculateShares(currentUserAccount.getUsername()).get("0-99"));
 			PieChart.Data hundredToThousand = new PieChart.Data("100 - 999 shares",
-					calculate.calculateShares().get("100-999"));
+					calculate.calculateShares(currentUserAccount.getUsername()).get("100-999"));
 			PieChart.Data thousandPlus = new PieChart.Data("More than 999 shares",
-					calculate.calculateShares().get("1000+"));
+					calculate.calculateShares(currentUserAccount.getUsername()).get("1000+"));
 			pieChart.getData().addAll(zeroToNinetyNine, hundredToThousand, thousandPlus);
 		} catch (PostNotFoundException e) {
 			alertError.alertZeroPost();

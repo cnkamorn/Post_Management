@@ -1,8 +1,6 @@
-package application.Controller;
+package application.Model;
 
 import java.util.Comparator;
-
-import application.Model.Post;
 
 /**
  * This class is a comparator class It contains related methods about comparing

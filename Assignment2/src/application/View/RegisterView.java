@@ -9,7 +9,16 @@ import javafx.stage.Stage;
 
 public class RegisterView {
 
-	public RegisterView() {
+	private static RegisterView Instance;
+
+	private RegisterView() {
+	};
+
+	public static RegisterView getInstance() {
+		if (Instance == null) {
+			Instance = new RegisterView();
+		}
+		return Instance;
 	}
 
 	public void getScene() {

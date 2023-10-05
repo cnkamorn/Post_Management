@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import application.Exception.BlankInputException;
 import application.Exception.PostNotFoundException;
@@ -10,7 +10,7 @@ import application.Exception.PostNotFoundException;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class RemovePost extends PostDashboardController {
+public class RemovePost {
 
 	private static RemovePost Instance;
 
@@ -30,10 +30,10 @@ public class RemovePost extends PostDashboardController {
 		}
 	}
 
-	public void removePost(String postId) throws PostNotFoundException {
+	public void removePost(String username, String postId) throws PostNotFoundException {
 		PostDatabase postDB = PostDatabase.getInstance();
 		UserDatabase userDB = UserDatabase.getInstance();
-		String authorId = userDB.queryUserId(currentUserAccount.getUsername()); // search for ID
+		String authorId = userDB.queryUserId(username); // search for ID
 		if (!postDB.removePost(authorId, postId)) {
 			throw new PostNotFoundException("Post is not exist or this user has no access to it");
 		}

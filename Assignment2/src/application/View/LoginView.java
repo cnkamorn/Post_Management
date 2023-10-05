@@ -6,9 +6,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class LoginView {
+	private static LoginView Instance;
 
-	public LoginView() {
+	private LoginView() {
+	};
 
+	public static LoginView getInstance() {
+		if (Instance == null) {
+			Instance = new LoginView();
+		}
+		return Instance;
 	}
 
 	public void getScene() {

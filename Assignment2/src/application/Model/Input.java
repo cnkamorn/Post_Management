@@ -12,7 +12,7 @@ import application.Exception.NegativeNumberException;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class Input extends Exception {
+public class Input {
 
 	private static Input Instance;
 

@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ import application.Exception.PostIdExistsException;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class AddPostValidation extends PostDashboardController {
+public class AddPostValidation {
 	private static AddPostValidation Instance;
 
 	private AddPostValidation() {
@@ -70,6 +70,7 @@ public class AddPostValidation extends PostDashboardController {
 	 * @return
 	 */
 	public boolean checkInputWhiteSpace(String postId, String postLikes, String postShares) {
+		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(postId)) {
 			alert.alertWhiteSpaceFound("Post ID");
 			return true;

@@ -1,4 +1,4 @@
-package application.Controller;
+package application.Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import application.Exception.InputHeaderException;
 import application.Exception.InvalidFileTypeException;
-import application.Model.Post;
 
 /**
  * This class is a an import class It contains related methods about import the
@@ -16,7 +15,7 @@ import application.Model.Post;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class ImportFile extends PostDashboardController {
+public class ImportFile {
 
 	private static ImportFile Instance;
 
