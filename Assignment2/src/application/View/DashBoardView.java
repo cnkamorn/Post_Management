@@ -24,7 +24,7 @@ public class DashBoardView {
 			Stage stage = new Stage();
 			Scene scene;
 			Parent root;
-			root = FXMLLoader.load(getClass().getResource("/application/dashboard.fxml"));
+			root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
 			scene = new Scene(root);
 			stage.setScene(scene);
 			stage.setTitle("Data Anylytics Hub");

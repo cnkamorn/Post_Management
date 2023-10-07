@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import application.Exception.InvalidLoginException;
 import application.Model.ErrorAlert;
-import application.Model.UserDatabase;
+import application.Model.DAO.UserDatabase;
 import application.View.RegisterView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

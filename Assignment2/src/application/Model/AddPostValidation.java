@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import application.Exception.BlankInputException;
 import application.Exception.PostIdExistsException;
+import application.Model.DAO.UserDatabase;
 
 /**
  * This class is a validation class for adding post to the system. It's an

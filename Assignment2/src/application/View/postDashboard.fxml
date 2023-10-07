@@ -58,7 +58,7 @@
                   </MenuBar>
                   <ImageView fitHeight="71.0" fitWidth="75.0" layoutX="35.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../post.png" />
+                        <Image url="@/image/post.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="289.0" layoutY="57.0" text="POST MANAGEMENT">
@@ -68,7 +68,7 @@
                   </Label>
                   <ImageView fitHeight="71.0" fitWidth="75.0" layoutX="700.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../vip.png" />
+                        <Image url="@/image/vip.png" />
                      </image>
                   </ImageView>
                </children>
@@ -204,7 +204,7 @@
             </Pane>
             <ImageView fx:id="postLogoView" fitHeight="239.0" fitWidth="287.0" layoutX="110.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../social.png" />
+                  <Image url="@/image/social.png" />
                </image>
             </ImageView>
          </children>

@@ -13,7 +13,6 @@ public class Account {
 	private String firstname;
 	private String lastname;
 	private String userplan;
-
 	private static Account Instance;
 
 	private Account() {

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import application.Model.Account;
-import application.Model.UserDatabase;
+import application.Model.DAO.UserDatabase;
 import application.View.AccountDashBoardView;
 import application.View.DashBoardView;
 import application.View.LoginView;

@@ -1,4 +1,4 @@
-package application.Model;
+package application.Model.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import application.Model.Account;
 
 /**
  * This class is a user database class It contains all related user database

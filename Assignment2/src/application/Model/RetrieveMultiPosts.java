@@ -5,6 +5,8 @@ import java.util.Collections;
 
 import application.Exception.BlankInputException;
 import application.Exception.PostNotFoundException;
+import application.Model.DAO.PostDatabase;
+import application.Model.DAO.UserDatabase;
 
 /**
  * This class is a retrieve multi posts class It's an extended class from the

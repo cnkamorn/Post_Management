@@ -10,7 +10,7 @@ import application.Exception.UsernameExistException;
 import application.Model.Account;
 import application.Model.ErrorAlert;
 import application.Model.SuccessAlert;
-import application.Model.UserDatabase;
+import application.Model.DAO.UserDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

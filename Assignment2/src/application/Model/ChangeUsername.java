@@ -8,6 +8,7 @@ import java.sql.Statement;
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
+import application.Model.DAO.UserDatabase;
 
 /**
  * This class is a change username class for account setting page It's an

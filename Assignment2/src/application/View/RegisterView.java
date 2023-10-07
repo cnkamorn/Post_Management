@@ -23,7 +23,7 @@ public class RegisterView {
 
 	public void getScene() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Register.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
 			Parent parentNode = loader.load();
 			Scene scene = new Scene(parentNode);
 			Stage stage = new Stage();

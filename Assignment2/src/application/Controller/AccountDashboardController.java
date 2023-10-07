@@ -12,7 +12,7 @@ import application.Model.ChangePassword;
 import application.Model.ChangeUsername;
 import application.Model.ErrorAlert;
 import application.Model.SuccessAlert;
-import application.Model.UserDatabase;
+import application.Model.DAO.UserDatabase;
 import application.View.DashBoardView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

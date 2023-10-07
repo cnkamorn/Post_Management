@@ -22,7 +22,7 @@ public class PostDashBoardView {
 	public void getScene() {
 		try {
 			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/postDashboard.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("postDashboard.fxml"));
 			Parent parentNode = loader.load();
 			Scene scene = new Scene(parentNode);
 			stage.setResizable(false);

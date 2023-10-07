@@ -22,7 +22,7 @@ public class AccountDashBoardView {
 	public void getScene() {
 		try {
 			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/accountDashboard.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("accountDashboard.fxml"));
 			Parent parentNode = loader.load();
 			Scene scene = new Scene(parentNode);
 			stage.setResizable(false);
