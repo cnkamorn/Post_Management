@@ -10,7 +10,7 @@ import application.Exception.UsernameExistException;
 import application.Model.Account;
 import application.Model.ErrorAlert;
 import application.Model.SuccessAlert;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,10 +42,13 @@ public class SignUpController {
 	private Button signup;
 
 	private ErrorAlert error = ErrorAlert.getInstance();
-	private UserDatabase userDb = UserDatabase.getInstance();
+	private UserDAO userDb = UserDAO.getInstance();
 	private Account userAccount = Account.getInstance();
 	private SuccessAlert successAlert = SuccessAlert.getInstance();
 
+	/*
+	 * Signup Method
+	 */
 	@FXML
 	private void signUp(ActionEvent event) {
 		try {
@@ -69,6 +72,9 @@ public class SignUpController {
 		}
 	}
 
+	/*
+	 * Method to check if there is any blank input
+	 */
 	public boolean checkBlank() throws BlankInputException {
 		if (firstname.getText().isBlank() || lastname.getText().isBlank() || password.getText().isBlank()
 				|| username.getText().isBlank()) {
@@ -77,6 +83,12 @@ public class SignUpController {
 		return false;
 	}
 
+	/**
+	 * Method to check the white space
+	 * 
+	 * @param text Input
+	 * @return boolean
+	 */
 	public boolean checkWhiteSpace(String text) {
 		for (int i = 0; i < text.length(); i++) {
 			if (Character.isWhitespace(text.charAt(i))) {
@@ -86,6 +98,15 @@ public class SignUpController {
 		return false;
 	}
 
+	/**
+	 * Method to check whether the input has white space or not
+	 * 
+	 * @param username
+	 * @param password
+	 * @param firstname
+	 * @param lastname
+	 * @return boolean
+	 */
 	public boolean checkInputWhiteSpace(String username, String password, String firstname, String lastname) {
 		if (checkWhiteSpace(username)) { // error if contains whitespace
 			error.alertWhiteSpaceFound("Username");
@@ -103,10 +124,17 @@ public class SignUpController {
 		return false;
 	}
 
+	/**
+	 * Method to check if the username has already exists in the database
+	 * 
+	 * @param username
+	 * @return boolean
+	 * @throws UsernameExistException
+	 */
 	public boolean checkUsernameExists(String username) throws UsernameExistException {
 		String query = "SELECT username FROM User WHERE username='" + username + "'";
 		try {
-			Connection con = UserDatabase.getConnection();
+			Connection con = UserDAO.getConnection();
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			con.close();

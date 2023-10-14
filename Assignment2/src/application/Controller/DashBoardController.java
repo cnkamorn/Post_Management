@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import application.Model.Account;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.UserDAO;
 import application.View.AccountDashBoardView;
 import application.View.DashBoardView;
 import application.View.LoginView;
@@ -52,6 +52,9 @@ public class DashBoardController extends LoginController {
 		dashboard.getScene();
 	}
 
+	/*
+	 * Method to show the account setting page
+	 */
 	@FXML
 	public void accountSetting(ActionEvent event) {
 		editprofilebtn.getScene().getWindow().hide();
@@ -60,7 +63,8 @@ public class DashBoardController extends LoginController {
 	}
 
 	/**
-	 * @param event
+	 * Method to show the dashboard page
+	 * 
 	 */
 	@FXML
 	public void postManagement(ActionEvent event) {
@@ -69,11 +73,15 @@ public class DashBoardController extends LoginController {
 		postDashboard.getScene();
 	}
 
+	/*
+	 * If the login is successful, this method will retrieve the user information
+	 * from the database and store it int the currectLoginUser account.
+	 */
 	public void setUserDetails() {
 		String query = "SELECT username,password,first_name,last_name,user_plan FROM User WHERE username='"
 				+ currentUserName + "'";
 		try {
-			Connection con = UserDatabase.getConnection();
+			Connection con = UserDAO.getConnection();
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
@@ -90,6 +98,9 @@ public class DashBoardController extends LoginController {
 		}
 	}
 
+	/*
+	 * Method to logout
+	 */
 	@FXML
 	public void logout(ActionEvent event) {
 		logoutbtn.getScene().getWindow().hide();
@@ -97,6 +108,9 @@ public class DashBoardController extends LoginController {
 		loginScene.getScene();
 	}
 
+	/*
+	 * Method to set the label's name after user's login
+	 */
 	public void setWelcomeText() {
 		if (this.editprofilebtn != null) {
 			welcome.setText(" Hello " + currentLoginUser.getFirstname().toUpperCase() + " "
@@ -106,6 +120,9 @@ public class DashBoardController extends LoginController {
 		}
 	}
 
+	/*
+	 * Initialized method to show the user's label name and set the user details
+	 */
 	public void initialize() {
 		setUserDetails();
 		setWelcomeText();

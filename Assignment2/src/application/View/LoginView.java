@@ -5,6 +5,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class is a login view class. It contains the get scene method
+ *
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class LoginView {
 	private static LoginView Instance;
 

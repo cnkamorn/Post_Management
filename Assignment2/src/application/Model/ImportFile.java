@@ -29,6 +29,15 @@ public class ImportFile {
 		return Instance;
 	}
 
+	/**
+	 * Method to import the file to the system
+	 * 
+	 * @param file
+	 * @return
+	 * @throws InvalidFileTypeException
+	 * @throws InputHeaderException
+	 * @throws FileNotFoundException
+	 */
 	public ArrayList<Post> bulkImport(File file)
 			throws InvalidFileTypeException, InputHeaderException, FileNotFoundException {
 		ArrayList<Post> postList = new ArrayList();

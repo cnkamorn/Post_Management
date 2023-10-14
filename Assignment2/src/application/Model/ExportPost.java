@@ -29,12 +29,24 @@ public class ExportPost {
 		return Instance;
 	}
 
+	/**
+	 * Method to check the blank field
+	 * 
+	 * @param postId
+	 * @throws BlankInputException
+	 */
 	public void checkBlankField(String postId) throws BlankInputException {
 		if (postId.isBlank()) {
 			throw new BlankInputException("Error:Input from the post Id field is blank");
 		}
 	}
 
+	/**
+	 * Method to export the file
+	 * 
+	 * @param post
+	 * @throws FileNotFoundException
+	 */
 	public void exportFile(Post post) throws FileNotFoundException {
 		Integer postID = post.getPostID();
 		String postContent = post.getPostContent();

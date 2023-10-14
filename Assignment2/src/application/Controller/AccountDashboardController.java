@@ -12,7 +12,7 @@ import application.Model.ChangePassword;
 import application.Model.ChangeUsername;
 import application.Model.ErrorAlert;
 import application.Model.SuccessAlert;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.UserDAO;
 import application.View.DashBoardView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -190,7 +190,7 @@ public class AccountDashboardController extends DashBoardController {
 			if (!username.checkInputWhiteSpace(currentUn, newUn, reTypeUn)) {
 				currentLoginUser.setUsername(newUn);
 				// update database
-				UserDatabase udb = UserDatabase.getInstance();
+				UserDAO udb = UserDAO.getInstance();
 				udb.updateUsername(currentUn, newUn);
 				alertSuccess.alertUpdateUsernameSuccess();
 			}
@@ -224,7 +224,7 @@ public class AccountDashboardController extends DashBoardController {
 			if (!password.checkInputWhiteSpace(currentPw, newPw, reTypePw)) {
 				currentLoginUser.setPassword(newPw);
 				// update database
-				UserDatabase udb = UserDatabase.getInstance();
+				UserDAO udb = UserDAO.getInstance();
 				udb.updatePassword(currentLoginUser.getUsername(), newPw);
 				alertSuccess.alertUpdatePasswordSuccess();
 			}
@@ -253,7 +253,7 @@ public class AccountDashboardController extends DashBoardController {
 			if (!firstname.checkInputWhiteSpace(newFirstName, reTypeFirstName)) {
 				currentLoginUser.setFirstname(newFirstName);
 				// update database
-				UserDatabase udb = UserDatabase.getInstance();
+				UserDAO udb = UserDAO.getInstance();
 				udb.updateFirstName(currentLoginUser.getUsername(), reTypeFirstName);
 				alertSuccess.alertUpdateFirstNameSuccess();
 			}
@@ -280,7 +280,7 @@ public class AccountDashboardController extends DashBoardController {
 			if (!lastname.checkInputWhiteSpace(newLastName, reTypeLastName)) {
 				currentLoginUser.setLastname(newLastName);
 				// update database
-				UserDatabase udb = UserDatabase.getInstance();
+				UserDAO udb = UserDAO.getInstance();
 				udb.updateLastName(currentLoginUser.getUsername(), reTypeLastName);
 				alertSuccess.alertUpdateLastNameSuccess();
 			}
@@ -319,7 +319,7 @@ public class AccountDashboardController extends DashBoardController {
 	public void setVipUser() {
 		alertSuccess.alertUpdatePlanSuccess();
 		currentLoginUser.setUserPlan("VIP");
-		UserDatabase udb = UserDatabase.getInstance();
+		UserDAO udb = UserDAO.getInstance();
 		udb.updatePlan(currentLoginUser.getUsername());
 	}
 

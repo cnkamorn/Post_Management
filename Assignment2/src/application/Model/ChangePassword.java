@@ -25,9 +25,10 @@ public class ChangePassword {
 	}
 
 	/**
+	 * Method to check if the retype password is matched with the password field
 	 * 
-	 * @param newPassword
-	 * @param reTypePassword
+	 * @param newLastName
+	 * @param reTypeLastName
 	 * @throws RetypeException
 	 */
 	public void checkMatchingRetypePassword(String newPassword, String reTypePassword) throws RetypeException {
@@ -37,6 +38,7 @@ public class ChangePassword {
 	}
 
 	/**
+	 * Method to check if there is any blank field
 	 * 
 	 * @param currentPassword
 	 * @param newPassword
@@ -51,6 +53,7 @@ public class ChangePassword {
 	}
 
 	/**
+	 * Method to check the password
 	 * 
 	 * @param currentPassword
 	 * @throws WrongPasswordException
@@ -63,9 +66,11 @@ public class ChangePassword {
 	}
 
 	/**
+	 * Method to check if the string contains white space
 	 * 
-	 * @param text
-	 * @return
+	 * @param newLastName
+	 * @param reTypeLastName
+	 * @return boolean
 	 */
 	public boolean checkWhiteSpace(String text) {
 		for (int i = 0; i < text.length(); i++) {
@@ -77,11 +82,12 @@ public class ChangePassword {
 	}
 
 	/**
+	 * Method to check if the input contains any white space
 	 * 
 	 * @param currentPassword
 	 * @param newPassword
 	 * @param reTypePassword
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkInputWhiteSpace(String currentPassword, String newPassword, String reTypePassword) {
 		ErrorAlert alert = ErrorAlert.getInstance();

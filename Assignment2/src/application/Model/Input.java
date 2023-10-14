@@ -26,6 +26,14 @@ public class Input {
 		return Instance;
 	}
 
+	/**
+	 * Method to validate integer input
+	 * 
+	 * @param input
+	 * @return boolean
+	 * @throws NumberFormatException
+	 * @throws NegativeNumberException
+	 */
 	public boolean acceptIntegerInput(String input) throws NumberFormatException, NegativeNumberException {
 		try {
 			int intInput = Integer.parseInt(input);
@@ -39,6 +47,13 @@ public class Input {
 		return true;
 	}
 
+	/**
+	 * Method to validate date time input
+	 * 
+	 * @param input
+	 * @return
+	 * @throws InvalidDateTimeFormatException
+	 */
 	public boolean acceptDateTime(String input) throws InvalidDateTimeFormatException {
 		// (DD/MM/YYYY HH:MM)
 		try {

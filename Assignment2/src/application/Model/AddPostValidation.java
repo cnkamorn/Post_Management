@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import application.Exception.BlankInputException;
 import application.Exception.PostIdExistsException;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.UserDAO;
 
 /**
  * This class is a validation class for adding post to the system. It's an
@@ -93,7 +93,7 @@ public class AddPostValidation {
 	 * @throws PostIdExistsException
 	 */
 	public void checkPostIdExist(String postId) throws PostIdExistsException {
-		try (Connection con = UserDatabase.getConnection(); Statement stmt = con.createStatement();) {
+		try (Connection con = UserDAO.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "SELECT post_id FROM post WHERE post_id = '" + postId + "';";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {

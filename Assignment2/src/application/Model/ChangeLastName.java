@@ -23,12 +23,25 @@ public class ChangeLastName {
 		return Instance;
 	}
 
+	/**
+	 * Method to check if there is any blank input field
+	 * 
+	 * @param newLastName
+	 * @param reTypeLastName
+	 * @throws BlankInputException
+	 */
 	public void checkBlankField(String newLastName, String reTypeLastName) throws BlankInputException {
 		if (newLastName.isBlank() || reTypeLastName.isBlank()) {
 			throw new BlankInputException("Error : Blank Input found");
 		}
 	}
 
+	/**
+	 * Method to check the white space
+	 * 
+	 * @param text
+	 * @return boolean
+	 */
 	public boolean checkWhiteSpace(String text) {
 		for (int i = 0; i < text.length(); i++) {
 			if (Character.isWhitespace(text.charAt(i))) {
@@ -38,6 +51,13 @@ public class ChangeLastName {
 		return false;
 	}
 
+	/**
+	 * Method to check the input white space
+	 * 
+	 * @param newLastName
+	 * @param reTypeLastName
+	 * @return boolean
+	 */
 	public boolean checkInputWhiteSpace(String newLastName, String reTypeLastName) {
 		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(newLastName)) { // error if contains whitespace
@@ -50,6 +70,13 @@ public class ChangeLastName {
 		return false;
 	}
 
+	/**
+	 * Method to check if the retype last name is matched with the last name field
+	 * 
+	 * @param newLastName
+	 * @param reTypeLastName
+	 * @throws RetypeException
+	 */
 	public void checkMatchingRetypeLastName(String newLastName, String reTypeLastName) throws RetypeException {
 		if (!newLastName.equals(reTypeLastName)) {
 			throw new RetypeException("New Last Name mismatches");

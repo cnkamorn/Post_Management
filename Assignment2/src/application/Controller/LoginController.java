@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import application.Exception.InvalidLoginException;
 import application.Model.ErrorAlert;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.UserDAO;
 import application.View.RegisterView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +35,9 @@ public class LoginController {
 	ErrorAlert alert = ErrorAlert.getInstance();
 	public static String currentUserName;
 
+	/*
+	 * Method to verify login information
+	 */
 	@FXML
 	private void login(ActionEvent event) {
 		DashBoardController dbc = new DashBoardController();
@@ -65,7 +68,7 @@ public class LoginController {
 		String query = "SELECT username, password FROM User WHERE username = '" + username + "' AND password ='"
 				+ password + "'; ";
 		try {
-			Connection con = UserDatabase.getConnection();
+			Connection con = UserDAO.getConnection();
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			con.close();

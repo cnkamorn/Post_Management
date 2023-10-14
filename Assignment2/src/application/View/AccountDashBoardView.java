@@ -5,6 +5,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class is an account dash board view class. It contains the get scene
+ * method
+ *
+ * 
+ * @author Chanakan Amornpatchara
+ * @version 1.0.0
+ */
 public class AccountDashBoardView {
 
 	private static AccountDashBoardView Instance;

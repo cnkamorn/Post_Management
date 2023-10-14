@@ -8,7 +8,7 @@ import java.sql.Statement;
 import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.UserDAO;
 
 /**
  * This class is a change username class for account setting page It's an
@@ -32,6 +32,13 @@ public class ChangeUsername {
 		return Instance;
 	}
 
+	/**
+	 * Method to check if the username field is matched with the currect login user
+	 * 
+	 * @param currentUsername
+	 * @param currentUserAccount
+	 * @throws UsernameMismatchException
+	 */
 	public void checkMatchingCurrentUsername(String currentUsername, String currentUserAccount)
 			throws UsernameMismatchException {
 		if (!currentUsername.equals(currentUserAccount)) {
@@ -39,16 +46,31 @@ public class ChangeUsername {
 		}
 	}
 
+	/**
+	 * Method to check if the input fields are matched.
+	 * 
+	 * @param currentUsername
+	 * @param currentUserAccount
+	 * @throws UsernameMismatchException
+	 */
 	public void checkMatchingRetypeUsername(String newUsername, String reTypeUsernameField) throws RetypeException {
 		if (!newUsername.equals(reTypeUsernameField)) {
 			throw new RetypeException("New Username mismatches");
 		}
 	}
 
+	/**
+	 * Method to check if the username is exist
+	 * 
+	 * @param currentUsername
+	 * @param newUsername
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public boolean checkUsernameExist(String currentUsername, String newUsername) throws SQLException {
 		String query = "SELECT username FROM User WHERE username='" + newUsername + "' AND username != '"
 				+ currentUsername + "';";
-		Connection con = UserDatabase.getConnection();
+		Connection con = UserDAO.getConnection();
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
 		con.close();
@@ -59,6 +81,14 @@ public class ChangeUsername {
 		return true;
 	}
 
+	/**
+	 * Method to check the blank fields
+	 * 
+	 * @param currentUsername
+	 * @param newUsername
+	 * @param retypeUsername
+	 * @throws BlankInputException
+	 */
 	public void checkBlankField(String currentUsername, String newUsername, String retypeUsername)
 			throws BlankInputException {
 		if (currentUsername.isBlank() || newUsername.isBlank() || retypeUsername.isBlank()) {
@@ -66,6 +96,12 @@ public class ChangeUsername {
 		}
 	}
 
+	/**
+	 * Method to check the white space
+	 * 
+	 * @param text
+	 * @return boolean
+	 */
 	public boolean checkWhiteSpace(String text) {
 		for (int i = 0; i < text.length(); i++) {
 			if (Character.isWhitespace(text.charAt(i))) {
@@ -75,6 +111,14 @@ public class ChangeUsername {
 		return false;
 	}
 
+	/**
+	 * Method to check if there's any input white space
+	 * 
+	 * @param currentUsername
+	 * @param newUsername
+	 * @param reTypeNewUsername
+	 * @return boolean
+	 */
 	public boolean checkInputWhiteSpace(String currentUsername, String newUsername, String reTypeNewUsername) {
 		ErrorAlert alert = ErrorAlert.getInstance();
 		if (checkWhiteSpace(currentUsername)) { // error if contains whitespace

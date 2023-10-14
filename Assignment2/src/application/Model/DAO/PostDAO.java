@@ -18,27 +18,36 @@ import application.Model.Post;
  * @author Chanakan Amornpatchara
  * @version 1.0.0
  */
-public class PostDatabase {
+public class PostDAO {
 
 	private static final String DB_URL = "jdbc:sqlite:data.db"; // driver
 	final static String TABLE_NAME = "Post";
 	// singleton
-	private static PostDatabase Instance;
+	private static PostDAO Instance;
 
-	private PostDatabase() {
+	private PostDAO() {
 	};
 
-	public static PostDatabase getInstance() {
+	public static PostDAO getInstance() {
 		if (Instance == null) {
-			Instance = new PostDatabase();
+			Instance = new PostDAO();
 		}
 		return Instance;
 	}
 
+	/**
+	 * Method to create a connect to the post table
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(DB_URL); // connection
 	}
 
+	/**
+	 * Method to create a post table
+	 */
 	public static void createTablePost() {
 		try (Connection con = getConnection(); Statement stmt = con.createStatement();) {
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
@@ -52,12 +61,17 @@ public class PostDatabase {
 		}
 	}
 
-	// SELECT a.* FROM post AS b INNER JOIN user as A ON (b.user_id=a.user_id);
+	/**
+	 * Method to insert a post to the table
+	 * 
+	 * @param post
+	 * @return boolean
+	 */
 	public boolean insertPost(Post post) {
 		String sql = "INSERT INTO " + TABLE_NAME
 				+ " (post_id, post_content, post_likes, post_shares,post_date_time,user_id)"
 				+ " VALUES (?, ?, ?, ?, ?,?)";
-		try (Connection con = PostDatabase.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
+		try (Connection con = PostDAO.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, Integer.toString(post.getPostID()));
 			stmt.setString(2, post.getPostContent());
 			stmt.setString(3, Integer.toString(post.getLikes()));
@@ -77,9 +91,17 @@ public class PostDatabase {
 		return false;
 	}
 
+	/**
+	 * Method to retrieve a post
+	 * 
+	 * @param authorID
+	 * @param postID
+	 * @return Post
+	 * @throws PostNotFoundException
+	 */
 	public Post retrievePost(String authorID, String postID) throws PostNotFoundException {
 		Post post = Post.getInstance();
-		try (Connection con = PostDatabase.getConnection(); Statement stmt = con.createStatement();) {
+		try (Connection con = PostDAO.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "SELECT * FROM Post WHERE post_id ='" + postID + "' AND user_id ='" + authorID + "';";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
@@ -101,9 +123,16 @@ public class PostDatabase {
 		return post;
 	}
 
+	/**
+	 * Method to retrieve a user's post
+	 * 
+	 * @param authorID
+	 * @return Arraylist of Post
+	 * @throws PostNotFoundException
+	 */
 	public ArrayList<Post> retrieveUserPosts(String authorID) throws PostNotFoundException {
 		ArrayList<Post> posts = new ArrayList();
-		try (Connection con = PostDatabase.getConnection(); Statement stmt = con.createStatement();) {
+		try (Connection con = PostDAO.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "SELECT * FROM Post WHERE user_id ='" + authorID + "';";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -123,8 +152,16 @@ public class PostDatabase {
 		return posts;
 	}
 
+	/**
+	 * Method to remove the post from the database
+	 * 
+	 * @param authorID
+	 * @param postID
+	 * @return
+	 * @throws PostNotFoundException
+	 */
 	public boolean removePost(String authorID, String postID) throws PostNotFoundException {
-		try (Connection con = PostDatabase.getConnection(); Statement stmt = con.createStatement();) {
+		try (Connection con = PostDAO.getConnection(); Statement stmt = con.createStatement();) {
 			String sql = "DELETE FROM Post WHERE post_id ='" + postID + "' AND user_id ='" + authorID + "';";
 			int result = stmt.executeUpdate(sql);
 			if (result == 1) {

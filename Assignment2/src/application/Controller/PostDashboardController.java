@@ -24,8 +24,8 @@ import application.Model.RemovePost;
 import application.Model.RetrieveMultiPosts;
 import application.Model.SearchPost;
 import application.Model.SuccessAlert;
-import application.Model.DAO.PostDatabase;
-import application.Model.DAO.UserDatabase;
+import application.Model.DAO.PostDAO;
+import application.Model.DAO.UserDAO;
 import application.View.DashBoardView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -212,15 +212,18 @@ public class PostDashboardController extends DashBoardController implements Init
 	@FXML
 	private Label subscriptionLabel;
 
-	private UserDatabase userDb = UserDatabase.getInstance();
+	private UserDAO userDb = UserDAO.getInstance();
 	private Post post = Post.getInstance();
 	private Input inputValidate = Input.getInstance();
-	private PostDatabase postDb = PostDatabase.getInstance();
+	private PostDAO postDb = PostDAO.getInstance();
 	private SuccessAlert alertSuccess = SuccessAlert.getInstance();
 	private ErrorAlert alertError = ErrorAlert.getInstance();
 	private ArrayList<String> currentSearchPost = new ArrayList();
 	private ExportPost exportPostController = ExportPost.getInstance();
 
+	/*
+	 * Method to call the home page view after clicking the back to home page button
+	 */
 	@FXML
 	public void backToHomePage(ActionEvent event) {
 		back.getScene().getWindow().hide();
@@ -228,6 +231,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		dashBoardScene.getScene();
 	}
 
+	/*
+	 * Method to show the add post page and hide other pages
+	 */
 	public void addPostViewVisible() {
 		addPostView.setVisible(true);
 		removePostView.setVisible(false);
@@ -237,6 +243,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		dataVisualizationView.setVisible(false);
 	}
 
+	/*
+	 * Method to show the retrieve post page and hide other pages
+	 */
 	public void retrievePostViewVisible() {
 		addPostView.setVisible(false);
 		removePostView.setVisible(false);
@@ -246,6 +255,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		dataVisualizationView.setVisible(false);
 	}
 
+	/*
+	 * Method to show the remove post page and hide other pages
+	 */
 	public void removePostViewVisible() {
 		addPostView.setVisible(false);
 		removePostView.setVisible(true);
@@ -255,6 +267,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		dataVisualizationView.setVisible(false);
 	}
 
+	/*
+	 * Method to show the export post page and hide other pages
+	 */
 	public void exportPostViewVisible() {
 		addPostView.setVisible(false);
 		removePostView.setVisible(false);
@@ -264,6 +279,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		dataVisualizationView.setVisible(false);
 	}
 
+	/*
+	 * Method to show the retrieve multi posts page and hide other pages
+	 */
 	public void retrieveMultiPostViewVisible() {
 		addPostView.setVisible(false);
 		removePostView.setVisible(false);
@@ -273,6 +291,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		dataVisualizationView.setVisible(false);
 	}
 
+	/*
+	 * Method to show the data visualizer page and hide other pages
+	 */
 	public void dataVisualizationViewVisible() {
 		addPostView.setVisible(false);
 		removePostView.setVisible(false);
@@ -287,6 +308,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to switch the page based on the button clicked
+	 */
 	@FXML
 	public void changePage(ActionEvent event) {
 		postLogoView.setVisible(false);
@@ -305,6 +329,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to remove the post to the system
+	 */
 	@FXML
 	public void removePost(ActionEvent event) {
 		String postId = removePostIDfield.getText();
@@ -320,6 +347,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to add the post to the system
+	 */
 	@FXML
 	public void addPost(ActionEvent event) {
 		// get texts and store in the variables
@@ -364,6 +394,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to search the post
+	 */
 	// ref https://www.youtube.com/watch?v=qQcr_JMxWRw&list=LL&index=1&t=110s
 	@FXML
 	public void searchPost(ActionEvent event) {
@@ -386,6 +419,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to export the post
+	 */
 	// ref https://www.youtube.com/watch?v=ZGFjaZLwqns
 	@FXML
 	public void exportPost(ActionEvent event) {
@@ -407,6 +443,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to retrieve posts by number
+	 */
 	@FXML
 	public void retrievePostsByN(ActionEvent event) {
 		postTableByN.getItems().clear();
@@ -439,6 +478,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to generate the chart
+	 */
 	@FXML
 	public void generateChart(ActionEvent event) {
 		// pie chart
@@ -459,6 +501,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to import the post to the system
+	 */
 	@FXML
 	public void bulkImport(ActionEvent event) {
 		// ref https://jenkov.com/tutorials/javafx/filechooser.html
@@ -504,6 +549,9 @@ public class PostDashboardController extends DashBoardController implements Init
 		}
 	}
 
+	/*
+	 * Method to initialize the post data to the tables
+	 */
 	// ref https://www.youtube.com/watch?v=qQcr_JMxWRw&list=LL&index=1&t=110s
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
