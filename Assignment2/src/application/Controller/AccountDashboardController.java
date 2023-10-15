@@ -6,8 +6,7 @@ import application.Exception.BlankInputException;
 import application.Exception.RetypeException;
 import application.Exception.UsernameMismatchException;
 import application.Exception.WrongPasswordException;
-import application.Model.ChangeFirstName;
-import application.Model.ChangeLastName;
+import application.Model.ChangeFLName;
 import application.Model.ChangePassword;
 import application.Model.ChangeUsername;
 import application.Model.ErrorAlert;
@@ -244,13 +243,13 @@ public class AccountDashboardController extends DashBoardController {
 	 */
 	@FXML
 	public void changeFirstName(ActionEvent event) {
-		ChangeFirstName firstname = ChangeFirstName.getInstance();
+		ChangeFLName changeFirstName = ChangeFLName.getInstance();
 		String newFirstName = firstNameField.getText();
 		String reTypeFirstName = reTypefirstNameField.getText();
 		try {
-			firstname.checkBlankField(newFirstName, reTypeFirstName);
-			firstname.checkMatchingRetypeFirstName(newFirstName, reTypeFirstName);
-			if (!firstname.checkInputWhiteSpace(newFirstName, reTypeFirstName)) {
+			changeFirstName.checkBlankField(newFirstName, reTypeFirstName);
+			changeFirstName.checkMatchingRetypeFirstName(newFirstName, reTypeFirstName, true);
+			if (!changeFirstName.checkInputWhiteSpace(newFirstName, reTypeFirstName, true)) {
 				currentLoginUser.setFirstname(newFirstName);
 				// update database
 				UserDAO udb = UserDAO.getInstance();
@@ -271,13 +270,13 @@ public class AccountDashboardController extends DashBoardController {
 	 */
 	@FXML
 	public void changeLastName(ActionEvent event) {
-		ChangeLastName lastname = ChangeLastName.getInstance();
+		ChangeFLName changeLastName = ChangeFLName.getInstance();
 		String newLastName = lastNameField.getText();
 		String reTypeLastName = reTypeLastNameField.getText();
 		try {
-			lastname.checkBlankField(newLastName, reTypeLastName);
-			lastname.checkMatchingRetypeLastName(newLastName, reTypeLastName);
-			if (!lastname.checkInputWhiteSpace(newLastName, reTypeLastName)) {
+			changeLastName.checkBlankField(newLastName, reTypeLastName);
+			changeLastName.checkMatchingRetypeFirstName(newLastName, reTypeLastName, false);
+			if (!changeLastName.checkInputWhiteSpace(newLastName, reTypeLastName, false)) {
 				currentLoginUser.setLastname(newLastName);
 				// update database
 				UserDAO udb = UserDAO.getInstance();
