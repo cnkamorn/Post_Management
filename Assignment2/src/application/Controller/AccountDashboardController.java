@@ -248,7 +248,7 @@ public class AccountDashboardController extends DashBoardController {
 		String reTypeFirstName = reTypefirstNameField.getText();
 		try {
 			changeFirstName.checkBlankField(newFirstName, reTypeFirstName);
-			changeFirstName.checkMatchingRetypeFirstName(newFirstName, reTypeFirstName, true);
+			changeFirstName.checkMatchingRetype(newFirstName, reTypeFirstName, true);
 			if (!changeFirstName.checkInputWhiteSpace(newFirstName, reTypeFirstName, true)) {
 				currentLoginUser.setFirstname(newFirstName);
 				// update database
@@ -275,7 +275,7 @@ public class AccountDashboardController extends DashBoardController {
 		String reTypeLastName = reTypeLastNameField.getText();
 		try {
 			changeLastName.checkBlankField(newLastName, reTypeLastName);
-			changeLastName.checkMatchingRetypeFirstName(newLastName, reTypeLastName, false);
+			changeLastName.checkMatchingRetype(newLastName, reTypeLastName, false);
 			if (!changeLastName.checkInputWhiteSpace(newLastName, reTypeLastName, false)) {
 				currentLoginUser.setLastname(newLastName);
 				// update database

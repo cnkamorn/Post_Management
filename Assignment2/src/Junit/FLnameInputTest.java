@@ -7,41 +7,34 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import application.Exception.RetypeException;
-import application.Model.ChangeFirstName;
-import application.Model.ChangeLastName;
+import application.Model.ChangeFLName;
 
 class FLnameInputTest {
-	static ChangeFirstName FN;
-	static ChangeLastName LN;
+	static ChangeFLName FLN;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		FN = ChangeFirstName.getInstance();
-		LN = ChangeLastName.getInstance();
+		FLN = ChangeFLName.getInstance();
 	}
 
 	@Test
 	void whiteSpace1() {
-		assertEquals(false, FN.checkWhiteSpace("A"));
-		assertEquals(false, LN.checkWhiteSpace("A"));
+		assertEquals(false, FLN.checkWhiteSpace("A"));
 	}
 
 	@Test
 	void whiteSpace2() {
-		assertEquals(true, FN.checkWhiteSpace("A "));
-		assertEquals(true, LN.checkWhiteSpace(" A"));
+		assertEquals(true, FLN.checkWhiteSpace("A "));
 	}
 
 	@Test
 	void whiteSpace3() {
-		assertEquals(true, FN.checkWhiteSpace("A A"));
-		assertEquals(true, LN.checkWhiteSpace("A A"));
+		assertEquals(true, FLN.checkWhiteSpace("A A"));
 	}
 
 	@Test
 	void whiteSpace4() {
-		assertEquals(true, FN.checkWhiteSpace(" "));
-		assertEquals(true, LN.checkWhiteSpace(" "));
+		assertEquals(true, FLN.checkWhiteSpace(" "));
 	}
 
 	/**
@@ -50,11 +43,7 @@ class FLnameInputTest {
 	@Test
 	void matchingFields1() {
 		Throwable exception = assertThrows(RetypeException.class, () -> {
-			FN.checkMatchingRetypeFirstName("NEWFN", "newFn ");
-		});
-
-		Throwable exception2 = assertThrows(RetypeException.class, () -> {
-			LN.checkMatchingRetypeLastName("NEWLN", "newL ");
+			FLN.checkMatchingRetype("NEWFN", "newFn ", true);
 		});
 	}
 
@@ -64,12 +53,9 @@ class FLnameInputTest {
 	@Test
 	void matchingFields2() {
 		Throwable exception = assertThrows(RetypeException.class, () -> {
-			FN.checkMatchingRetypeFirstName("a", "A");
+			FLN.checkMatchingRetype("a", "A", true);
 		});
 
-		Throwable exception2 = assertThrows(RetypeException.class, () -> {
-			LN.checkMatchingRetypeLastName("B", "b");
-		});
 	}
 
 	/**
@@ -78,11 +64,7 @@ class FLnameInputTest {
 	@Test
 	void matchingFields3() {
 		Throwable exception = assertThrows(RetypeException.class, () -> {
-			FN.checkMatchingRetypeFirstName("A A", "AA ");
-		});
-
-		Throwable exception2 = assertThrows(RetypeException.class, () -> {
-			LN.checkMatchingRetypeLastName("BBB", "bbb");
+			FLN.checkMatchingRetype("A A", "AA ", true);
 		});
 	}
 
@@ -92,11 +74,7 @@ class FLnameInputTest {
 	@Test
 	void matchingFields4() {
 		Throwable exception = assertThrows(RetypeException.class, () -> {
-			FN.checkMatchingRetypeFirstName("AAAA", "aaaa");
-		});
-
-		Throwable exception2 = assertThrows(RetypeException.class, () -> {
-			LN.checkMatchingRetypeLastName("B  A", "A  B ");
+			FLN.checkMatchingRetype("AAAA", "aaaa", true);
 		});
 	}
 }

@@ -87,8 +87,7 @@ public class ChangeFLName {
 	 * @check if true = firstname,else lastname
 	 * @throws RetypeException
 	 */
-	public void checkMatchingRetypeFirstName(String newFLName, String reTypeFLName, boolean check)
-			throws RetypeException {
+	public void checkMatchingRetype(String newFLName, String reTypeFLName, boolean check) throws RetypeException {
 		if (!newFLName.equals(reTypeFLName)) {
 			if (check) {
 				throw new RetypeException("New First Name mismatches");
