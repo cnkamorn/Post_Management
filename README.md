@@ -31,6 +31,9 @@ Social-Media-Management-Application is a JavaFX GUI application built on the Mod
       - VIP users can import multiple social media posts from a CSV file (e.g., posts.csv).
       - Exceptions during import are captured, handling cases where the CSV file format is incorrect.
 
+## Database
+The application utilizes SQLite for data storage.
+
 ## Testing
 The application is tested using JUnit. The test cases cover various scenarios to ensure the robustness and reliability of the implemented functionalities.
 
