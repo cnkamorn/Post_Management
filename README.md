@@ -34,6 +34,13 @@ Social-Media-Management-Application is a JavaFX GUI application built on the Mod
 ## Database
 The application utilizes SQLite for data storage.
 
+## Technical Aspects
+
+Developed with: Java, JavaFX, SQLite
+Design Pattern: MVC (Model-View-Controller)
+Singleton Usage: Potentially used for centralized access to global resources or configuration (details unavailable due to confidentiality).
+OOP Principles: Embraces object-oriented design principles for modularity, encapsulation, and inheritance (specific principles not disclosed).
+
 ## Testing
 The application is tested using JUnit. The test cases cover various scenarios to ensure the robustness and reliability of the implemented functionalities.
 
