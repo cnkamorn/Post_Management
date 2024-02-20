@@ -53,3 +53,15 @@ This project is a simplified version for educational purposes and does not aim t
 3. Compile and run the `Main.java` file.
 
 Feel free to explore and enhance the functionalities in future updates!
+
+Screenshots:
+<img width="620" alt="Screenshot 2567-02-20 at 13 22 37" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/ad4d6e10-a2ff-44b9-b19b-8eb9b827c829">
+<img width="572" alt="Screenshot 2567-02-20 at 13 22 58" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/86a6218f-7aee-4e37-a59b-d2282fc9dad8">
+<img width="611" alt="Screenshot 2567-02-20 at 13 23 12" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/b9d1c818-53bd-4be6-a863-cf1acd468f07">
+<img width="838" alt="Screenshot 2567-02-20 at 13 24 21" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/8db8576c-9aab-4961-b46b-8483982ef0a0">
+<img width="830" alt="Screenshot 2567-02-20 at 13 24 25" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/e12e58e5-5628-4836-9e43-88446bc1695a">
+<img width="826" alt="Screenshot 2567-02-20 at 13 26 26" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/6fd1334c-47d3-43b4-8bc1-c3ac5a75b7a7">
+<img width="821" alt="Screenshot 2567-02-20 at 13 26 33" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/4ef7a6e2-4e3d-4194-9eb0-fcd376587986">
+<img width="833" alt="Screenshot 2567-02-20 at 13 26 46" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/a8c5d589-6e1d-4e54-9a0a-ca88e89dd611">
+<img width="619" alt="Screenshot 2567-02-20 at 13 27 05" src="https://github.com/cnkamorn/Social-Media-Management-Application/assets/92679212/69d5e274-7049-401a-9ca9-b92d5e523c7b">
+
